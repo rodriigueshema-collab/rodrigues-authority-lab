@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rodrigue's Authority Lab — By Rodrigue Shema</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0e0e;
+    --ink-2: #3a3a3a;
+    --ink-3: #7a7a7a;
+    --paper: #faf8f4;
+    --paper-2: #f2efe8;
+    --paper-3: #e8e3d8;
+    --gold: #b8860b;
+    --gold-light: #f5e9c8;
+    --border: rgba(14,14,14,0.1);
+    --border-strong: rgba(14,14,14,0.22);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,248,244,0.94);
+    backdrop-filter: blur(14px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 2rem;
+    height: 62px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--ink); text-decoration: none;
+    letter-spacing: -0.02em;
+    cursor: pointer;
+  }
+  .nav-brand span { color: var(--gold); }
+  .nav-right { display: flex; align-items: center; gap: .75rem; }
+  .nav-badge {
+    font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--gold); background: var(--gold-light);
+    border: 0.5px solid rgba(184,134,11,0.3);
+    border-radius: 20px; padding: 4px 12px;
+  }
+  .nav-cta {
+    font-size: 13px; font-weight: 500; color: var(--ink);
+    background: none; border: 0.5px solid var(--border-strong);
+    border-radius: 20px; padding: 7px 16px;
+    cursor: pointer; text-decoration: none;
+    transition: all .2s;
+  }
+  .nav-cta:hover { background: var(--ink); color: var(--paper); }
+
+  /* HERO */
+  .hero {
+    padding: 150px 2rem 60px;
+    max-width: 820px; margin: 0 auto;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--gold);
+    background: var(--gold-light);
+    border: 0.5px solid rgba(184,134,11,0.25);
+    border-radius: 20px; padding: 6px 16px;
+    margin-bottom: 2.25rem;
+  }
+  .hero-badge::before { content: '◆'; font-size: 8px; opacity: .7; }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 8vw, 76px);
+    font-weight: 700; line-height: 1.03;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 17px; font-weight: 300; line-height: 1.75;
+    color: var(--ink-2); max-width: 580px; margin: 0 auto 1.5rem;
+  }
+  .hero-origin {
+    font-size: 13px; color: var(--ink-3); margin-bottom: 3rem;
+    font-style: italic;
+  }
+  .hero-proof {
+    display: flex; align-items: center; justify-content: center; gap: 2.5rem;
+    flex-wrap: wrap; margin-bottom: 1rem;
+  }
+  .proof-item { text-align: center; }
+  .proof-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 700; color: var(--ink);
+    line-height: 1;
+  }
+  .proof-label { font-size: 12px; color: var(--ink-3); margin-top: 3px; }
+  .proof-divider { width: 1px; height: 44px; background: var(--border); }
+  .hero-proof-note {
+    font-size: 12px; color: var(--ink-3); font-style: italic;
+    margin-top: .75rem;
+  }
+
+  /* FRAMEWORK STRIP */
+  .framework-strip {
+    background: var(--ink);
+    padding: 2rem;
+    margin-top: 3rem;
+  }
+  .framework-header {
+    text-align: center;
+    font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4); margin-bottom: 1.5rem;
+  }
+  .framework-inner {
+    max-width: 860px; margin: 0 auto;
+    display: flex; align-items: stretch; justify-content: center;
+    flex-wrap: wrap; gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .fw-item {
+    flex: 1; min-width: 140px;
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 1.25rem 1.5rem;
+    background: var(--ink);
+    transition: background .2s;
+  }
+  .fw-item:hover { background: #1a1a1a; }
+  .fw-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px; font-weight: 700; color: var(--gold); line-height: 1;
+    flex-shrink: 0;
+  }
+  .fw-text { text-align: left; padding-top: 3px; }
+  .fw-word { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 3px; }
+  .fw-desc { font-size: 11px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+  .framework-note {
+    text-align: center; margin-top: 1.25rem;
+    font-size: 12px; color: rgba(255,255,255,0.35); font-style: italic;
+  }
+
+  /* HOW IT WORKS */
+  .how-section {
+    padding: 80px 2rem 60px;
+    max-width: 820px; margin: 0 auto;
+  }
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-3); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px; font-weight: 700; color: var(--ink);
+    letter-spacing: -0.02em; line-height: 1.1;
+    margin-bottom: .75rem;
+  }
+  .section-sub { font-size: 15px; color: var(--ink-2); line-height: 1.7; margin-bottom: 3rem; max-width: 600px; }
+
+  .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--border); border-radius: var(--radius); overflow: hidden; }
+  .how-step { background: var(--paper); padding: 1.75rem 1.5rem; }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; font-weight: 700; color: var(--paper-3); line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .step-title { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: .5rem; }
+  .step-desc { font-size: 13px; color: var(--ink-3); line-height: 1.65; }
+
+  /* TOOLS SECTION */
+  .tools-section {
+    padding: 60px 2rem 80px;
+    max-width: 820px; margin: 0 auto;
+  }
+  .tools-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .tool-card {
+    background: #fff;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem 1.5rem;
+    cursor: pointer;
+    transition: all .2s;
+    position: relative; overflow: hidden;
+  }
+  .tool-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), #e8a80a);
+    opacity: 0; transition: opacity .2s;
+  }
+  .tool-card:hover { border-color: rgba(184,134,11,0.3); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.09); }
+  .tool-card:hover::before { opacity: 1; }
+  .tool-num { font-size: 11px; font-weight: 600; letter-spacing: .1em; color: var(--gold); margin-bottom: 1rem; }
+  .tool-icon { font-size: 30px; margin-bottom: 1rem; }
+  .tool-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 23px; font-weight: 700; color: var(--ink);
+    margin-bottom: .5rem; line-height: 1.1;
+  }
+  .tool-desc { font-size: 13px; color: var(--ink-3); line-height: 1.65; margin-bottom: 1.25rem; }
+  .tool-btn {
+    font-size: 13px; font-weight: 500; color: var(--ink);
+    background: var(--paper-2);
+    border: none; border-radius: 20px;
+    padding: 7px 16px; cursor: pointer;
+    transition: all .15s;
+  }
+  .tool-card:hover .tool-btn { background: var(--ink); color: var(--paper); }
+
+  /* APP VIEWS */
+  .app-view {
+    display: none;
+    padding: 100px 2rem 80px;
+    max-width: 740px; margin: 0 auto;
+    animation: fadeUp .3s ease;
+  }
+  .app-view.active { display: block; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--ink-3);
+    background: none; border: none; cursor: pointer;
+    padding: 0; margin-bottom: 2rem;
+    transition: color .15s;
+  }
+  .back-btn:hover { color: var(--ink); }
+
+  .view-badge {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: var(--gold); background: var(--gold-light);
+    border-radius: 20px; padding: 4px 12px; margin-bottom: 1rem;
+  }
+  .view-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px; font-weight: 700; color: var(--ink);
+    letter-spacing: -0.02em; line-height: 1.1; margin-bottom: .5rem;
+  }
+  .view-sub { font-size: 14px; color: var(--ink-2); line-height: 1.65; margin-bottom: 2rem; }
+
+  .rcfto-hint {
+    background: var(--paper-2); border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm); padding: 1rem 1.25rem;
+    margin-bottom: 1.75rem;
+    font-size: 13px; color: var(--ink-2); line-height: 1.6;
+  }
+  .rcfto-hint strong { color: var(--gold); }
+
+  /* FORM */
+  .form-card {
+    background: #fff; border: 0.5px solid var(--border);
+    border-radius: var(--radius); padding: 2rem;
+  }
+  .field { margin-bottom: 1.35rem; }
+  .field:last-child { margin-bottom: 0; }
+  .field label {
+    display: block; font-size: 13px; font-weight: 600;
+    color: var(--ink-2); margin-bottom: 4px;
+  }
+  .field-hint { font-size: 12px; color: var(--ink-3); margin-bottom: 7px; font-style: italic; }
+  .field input, .field textarea, .field select {
+    width: 100%; font-family: 'Outfit', sans-serif;
+    font-size: 14px; color: var(--ink);
+    background: var(--paper);
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px; outline: none; resize: vertical;
+    transition: border-color .15s, background .15s;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    border-color: var(--gold); background: #fff;
+  }
+  .generate-btn {
+    width: 100%; margin-top: 1.75rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px; font-weight: 600;
+    color: var(--paper); background: var(--ink);
+    border: none; border-radius: var(--radius-sm);
+    padding: 15px; cursor: pointer;
+    transition: opacity .15s;
+    letter-spacing: .01em;
+  }
+  .generate-btn:hover { opacity: .85; }
+  .generate-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+  /* LOADING */
+  .loading-state { display: none; text-align: center; padding: 4rem 0; }
+  .loading-state.active { display: block; }
+  .loading-ring {
+    width: 52px; height: 52px; margin: 0 auto 1.5rem;
+    border: 2px solid var(--paper-3);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--ink-2); }
+  .loading-sub { font-size: 13px; color: var(--ink-3); margin-top: .5rem; }
+
+  /* RESULTS */
+  .results-wrap { display: none; }
+  .results-wrap.active { display: block; animation: fadeUp .3s ease; }
+
+  .result-block { margin-bottom: 2.25rem; }
+  .result-block-title {
+    font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-3); margin-bottom: 1rem;
+    padding-bottom: .75rem; border-bottom: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .copy-btn {
+    font-size: 11px; font-weight: 500; color: var(--ink-3);
+    background: var(--paper-2); border: 0.5px solid var(--border);
+    border-radius: 20px; padding: 3px 10px; cursor: pointer;
+    transition: all .15s; text-transform: none; letter-spacing: 0;
+  }
+  .copy-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  .book-title-display {
+    background: var(--ink); color: var(--paper);
+    border-radius: var(--radius); padding: 2.25rem; margin-bottom: 1rem;
+  }
+  .btd-label { font-size: 11px; color: rgba(250,248,244,0.4); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .75rem; }
+  .btd-main { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 700; line-height: 1.15; margin-bottom: .75rem; }
+  .btd-sub { font-size: 15px; color: rgba(250,248,244,0.6); line-height: 1.55; font-style: italic; }
+
+  .rcfto-grid { display: grid; gap: .75rem; }
+  .rcfto-item {
+    background: #fff; border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm); padding: 1.1rem 1.25rem;
+    display: grid; grid-template-columns: 56px 1fr; gap: 1rem; align-items: start;
+  }
+  .rcfto-left { text-align: center; }
+  .rcfto-letter { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 700; color: var(--gold); line-height: 1; }
+  .rcfto-word { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); }
+  .rcfto-text { font-size: 14px; color: var(--ink-2); line-height: 1.7; padding-top: 4px; }
+
+  .chapters-list { display: grid; gap: .5rem; }
+  .chapter-row {
+    display: flex; gap: 1rem; align-items: baseline;
+    padding: .8rem 1rem;
+    background: #fff; border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  .ch-num { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--gold); min-width: 22px; line-height: 1; }
+  .ch-title { font-size: 14px; color: var(--ink); line-height: 1.4; }
+
+  .hook-display {
+    background: var(--paper-2);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.25rem 1.5rem;
+    font-size: 15px; line-height: 1.85; color: var(--ink);
+    white-space: pre-wrap;
+  }
+
+  .copy-piece { background: #fff; border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 1.35rem; }
+  .copy-piece-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); margin-bottom: .75rem; }
+  .copy-piece-text { font-size: 14px; color: var(--ink-2); line-height: 1.8; white-space: pre-wrap; }
+
+  .content-pillars { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; margin-bottom: 1rem; }
+  .pillar-card {
+    background: #fff; border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm); padding: 1.1rem;
+    position: relative; overflow: hidden;
+  }
+  .pillar-card::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: var(--gold); }
+  .pillar-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: .35rem; padding-left: .75rem; }
+  .pillar-desc { font-size: 12px; color: var(--ink-3); line-height: 1.55; padding-left: .75rem; }
+
+  .posts-grid { display: grid; gap: .4rem; }
+  .post-row { display: flex; gap: .75rem; align-items: baseline; padding: .65rem .9rem; background: var(--paper-2); border-radius: var(--radius-sm); }
+  .post-day { font-size: 11px; font-weight: 600; color: var(--gold); min-width: 38px; }
+  .post-idea { font-size: 13px; color: var(--ink-2); line-height: 1.4; }
+
+  .bio-box { background: var(--ink); color: var(--paper); border-radius: var(--radius-sm); padding: 1.5rem; font-size: 14px; line-height: 1.8; white-space: pre-wrap; }
+
+  /* CTA BLOCK */
+  .cta-block {
+    background: var(--ink);
+    border-radius: var(--radius); padding: 2.5rem;
+    text-align: center; margin-top: 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .cta-block::before {
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(184,134,11,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .cta-label { font-size: 12px; color: rgba(184,134,11,0.8); font-weight: 500; margin-bottom: .75rem; letter-spacing: .05em; text-transform: uppercase; }
+  .cta-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: var(--paper); margin-bottom: .75rem; line-height: 1.2; }
+  .cta-sub { font-size: 14px; color: rgba(250,248,244,0.6); margin-bottom: 1.75rem; line-height: 1.7; }
+  .cta-links { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .cta-btn {
+    display: inline-block; font-family: 'Outfit', sans-serif;
+    font-size: 14px; font-weight: 600; color: var(--ink); background: var(--gold-light);
+    border: none; border-radius: 30px; padding: 13px 28px; cursor: pointer;
+    text-decoration: none; transition: all .15s;
+  }
+  .cta-btn:hover { background: #fff; }
+  .cta-btn-ghost {
+    display: inline-block; font-family: 'Outfit', sans-serif;
+    font-size: 13px; font-weight: 400; color: rgba(250,248,244,0.5);
+    background: none; border: none; text-decoration: none; transition: color .15s; cursor: pointer;
+  }
+  .cta-btn-ghost:hover { color: var(--paper); }
+
+  .restart-btn {
+    display: block; width: 100%; margin-top: 1rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px; font-weight: 400; color: var(--ink-3);
+    background: none; border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm); padding: 11px;
+    cursor: pointer; transition: all .15s;
+  }
+  .restart-btn:hover { color: var(--ink); border-color: var(--border-strong); }
+
+  .error-msg {
+    background: #fdf0ee; border: 0.5px solid rgba(200,60,40,0.2);
+    border-radius: var(--radius-sm); padding: 1rem 1.25rem;
+    font-size: 14px; color: #a03020; margin-top: 1rem; display: none;
+    line-height: 1.6;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    background: var(--paper-2); border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border);
+    padding: 3rem 2rem;
+  }
+  .about-inner { max-width: 820px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .about-name { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; margin-bottom: .75rem; line-height: 1.1; }
+  .about-desc { font-size: 14px; color: var(--ink-2); line-height: 1.75; margin-bottom: 1.5rem; }
+  .about-contact { display: flex; flex-direction: column; gap: .5rem; }
+  .contact-item { font-size: 13px; color: var(--ink-2); }
+  .contact-item a { color: var(--gold); text-decoration: none; }
+  .contact-item a:hover { text-decoration: underline; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: var(--radius); overflow: hidden; }
+  .stat-box { background: var(--paper); padding: 1.5rem; text-align: center; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: .25rem; }
+  .stat-label { font-size: 12px; color: var(--ink-3); line-height: 1.4; }
+
+  footer { border-top: 0.5px solid var(--border); padding: 2rem; text-align: center; font-size: 12px; color: var(--ink-3); }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .content-pillars { grid-template-columns: 1fr; }
+    .tools-grid { grid-template-columns: 1fr; }
+    .proof-divider { display: none; }
+    .hero-proof { gap: 1.5rem; }
+    .fw-item { min-width: 120px; }
+    .nav-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" onclick="showHome()">Rodrigue's <span>Authority Lab</span></a>
+  <div class="nav-right">
+    <span class="nav-badge">RCFTO Framework</span>
+    <a class="nav-cta" href="https://www.linkedin.com/in/rodrigue-shema-4553b4405/" target="_blank">Work with Rodrigue</a>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="view-home">
+  <section class="hero">
+    <div class="hero-badge">Powered by the RCFTO Framework</div>
+    <h1>Turn your expertise<br>into <em>authority</em></h1>
+    <p class="hero-sub">Three free AI tools built on Rodrigue's RCFTO framework — the exact system used to write 9 books and generate 244+ sales in a single month from Kigali, Rwanda. Zero ads. Zero audience. Zero shortcuts.</p>
+    <p class="hero-origin">Built by a 21-year-old who started with $1.27 in royalties and proved the system worked.</p>
+    <div class="hero-proof">
+      <div class="proof-item">
+        <div class="proof-num">9</div>
+        <div class="proof-label">Books published</div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-num">244+</div>
+        <div class="proof-label">Copies sold</div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-num">$0</div>
+        <div class="proof-label">Ad spend</div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-num">30</div>
+        <div class="proof-label">Days to do it</div>
+      </div>
+    </div>
+    <p class="hero-proof-note">Amazon KDP dashboard verified. April–May 2026.</p>
+  </section>
+
+  <div class="framework-strip">
+    <div class="framework-header">The RCFTO Framework — Role · Context · Format · Tone · Output</div>
+    <div class="framework-inner">
+      <div class="fw-item">
+        <div class="fw-letter">R</div>
+        <div class="fw-text">
+          <div class="fw-word">Role</div>
+          <div class="fw-desc">The precise perspective your writing comes from — not "expert" but the specific angle only you hold</div>
+        </div>
+      </div>
+      <div class="fw-item">
+        <div class="fw-letter">C</div>
+        <div class="fw-text">
+          <div class="fw-word">Context</div>
+          <div class="fw-desc">The reader's exact situation — their beliefs, frustrations, and what they need to feel understood</div>
+        </div>
+      </div>
+      <div class="fw-item">
+        <div class="fw-letter">F</div>
+        <div class="fw-text">
+          <div class="fw-word">Format</div>
+          <div class="fw-desc">The architecture of your argument — the deliberate sequence that builds to your conclusion</div>
+        </div>
+      </div>
+      <div class="fw-item">
+        <div class="fw-letter">T</div>
+        <div class="fw-text">
+          <div class="fw-word">Tone</div>
+          <div class="fw-desc">Your specific voice — sentence rhythm, language preference, register — not "professional" but unmistakably you</div>
+        </div>
+      </div>
+      <div class="fw-item">
+        <div class="fw-letter">O</div>
+        <div class="fw-text">
+          <div class="fw-word">Output</div>
+          <div class="fw-desc">What the reader should know, feel, believe, and do by the last word — the standard everything is measured against</div>
+        </div>
+      </div>
+    </div>
+    <div class="framework-note">"Claude AI doesn't have a writing problem. Most people have a clarity problem. RCFTO solves that at the root." — Rodrigue Shema</div>
+  </div>
+
+  <section class="how-section">
+    <div class="section-label">How the app works</div>
+    <h2 class="section-title">Simple. Fast. Yours.</h2>
+    <p class="section-sub">The RCFTO framework becomes the engine inside every prompt. Your expertise goes in — authority assets come out. No login. No database. Every output is unique to you.</p>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="step-num">01</div>
+        <div class="step-title">Pick your tool</div>
+        <div class="step-desc">Choose from the book generator, copy generator, or 30-day content strategy — each solves a different visibility gap.</div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">02</div>
+        <div class="step-title">Fill the short form</div>
+        <div class="step-desc">Your answers become the RCFTO inputs. Role, Context, Format, Tone, and Output are all baked in — you just answer natural questions.</div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">03</div>
+        <div class="step-title">Get your output</div>
+        <div class="step-desc">In seconds, Claude AI generates unique content built around your specific expertise. Copy it, use it, publish it.</div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">04</div>
+        <div class="step-title">Want it done for you?</div>
+        <div class="step-desc">Every result page links directly to Rodrigue. The tools show you what's possible. He builds the real thing.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tools-section">
+    <div class="section-label">Three tools. One framework.</div>
+    <h2 class="section-title">Pick your tool</h2>
+    <p class="section-sub">Each tool addresses one of the three visibility gaps: the organisation gap, the consistency gap, and the positioning gap.</p>
+    <div class="tools-grid">
+      <div class="tool-card" onclick="showTool('book')">
+        <div class="tool-num">TOOL 01 · AUTHORITY</div>
+        <div class="tool-icon">📖</div>
+        <div class="tool-name">Authority Book Generator</div>
+        <div class="tool-desc">Get your full RCFTO-structured book framework: title, subtitle, chapter outline, and a LinkedIn hook. A book is the deepest credibility mechanism you can own.</div>
+        <button class="tool-btn">Generate my book →</button>
+      </div>
+      <div class="tool-card" onclick="showTool('copy')">
+        <div class="tool-num">TOOL 02 · POSITIONING</div>
+        <div class="tool-icon">✍️</div>
+        <div class="tool-name">RCFTO Copy Generator</div>
+        <div class="tool-desc">Get a sales page opener, cold outreach email, LinkedIn post, and a one-liner positioning statement — all built from your unique differentiator.</div>
+        <button class="tool-btn">Generate my copy →</button>
+      </div>
+      <div class="tool-card" onclick="showTool('content')">
+        <div class="tool-num">TOOL 03 · CONSISTENCY</div>
+        <div class="tool-icon">📅</div>
+        <div class="tool-name">30-Day Content Strategy</div>
+        <div class="tool-desc">Get 4 content pillars, 30 post ideas, a posting schedule, and a rewritten LinkedIn bio. Consistency is the gap most experts never close.</div>
+        <button class="tool-btn">Build my strategy →</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="about-strip">
+    <div class="about-inner">
+      <div class="about-text">
+        <div class="section-label">The person behind the tools</div>
+        <div class="about-name">Rodrigue Shema</div>
+        <p class="about-desc">Book strategist, ghostwriter, and brand content builder based in Kigali, Rwanda. At 21, he researched, wrote, and published 9 books across 4 genres in a single month — 244+ copies sold, zero ads, no prior audience. His methodology is the RCFTO framework. His best-selling title: <em>The Creator's Claude Playbook</em>.</p>
+        <p class="about-desc">He works with coaches, consultants, founders, and experts who are carrying knowledge the world hasn't seen expressed at its full potential.</p>
+        <div class="about-contact">
+          <div class="contact-item">📧 <a href="mailto:rodriigueshema@gmail.com">rodriigueshema@gmail.com</a></div>
+          <div class="contact-item">💼 <a href="https://www.linkedin.com/in/rodrigue-shema-4553b4405/" target="_blank">linkedin.com/in/rodrigue-shema-4553b4405</a></div>
+          <div class="contact-item">📱 WhatsApp: <a href="https://wa.me/250799979364">+250 799 979 364</a></div>
+          <div class="contact-item">🛒 <a href="https://www.amazon.com/author/rodrigue-shema" target="_blank">amazon.com/author/rodrigue-shema</a></div>
+        </div>
+      </div>
+      <div class="about-stats">
+        <div class="stat-box"><div class="stat-num">9</div><div class="stat-label">Books published in 30 days</div></div>
+        <div class="stat-box"><div class="stat-num">244</div><div class="stat-label">Copies sold, zero ads</div></div>
+        <div class="stat-box"><div class="stat-num">4</div><div class="stat-label">Distinct genres</div></div>
+        <div class="stat-box"><div class="stat-num">21</div><div class="stat-label">Years old. Based in Kigali.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Built by <a href="https://www.linkedin.com/in/rodrigue-shema-4553b4405/" target="_blank">Rodrigue Shema</a> · Ghostwriter & Authority Strategist · Kigali, Rwanda · All tools free to use
+  </footer>
+</div>
+
+<!-- ═══ TOOL 1: BOOK GENERATOR ═══ -->
+<div id="view-book" class="app-view">
+  <button class="back-btn" onclick="showHome()">← Back to tools</button>
+  <div class="view-badge">Tool 01 · Authority Book</div>
+  <h2 class="view-title">Authority Book Generator</h2>
+  <p class="view-sub">A published book is the deepest credibility mechanism you can own. Fill in these fields and get a complete RCFTO-structured framework — title, chapters, and a LinkedIn hook — in seconds.</p>
+  <div class="rcfto-hint">
+    <strong>How RCFTO powers this:</strong> Your expertise sets the <strong>Role</strong>. Your reader defines the <strong>Context</strong>. The chapter outline becomes the <strong>Format</strong>. The hook is calibrated to your <strong>Tone</strong>. The transformation you create is the <strong>Output</strong>.
+  </div>
+  <div id="book-form">
+    <div class="form-card">
+      <div class="field">
+        <label>What is your area of expertise?</label>
+        <div class="field-hint">Be specific — not "leadership" but "leadership communication for first-time engineering managers at Series A startups"</div>
+        <input type="text" id="b-expertise" placeholder="Your precise expertise..." />
+      </div>
+      <div class="field">
+        <label>Who is your ideal reader?</label>
+        <div class="field-hint">Describe their exact situation — what they're experiencing right now, not just their job title</div>
+        <input type="text" id="b-audience" placeholder="e.g. Consultants who keep winning projects through referrals but can't figure out why strangers don't trust them yet..." />
+      </div>
+      <div class="field">
+        <label>What transformation do you create?</label>
+        <div class="field-hint">From [specific struggle] to [specific result] — the more precise, the better the book</div>
+        <textarea id="b-transformation" rows="2" placeholder="From [where they are] to [where they'll be]..."></textarea>
+      </div>
+      <div class="field">
+        <label>What is your unique method or angle? (optional)</label>
+        <div class="field-hint">A signature process, framework, or experience that nobody else in your field has</div>
+        <input type="text" id="b-method" placeholder="e.g. A 3-step diagnostic I developed after 200+ client sessions..." />
+      </div>
+      <button class="generate-btn" id="b-btn" onclick="generateBook()">Generate my authority book framework</button>
+      <div class="error-msg" id="b-error"></div>
+    </div>
+  </div>
+  <div class="loading-state" id="b-loading">
+    <div class="loading-ring"></div>
+    <div class="loading-text">Building your framework...</div>
+    <div class="loading-sub">Applying Role → Context → Format → Tone → Output</div>
+  </div>
+  <div class="results-wrap" id="b-results">
+    <div class="result-block">
+      <div class="result-block-title">Your authority book <button class="copy-btn" onclick="copyEl('b-title-full')">Copy title</button></div>
+      <div id="b-title-full"></div>
+    </div>
+    <div class="result-block">
+      <div class="result-block-title">Your RCFTO framework applied</div>
+      <div class="rcfto-grid" id="b-rcfto"></div>
+    </div>
+    <div class="result-block">
+      <div class="result-block-title">Chapter outline <button class="copy-btn" onclick="copyEl('b-chapters')">Copy</button></div>
+      <div class="chapters-list" id="b-chapters"></div>
+    </div>
+    <div class="result-block">
+      <div class="result-block-title">LinkedIn launch hook <button class="copy-btn" onclick="copyEl('b-hook')">Copy</button></div>
+      <div class="hook-display" id="b-hook"></div>
+    </div>
+    <div class="cta-block">
+      <div class="cta-label">Ready to write the actual book?</div>
+      <div class="cta-title">Rodrigue will ghostwrite it for you</div>
+      <div class="cta-sub">9 books. 244+ sales. Zero ads. One month. Your framework is ready — now let's write the book that reaches strangers without you in the room.</div>
+      <div class="cta-links">
+        <a class="cta-btn" href="https://www.linkedin.com/in/rodrigue-shema-4553b4405/" target="_blank">Connect on LinkedIn →</a>
+        <a class="cta-btn-ghost" href="mailto:rodriigueshema@gmail.com">Email directly</a>
+      </div>
+    </div>
+    <button class="restart-btn" onclick="restartTool('book')">← Generate a new framework</button>
+  </div>
+</div>
+
+<!-- ═══ TOOL 2: COPY GENERATOR ═══ -->
+<div id="view-copy" class="app-view">
+  <button class="back-btn" onclick="showHome()">← Back to tools</button>
+  <div class="view-badge">Tool 02 · Positioning Copy</div>
+  <h2 class="view-title">RCFTO Copy Generator</h2>
+  <p class="view-sub">Positioning is not what you do — it's why a stranger would choose you over everyone else. Get your one-liner, sales page opener, cold email, and LinkedIn post, all built from your specific differentiator.</p>
+  <div class="rcfto-hint">
+    <strong>How RCFTO powers this:</strong> Your offer defines the <strong>Role</strong>. Your client's situation is the <strong>Context</strong>. Each piece has its own <strong>Format</strong> structure. Your differentiator shapes the <strong>Tone</strong>. Every piece drives toward a clear <strong>Output</strong> action.
+  </div>
+  <div id="copy-form">
+    <div class="form-card">
+      <div class="field">
+        <label>What do you offer?</label>
+        <div class="field-hint">Be specific about the service, not just the category</div>
+        <input type="text" id="c-offer" placeholder="Your specific offer..." />
+      </div>
+      <div class="field">
+        <label>Who is your ideal client?</label>
+        <div class="field-hint">Describe their current situation — what they're experiencing right now that makes them need you</div>
+        <input type="text" id="c-audience" placeholder="e.g. Experienced consultants earning $8k/month who know their methodology is strong but can't attract clients without referrals..." />
+      </div>
+      <div class="field">
+        <label>What specific result do you deliver?</label>
+        <div class="field-hint">Concrete, measurable, time-bound if possible</div>
+        <textarea id="c-result" rows="2" placeholder="The specific outcome your best clients achieve..."></textarea>
+      </div>
+      <div class="field">
+        <label>What makes you different from everyone else?</label>
+        <div class="field-hint">Your unique experience, unconventional method, or proof point that nobody else can claim</div>
+        <input type="text" id="c-diff" placeholder="What only you can honestly say..." />
+      </div>
+      <button class="generate-btn" id="c-btn" onclick="generateCopy()">Generate my copy</button>
+      <div class="error-msg" id="c-error"></div>
+    </div>
+  </div>
+  <div class="loading-state" id="c-loading">
+    <div class="loading-ring"></div>
+    <div class="loading-text">Writing your copy...</div>
+    <div class="loading-sub">Crafting words that convert strangers into believers</div>
+  </div>
+  <div class="results-wrap" id="c-results">
+    <div class="result-block">
+      <div class="result-block-title">Your positioning one-liner <button class="copy-btn" onclick="copyEl('c-oneliner')">Copy</button></div>
+      <div class="hook-display" id="c-oneliner"></div>
+    </div>
+    <div class="result-block">
+      <div class="result-block-title">Sales page opening <button class="copy-btn" onclick="copyEl('c-salespage')">Copy</button></div>
+      <div class="copy-piece"><div class="copy-piece-text" id="c-salespage"></div></div>
+    </div>
+    <div class="result-block">
+      <div class="result-block-title">Cold outreach email <button class="copy-btn" onclick="copyEl('c-email')">Copy</button></div>
+      <div class="copy-piece"><div class="copy-piece-text" id="c-email"></div></div>
+    </div>
+    <div class="result-block">
+      <div class="result-block-title">LinkedIn post <button class="copy-btn" onclick="copyEl('c-post')">Copy</button></div>
+      <div class="hook-display" id="c-post"></div>
+    </div>
+    <div class="cta-block">
+      <div class="cta-label">Need a complete copy system?</div>
+      <div class="cta-title">Rodrigue builds copy that works without you in the room</div>
+      <div class="cta-sub">Sales pages, email sequences, LinkedIn content — all built on your specific RCFTO positioning, not templates.</div>
+      <div class="cta-links">
+        <a class="cta-btn" href="https://www.linkedin.com/in/rodrigue-shema-4553b4405/" target="_blank">Let's talk on LinkedIn →</a>
+        <a class="cta-btn-ghost" href="mailto:rodriigueshema@gmail.com">Email directly</a>
+      </div>
+    </div>
+    <button class="restart-btn" onclick="restartTool('copy')">← Generate new copy</button>
+  </div>
+</div>
+
+<!-- ═══ TOOL 3: CONTENT STRATEGY ═══ -->
+<div id="view-content" class="app-view">
+  <button class="back-btn" onclick="showHome()">← Back to tools</button>
+  <div class="view-badge">Tool 03 · Content Strategy</div>
+  <h2 class="view-title">30-Day Content Strategy</h2>
+  <p class="view-sub">Most experts understand consistency matters. The problem is building a system that makes it sustainable. Get 4 content pillars, 30 specific post ideas, a posting schedule, and a rewritten bio — all structured around your RCFTO framework.</p>
+  <div class="rcfto-hint">
+    <strong>How RCFTO powers this:</strong> Your expertise sets the <strong>Role</strong> for every post. Your audience's situation defines the <strong>Context</strong>. Pillars give each post a <strong>Format</strong> purpose. Your goal shapes the <strong>Tone</strong>. Every post drives toward a single <strong>Output</strong> action.
+  </div>
+  <div id="content-form">
+    <div class="form-card">
+      <div class="field">
+        <label>What is your expertise?</label>
+        <div class="field-hint">Specific angle, not just a category — the more precise, the less generic your content will sound</div>
+        <input type="text" id="cs-expertise" placeholder="Your expertise and specific angle..." />
+      </div>
+      <div class="field">
+        <label>Who is your target audience on LinkedIn?</label>
+        <div class="field-hint">Their situation, not their demographics — what are they currently experiencing?</div>
+        <input type="text" id="cs-audience" placeholder="e.g. Founders at 5-person agencies who've hit a revenue ceiling..." />
+      </div>
+      <div class="field">
+        <label>What is your main content goal?</label>
+        <select id="cs-goal">
+          <option value="get clients">Get clients / book discovery calls</option>
+          <option value="grow audience">Grow my audience and reach</option>
+          <option value="build authority">Build authority and become the go-to in my niche</option>
+          <option value="launch a product">Launch a product, book, or service</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>What transformation do you help people achieve?</label>
+        <div class="field-hint">From [their specific current struggle] to [the specific result they want]</div>
+        <textarea id="cs-transformation" rows="2" placeholder="From [where they are] to [where they want to be]..."></textarea>
+      </div>
+      <button class="generate-btn" id="cs-btn" onclick="generateContent()">Build my 30-day strategy</button>
+      <div class="error-msg" id="cs-error"></div>
+    </div>
+  </div>
+  <div class="loading-state" id="cs-loading">
+    <div class="loading-ring"></div>
+    <div class="loading-text">Building your strategy...</div>
+    <div class="loading-sub">30 days of content that sounds like you, not like everyone else</div>
+  </div>
+  <div class="results-wrap" id="cs-results">
+    <div class="result-block">
+      <div class="result-block-title">Your 4 content pillars</div>
+      <div class="content-pillars" id="cs-pillars"></div>
+    </div>
+    <div class="result-block">
+      <div class="result-block-title">30 post ideas <button class="copy-btn" onclick="copyAllPosts()">Copy all</button></div>
+      <div class="posts-grid" id="cs-posts"></div>
+    </div>
+    <div class="result-block">
+      <div class="result-block-title">Posting schedule</div>
+      <div class="copy-piece"><div class="copy-piece-text" id="cs-schedule"></div></div>
+    </div>
+    <div class="result-block">
+      <div class="result-block-title">Rewritten LinkedIn bio <button class="copy-btn" onclick="copyEl('cs-bio')">Copy</button></div>
+      <div class="bio-box" id="cs-bio"></div>
+    </div>
+    <div class="cta-block">
+      <div class="cta-label">Don't want to write it all yourself?</div>
+      <div class="cta-title">Rodrigue will write your content for you</div>
+      <div class="cta-sub">You focus on your expertise. He handles the words. Every post built on your specific RCFTO framework — not templates, not generic AI output.</div>
+      <div class="cta-links">
+        <a class="cta-btn" href="https://www.linkedin.com/in/rodrigue-shema-4553b4405/" target="_blank">Start the conversation →</a>
+        <a class="cta-btn-ghost" href="mailto:rodriigueshema@gmail.com">Email directly</a>
+      </div>
+    </div>
+    <button class="restart-btn" onclick="restartTool('content')">← Build a new strategy</button>
+  </div>
+</div>
+
+<script>
+/* ─── NAVIGATION ─── */
+function showHome(){
+  document.getElementById('view-home').style.display='block';
+  ['book','copy','content'].forEach(t=>document.getElementById('view-'+t).classList.remove('active'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showTool(t){
+  document.getElementById('view-home').style.display='none';
+  ['book','copy','content'].forEach(id=>document.getElementById('view-'+id).classList.remove('active'));
+  document.getElementById('view-'+t).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function restartTool(t){
+  const p={book:'b',copy:'c',content:'cs'}[t];
+  document.getElementById(p+'-form').style.display='block';
+  document.getElementById(p+'-loading').classList.remove('active');
+  document.getElementById(p+'-results').classList.remove('active');
+  document.getElementById(p+'-error').style.display='none';
+  document.getElementById(p+'-btn').disabled=false;
+}
+function setLoading(p,on){
+  document.getElementById(p+'-form').style.display=on?'none':'block';
+  document.getElementById(p+'-loading').classList[on?'add':'remove']('active');
+}
+function showResults(p){
+  document.getElementById(p+'-loading').classList.remove('active');
+  document.getElementById(p+'-results').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showError(p,msg){
+  document.getElementById(p+'-loading').classList.remove('active');
+  document.getElementById(p+'-form').style.display='block';
+  const el=document.getElementById(p+'-error');
+  el.innerHTML=msg; el.style.display='block';
+  document.getElementById(p+'-btn').disabled=false;
+}
+function copyEl(id){
+  const el=document.getElementById(id);
+  if(!el) return;
+  navigator.clipboard.writeText(el.innerText).then(()=>{
+    const btns=document.querySelectorAll('.copy-btn');
+    btns.forEach(b=>{
+      if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(id)){
+        const orig=b.textContent;
+        b.textContent='Copied ✓';
+        setTimeout(()=>{ b.textContent=orig; },2000);
+      }
+    });
+  });
+}
+function copyAllPosts(){
+  const el=document.getElementById('cs-posts');
+  if(!el) return;
+  navigator.clipboard.writeText(el.innerText).then(()=>{
+    const btn=document.querySelector('[onclick="copyAllPosts()"]');
+    if(btn){ btn.textContent='Copied ✓'; setTimeout(()=>{ btn.textContent='Copy all'; },2000); }
+  });
+}
+
+/* ─── CLAUDE API ─── */
+async function callClaude(systemPrompt, userPrompt){
+  const res = await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:2000,
+      system: systemPrompt,
+      messages:[{role:'user',content:userPrompt}]
+    })
+  });
+  if(!res.ok){
+    const err=await res.json().catch(()=>({}));
+    throw new Error(err.error?.message||'API request failed (status '+res.status+')');
+  }
+  const data = await res.json();
+  if(data.error) throw new Error(data.error.message);
+  const raw = data.content.map(i=>i.text||'').join('');
+  // Strip any markdown code fences
+  return raw.replace(/```json\s*/gi,'').replace(/```\s*/g,'').trim();
+}
+
+/* ─── TOOL 1: BOOK GENERATOR ─── */
+async function generateBook(){
+  const expertise=document.getElementById('b-expertise').value.trim();
+  const audience=document.getElementById('b-audience').value.trim();
+  const transformation=document.getElementById('b-transformation').value.trim();
+  const method=document.getElementById('b-method').value.trim();
+  if(!expertise||!audience||!transformation){
+    showError('b','Please fill in the first three fields before generating.');
+    return;
+  }
+  document.getElementById('b-btn').disabled=true;
+  document.getElementById('b-error').style.display='none';
+  setLoading('b',true);
+  try{
+    const system=`You are Rodrigue Shema's AI writing engine. You apply the RCFTO framework (Role, Context, Format, Tone, Output) to generate authority book frameworks for experts.
+
+RCFTO:
+- ROLE: The precise perspective the author brings — their specific experience and angle
+- CONTEXT: The reader's exact situation — frustrations, beliefs, what makes this book necessary
+- FORMAT: The deliberate chapter sequence — the logical architecture that builds to transformation
+- TONE: The specific voice — not generic "professional" but the author's own register
+- OUTPUT: What the reader should know, believe, feel, and do after finishing
+
+Respond ONLY in valid JSON. No markdown fences, no preamble, no explanation.`;
+
+    const user=`Generate a complete authority book framework using RCFTO.
+
+EXPERTISE: ${expertise}
+TARGET READER: ${audience}
+TRANSFORMATION: ${transformation}
+UNIQUE METHOD: ${method||'Derive from the expertise provided'}
+
+Return exactly this JSON:
+{
+  "book_title": "A powerful specific book title — not generic, not fluffy",
+  "book_subtitle": "Subtitle that names the reader, the transformation, and how",
+  "rcfto": {
+    "R": {"word": "Role", "text": "The precise perspective this book comes from"},
+    "C": {"word": "Context", "text": "The reader's exact situation and frustrations"},
+    "F": {"word": "Format", "text": "The architectural logic of the chapter sequence"},
+    "T": {"word": "Tone", "text": "The specific voice and register this book carries"},
+    "O": {"word": "Output", "text": "What the reader knows, believes, and does by the final page"}
+  },
+  "chapters": [
+    {"num": 1, "title": "Chapter title"},
+    {"num": 2, "title": "Chapter title"},
+    {"num": 3, "title": "Chapter title"},
+    {"num": 4, "title": "Chapter title"},
+    {"num": 5, "title": "Chapter title"},
+    {"num": 6, "title": "Chapter title"},
+    {"num": 7, "title": "Chapter title"}
+  ],
+  "linkedin_hook": "A 5-6 line LinkedIn hook that stops the scroll. Short punchy lines. Speak directly to the reader's pain. Build curiosity. End with a CTA. No hashtags."
+}`;
+
+    const raw=await callClaude(system,user);
+    let d;
+    try{ d=JSON.parse(raw); }
+    catch(pe){
+      // Try to extract JSON from response
+      const match=raw.match(/\{[\s\S]*\}/);
+      if(match) d=JSON.parse(match[0]);
+      else throw new Error('Could not parse AI response. Please try again.');
+    }
+
+    document.getElementById('b-title-full').innerHTML=`
+      <div class="book-title-display">
+        <div class="btd-label">Your authority book title</div>
+        <div class="btd-main">${escHtml(d.book_title)}</div>
+        <div class="btd-sub">${escHtml(d.book_subtitle)}</div>
+      </div>`;
+
+    document.getElementById('b-rcfto').innerHTML=
+      ['R','C','F','T','O'].map(k=>`
+        <div class="rcfto-item">
+          <div class="rcfto-left">
+            <div class="rcfto-letter">${k}</div>
+            <div class="rcfto-word">${escHtml(d.rcfto[k].word)}</div>
+          </div>
+          <div class="rcfto-text">${escHtml(d.rcfto[k].text)}</div>
+        </div>`).join('');
+
+    document.getElementById('b-chapters').innerHTML=
+      d.chapters.map(c=>`
+        <div class="chapter-row">
+          <span class="ch-num">${c.num}</span>
+          <span class="ch-title">${escHtml(c.title)}</span>
+        </div>`).join('');
+
+    document.getElementById('b-hook').textContent=d.linkedin_hook;
+    showResults('b');
+  }catch(e){
+    showError('b','Something went wrong: '+e.message+'. Please try again.');
+  }
+}
+
+/* ─── TOOL 2: COPY GENERATOR ─── */
+async function generateCopy(){
+  const offer=document.getElementById('c-offer').value.trim();
+  const audience=document.getElementById('c-audience').value.trim();
+  const result=document.getElementById('c-result').value.trim();
+  const diff=document.getElementById('c-diff').value.trim();
+  if(!offer||!audience||!result){
+    showError('c','Please fill in the first three fields before generating.');
+    return;
+  }
+  document.getElementById('c-btn').disabled=true;
+  document.getElementById('c-error').style.display='none';
+  setLoading('c',true);
+  try{
+    const system=`You are Rodrigue Shema's AI copywriting engine, applying the RCFTO framework (Role, Context, Format, Tone, Output) to produce positioning copy for experts and consultants.
+
+RCFTO in copywriting:
+- ROLE: The writer's specific perspective and differentiator
+- CONTEXT: The prospect's exact frustration and current situation
+- FORMAT: The structural logic of each copy piece
+- TONE: Voice calibrated to earn trust from this specific prospect
+- OUTPUT: The single action each piece is designed to produce
+
+Respond ONLY in valid JSON. No markdown fences, no preamble.`;
+
+    const user=`Generate positioning copy using RCFTO.
+
+OFFER: ${offer}
+IDEAL CLIENT: ${audience}
+RESULT DELIVERED: ${result}
+DIFFERENTIATOR: ${diff||'Derive from offer and result'}
+
+Return exactly this JSON:
+{
+  "one_liner": "Single sentence: who you help, what you help them do, what makes you different. Under 25 words. No filler.",
+  "sales_page": "3 paragraphs of sales page opening. Para 1: reader's exact situation and frustration. Para 2: your differentiator and why it matters. Para 3: the offer and specific outcome. Separate paragraphs with blank lines.",
+  "cold_email": "Cold outreach email. Format:\nSubject: [subject line]\n\n[3-4 short paragraphs. Opens with their situation not your credentials. Ends with one clear question as CTA.]",
+  "linkedin_post": "LinkedIn post about this offer. 5-6 short lines. First line is scroll-stopping hook. Build with specifics. End with question or CTA. No hashtags. No emojis."
+}`;
+
+    const raw=await callClaude(system,user);
+    let d;
+    try{ d=JSON.parse(raw); }
+    catch(pe){
+      const match=raw.match(/\{[\s\S]*\}/);
+      if(match) d=JSON.parse(match[0]);
+      else throw new Error('Could not parse AI response. Please try again.');
+    }
+
+    document.getElementById('c-oneliner').textContent=d.one_liner;
+    document.getElementById('c-salespage').textContent=d.sales_page;
+    document.getElementById('c-email').textContent=d.cold_email;
+    document.getElementById('c-post').textContent=d.linkedin_post;
+    showResults('c');
+  }catch(e){
+    showError('c','Something went wrong: '+e.message+'. Please try again.');
+  }
+}
+
+/* ─── TOOL 3: CONTENT STRATEGY ─── */
+async function generateContent(){
+  const expertise=document.getElementById('cs-expertise').value.trim();
+  const audience=document.getElementById('cs-audience').value.trim();
+  const goal=document.getElementById('cs-goal').value;
+  const transformation=document.getElementById('cs-transformation').value.trim();
+  if(!expertise||!audience||!transformation){
+    showError('cs','Please fill in all fields before generating.');
+    return;
+  }
+  document.getElementById('cs-btn').disabled=true;
+  document.getElementById('cs-error').style.display='none';
+  setLoading('cs',true);
+  try{
+    const system=`You are Rodrigue Shema's AI content strategy engine, applying the RCFTO framework (Role, Context, Format, Tone, Output) to build 30-day LinkedIn content strategies for experts.
+
+Each post idea must be specific enough that it could only come from someone with this person's expertise — not generic industry advice, but their precise angle.
+
+Respond ONLY in valid JSON. No markdown fences, no preamble.`;
+
+    const user=`Build a 30-day LinkedIn content strategy using RCFTO.
+
+EXPERTISE: ${expertise}
+TARGET AUDIENCE: ${audience}
+CONTENT GOAL: ${goal}
+TRANSFORMATION: ${transformation}
+
+Return exactly this JSON (all 30 posts required):
+{
+  "pillars": [
+    {"name": "Pillar name (2-3 words)", "desc": "What this pillar covers and why it matters — 1 specific sentence"},
+    {"name": "...", "desc": "..."},
+    {"name": "...", "desc": "..."},
+    {"name": "...", "desc": "..."}
+  ],
+  "posts": [
+    {"day": 1, "idea": "Specific post idea — an actual angle or story, not just a topic. One sentence."},
+    {"day": 2, "idea": "..."},
+    {"day": 3, "idea": "..."},
+    {"day": 4, "idea": "..."},
+    {"day": 5, "idea": "..."},
+    {"day": 6, "idea": "..."},
+    {"day": 7, "idea": "..."},
+    {"day": 8, "idea": "..."},
+    {"day": 9, "idea": "..."},
+    {"day": 10, "idea": "..."},
+    {"day": 11, "idea": "..."},
+    {"day": 12, "idea": "..."},
+    {"day": 13, "idea": "..."},
+    {"day": 14, "idea": "..."},
+    {"day": 15, "idea": "..."},
+    {"day": 16, "idea": "..."},
+    {"day": 17, "idea": "..."},
+    {"day": 18, "idea": "..."},
+    {"day": 19, "idea": "..."},
+    {"day": 20, "idea": "..."},
+    {"day": 21, "idea": "..."},
+    {"day": 22, "idea": "..."},
+    {"day": 23, "idea": "..."},
+    {"day": 24, "idea": "..."},
+    {"day": 25, "idea": "..."},
+    {"day": 26, "idea": "..."},
+    {"day": 27, "idea": "..."},
+    {"day": 28, "idea": "..."},
+    {"day": 29, "idea": "..."},
+    {"day": 30, "idea": "..."}
+  ],
+  "schedule": "Specific posting schedule in 3-4 sentences. Include best days, optimal times, frequency, and the logic for this specific audience.",
+  "bio": "Rewritten LinkedIn bio in 3 short paragraphs. Para 1: who you help and exact result — specific not categorical. Para 2: proof, credibility, what makes methodology different. Para 3: direct CTA to connect or reach out."
+}`;
+
+    const raw=await callClaude(system,user);
+    let d;
+    try{ d=JSON.parse(raw); }
+    catch(pe){
+      const match=raw.match(/\{[\s\S]*\}/);
+      if(match) d=JSON.parse(match[0]);
+      else throw new Error('Could not parse AI response. Please try again.');
+    }
+
+    document.getElementById('cs-pillars').innerHTML=
+      d.pillars.map(p=>`
+        <div class="pillar-card">
+          <div class="pillar-name">${escHtml(p.name)}</div>
+          <div class="pillar-desc">${escHtml(p.desc)}</div>
+        </div>`).join('');
+
+    document.getElementById('cs-posts').innerHTML=
+      d.posts.map(p=>`
+        <div class="post-row">
+          <span class="post-day">Day ${p.day}</span>
+          <span class="post-idea">${escHtml(p.idea)}</span>
+        </div>`).join('');
+
+    document.getElementById('cs-schedule').textContent=d.schedule;
+    document.getElementById('cs-bio').textContent=d.bio;
+    showResults('cs');
+  }catch(e){
+    showError('cs','Something went wrong: '+e.message+'. Please try again.');
+  }
+}
+
+/* ─── UTILS ─── */
+function escHtml(str){
+  if(!str) return '';
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
