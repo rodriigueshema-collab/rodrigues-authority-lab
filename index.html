@@ -161,7 +161,7 @@ footer a:hover{color:var(--text-2);}
 .choice-btn.selected{font-weight:600;}
 
 /* BUTTONS */
-.btn-primary{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-head);font-size:14px;font-weight:700;color:#000;background:var(--gold);border:none;border-radius:var(--radius-sm);padding:13px 28px;cursor:pointer;transition:all .22s;}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-head);font-size:15px;font-weight:800;color:#000;background:var(--gold);border:none;border-radius:50px;padding:14px 30px;cursor:pointer;transition:all .22s;box-shadow:0 4px 16px rgba(245,158,11,.25);}
 .btn-primary:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 28px rgba(245,158,11,.38);}
 .btn-primary:active{transform:scale(.98);}
 .btn-primary:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none;}
@@ -258,7 +258,7 @@ footer a:hover{color:var(--text-2);}
 .btn-rewrite:hover{color:var(--text);background:var(--bg-3);}
 
 /* REWRITE */
-.rewrite-options{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.rewrite-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.25rem;}
 .rw-btn{font-size:12px;font-weight:600;color:var(--text-2);background:var(--bg-3);border:1px solid var(--border-2);border-radius:20px;padding:7px 16px;cursor:pointer;transition:all .18s;}
 .rw-btn:hover,.rw-btn.selected{border-color:var(--gold-border);color:var(--gold);background:var(--gold-dim);}
 
@@ -319,6 +319,45 @@ footer a:hover{color:var(--text-2);}
 .fb-custom{width:100%;margin-top:.75rem;background:var(--bg-3);border:1px solid var(--border-2);border-radius:var(--radius-sm);padding:10px 14px;font-family:var(--font-body);font-size:13px;color:var(--text);outline:none;resize:none;}
 .fb-custom::placeholder{color:var(--text-3);}
 .fb-thank{font-size:13px;color:var(--green);text-align:center;padding:.5rem 0;}
+
+/* ── NEW CONTENT ENGINE PANEL ── */
+#ce-panel-overlay{position:fixed;inset:0;z-index:600;background:rgba(11,15,26,.7);backdrop-filter:blur(8px);display:none;align-items:flex-end;justify-content:center;}
+#ce-panel-overlay.show{display:flex;}
+@media(min-width:640px){#ce-panel-overlay{align-items:center;}}
+.ce-panel{background:var(--bg-2);border:1px solid var(--border-2);border-radius:20px 20px 0 0;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;padding:1.75rem 1.5rem 2rem;animation:slideIn .3s ease both;}
+@media(min-width:640px){.ce-panel{border-radius:20px;}}
+.ce-panel-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;}
+.ce-panel-title{font-family:var(--font-head);font-size:18px;font-weight:800;color:var(--text);}
+.ce-panel-sub{font-size:12px;color:var(--text-3);margin-top:2px;}
+.ce-close-btn{background:none;border:none;cursor:pointer;color:var(--text-3);font-size:20px;padding:2px 6px;line-height:1;transition:color .2s;}
+.ce-close-btn:hover{color:var(--text);}
+.ce-step-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;}
+.ce-step-title{font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:.9rem;}
+.ce-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.5rem;}
+.ce-type-btn{background:var(--bg-3);border:1px solid var(--border-2);border-radius:10px;padding:.85rem 1rem;cursor:pointer;transition:all .18s;text-align:left;}
+.ce-type-btn:hover,.ce-type-btn.selected{border-color:var(--gold-border);background:var(--gold-dim);}
+.ce-type-btn.selected .ce-type-name{color:var(--gold);}
+.ce-type-icon{font-size:18px;margin-bottom:.3rem;}
+.ce-type-name{font-size:12px;font-weight:600;color:var(--text-2);transition:color .18s;}
+.ce-opt-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem;}
+.ce-opt-btn{font-size:12px;font-weight:600;color:var(--text-2);background:var(--bg-3);border:1px solid var(--border-2);border-radius:20px;padding:6px 14px;cursor:pointer;transition:all .18s;}
+.ce-opt-btn:hover,.ce-opt-btn.selected{border-color:var(--gold-border);color:var(--gold);background:var(--gold-dim);}
+.ce-divider{height:1px;background:var(--border);margin:1.25rem 0;}
+.ce-output-wrap{display:none;animation:fadeUp .3s ease both;}
+.ce-output-wrap.show{display:block;}
+.ce-output-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;display:flex;align-items:center;gap:8px;}
+.ce-output-badge{font-size:10px;font-weight:700;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:2px 8px;}
+.ce-output-box{background:var(--bg-3);border:1px solid var(--border-2);border-radius:10px;padding:1.25rem;font-size:14px;line-height:1.8;color:var(--text-2);white-space:pre-wrap;word-break:break-word;min-height:120px;}
+.ce-output-actions{display:flex;gap:8px;margin-top:.9rem;flex-wrap:wrap;}
+.ce-copy-btn{font-size:12px;font-weight:600;color:var(--text);background:var(--gold);border:none;border-radius:20px;padding:7px 18px;cursor:pointer;transition:all .2s;}
+.ce-copy-btn:hover{background:#fbbf24;}
+.ce-regen-btn{font-size:12px;font-weight:500;color:var(--text-2);background:none;border:1px solid var(--border-2);border-radius:20px;padding:7px 16px;cursor:pointer;transition:all .2s;}
+.ce-regen-btn:hover{color:var(--text);background:var(--bg-3);}
+.ce-hint{font-size:11px;color:var(--text-3);margin-top:.5rem;}
+/* Hint badge on chapter view */
+.ch-content-hint{font-size:12px;color:var(--text-3);margin-top:.75rem;padding:.5rem .75rem;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;display:inline-block;}
+.btn-generate-content{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-head);font-size:14px;font-weight:700;color:#000;background:var(--gold);border:none;border-radius:50px;padding:12px 24px;cursor:pointer;transition:all .22s;box-shadow:0 4px 16px rgba(245,158,11,.25);}
+.btn-generate-content:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 28px rgba(245,158,11,.38);}
 
 /* CONFIRM MODAL */
 #confirm-modal{position:fixed;inset:0;z-index:900;background:rgba(11,15,26,.95);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:1.5rem;}
@@ -392,7 +431,7 @@ footer a:hover{color:var(--text-2);}
     <div class="home-badge">📘 Rodrigue's Authority Lab</div>
     <div class="home-tagline">Book Strategist</div>
     <h1 class="home-h1">Your expertise deserves<br><span>a book that opens doors.</span></h1>
-    <p class="home-sub">A real workspace to write your book step by step, one approved chapter at a time, then turn it into content that builds your brand.</p>
+    <p class="home-sub">Write your authority book chapter by chapter. Approve each one. Then turn it into content that builds your brand.</p>
     <div class="home-proof">
       <div class="home-proof-stat">📘 <strong>Chapter-by-chapter</strong> approval</div>
       <div class="home-proof-divider"></div>
@@ -682,10 +721,10 @@ footer a:hover{color:var(--text-2);}
       <div id="rewrite-panel" style="display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);">
         <div class="approval-label" style="margin-bottom:.75rem;">How should I improve it?</div>
         <div class="rewrite-options">
-          <button class="rw-btn" data-val="Simpler language" onclick="selectRw(this)">Simpler</button>
-          <button class="rw-btn" data-val="More detailed" onclick="selectRw(this)">More detailed</button>
-          <button class="rw-btn" data-val="More bold and direct" onclick="selectRw(this)">More bold</button>
-          <button class="rw-btn" data-val="Add more examples" onclick="selectRw(this)">Add examples</button>
+          <button class="rw-btn" data-val="Make it more bold" onclick="selectRw(this)">🔥 Make it more bold</button>
+          <button class="rw-btn" data-val="Add more depth" onclick="selectRw(this)">📚 Add more depth</button>
+          <button class="rw-btn" data-val="Strengthen flow" onclick="selectRw(this)">🔗 Strengthen flow</button>
+          <button class="rw-btn" data-val="Remove generic phrasing" onclick="selectRw(this)">✂️ Remove generic phrasing</button>
         </div>
         <textarea class="field-textarea" id="rewrite-custom" rows="2" placeholder="Or describe exactly how to improve it..." style="margin-top:.75rem;"></textarea>
         <div class="btn-row" style="margin-top:1rem;">
@@ -694,10 +733,17 @@ footer a:hover{color:var(--text-2);}
         </div>
       </div>
     </div>
+    <!-- Generate Content CTA -->
+    <div id="ch-generate-content-row" style="margin-top:1.25rem;display:none;">
+      <button class="btn-generate-content" onclick="openCEPanel()">Generate Content 🚀</button>
+      <div class="ch-content-hint" style="margin-top:.6rem;">💡 This chapter can become 10+ posts</div>
+    </div>
+
     <!-- Chapter Navigation -->
     <div id="ch-nav-row" style="display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);gap:10px;flex-wrap:wrap;">
       <button class="btn-secondary" id="ch-nav-prev" onclick="navigateChapter(-1)" style="padding:10px 18px;font-size:13px;">← Previous</button>
       <button class="btn-ghost" onclick="showPage('page-workspace');showWorkspace();" style="font-size:13px;">↑ Workspace</button>
+      <button class="btn-ghost" id="ch-reset-btn" onclick="resetCurrentChapter()" style="font-size:12px;color:var(--red);opacity:.7;" title="Reset this chapter">↺ Reset</button>
       <button class="btn-secondary" id="ch-nav-next" onclick="navigateChapter(1)" style="padding:10px 18px;font-size:13px;">Next →</button>
     </div>
   </div>
@@ -768,12 +814,102 @@ footer a:hover{color:var(--text-2);}
   </div>
 </div>
 
+<!-- CONTENT ENGINE PANEL OVERLAY -->
+<div id="ce-panel-overlay" onclick="closeCEPanelOutside(event)">
+  <div class="ce-panel" id="ce-panel">
+    <div class="ce-panel-header">
+      <div>
+        <div class="ce-panel-title">Content Engine 🚀</div>
+        <div class="ce-panel-sub" id="ce-panel-chapter-name">Chapter content</div>
+      </div>
+      <button class="ce-close-btn" onclick="closeCEPanel()">×</button>
+    </div>
+
+    <!-- STEP 1: Content Type -->
+    <div class="ce-step-label">Step 1 · Choose format</div>
+    <div class="ce-type-grid">
+      <div class="ce-type-btn selected" data-type="LinkedIn Post" onclick="selectCEType(this)">
+        <div class="ce-type-icon">💼</div>
+        <div class="ce-type-name">LinkedIn Post</div>
+      </div>
+      <div class="ce-type-btn" data-type="X Thread" onclick="selectCEType(this)">
+        <div class="ce-type-icon">🧵</div>
+        <div class="ce-type-name">X Thread</div>
+      </div>
+      <div class="ce-type-btn" data-type="Email Newsletter" onclick="selectCEType(this)">
+        <div class="ce-type-icon">📧</div>
+        <div class="ce-type-name">Email Newsletter</div>
+      </div>
+      <div class="ce-type-btn" data-type="Hook Ideas" onclick="selectCEType(this)">
+        <div class="ce-type-icon">💡</div>
+        <div class="ce-type-name">Hook Ideas</div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Tone -->
+    <div class="ce-step-label">Step 2 · Choose tone</div>
+    <div class="ce-opt-row" id="ce-tone-row">
+      <button class="ce-opt-btn selected" data-val="Authority" onclick="selectCEOpt(this,'ce-tone-row')">Authority</button>
+      <button class="ce-opt-btn" data-val="Storytelling" onclick="selectCEOpt(this,'ce-tone-row')">Storytelling</button>
+      <button class="ce-opt-btn" data-val="Bold" onclick="selectCEOpt(this,'ce-tone-row')">Bold</button>
+    </div>
+
+    <!-- STEP 3: Platform -->
+    <div class="ce-step-label">Step 3 · Platform</div>
+    <div class="ce-opt-row" id="ce-platform-row">
+      <button class="ce-opt-btn selected" data-val="LinkedIn" onclick="selectCEOpt(this,'ce-platform-row')">LinkedIn</button>
+      <button class="ce-opt-btn" data-val="X (Twitter)" onclick="selectCEOpt(this,'ce-platform-row')">X (Twitter)</button>
+    </div>
+
+    <!-- STEP 4: Variations toggle -->
+    <div class="ce-step-label">Step 4 · Variations <span style="color:var(--gold);font-size:9px;letter-spacing:.06em;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:10px;padding:1px 7px;margin-left:4px;">POWER</span></div>
+    <div class="ce-opt-row" id="ce-variations-row">
+      <button class="ce-opt-btn selected" data-val="no" onclick="selectCEOpt(this,'ce-variations-row')">Single output</button>
+      <button class="ce-opt-btn" data-val="yes" onclick="selectCEOpt(this,'ce-variations-row')">3 Variations (A/B/C)</button>
+    </div>
+
+    <button class="btn-primary" style="width:100%;justify-content:center;margin-top:.5rem;" onclick="runCEPipeline()" id="ce-generate-btn">Generate →</button>
+
+    <!-- PIPELINE PROGRESS -->
+    <div id="ce-progress-wrap" style="display:none;margin-top:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
+        <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);">Pipeline</span>
+        <span id="ce-progress-label" style="font-size:11px;color:var(--text-3);"></span>
+      </div>
+      <div style="background:var(--bg-3);border-radius:20px;height:4px;overflow:hidden;">
+        <div id="ce-progress-bar" style="height:100%;background:linear-gradient(90deg,var(--gold),#fbbf24);border-radius:20px;width:0%;transition:width .5s ease;"></div>
+      </div>
+    </div>
+
+    <div class="ce-divider"></div>
+
+    <!-- OUTPUT -->
+    <div class="ce-output-wrap" id="ce-output-wrap">
+      <div class="ce-output-label">
+        Ready to post
+        <span class="ce-output-badge" id="ce-output-badge">LinkedIn Post</span>
+      </div>
+      <div class="ce-output-box" id="ce-output-box"></div>
+      <div class="ce-output-actions">
+        <button class="ce-copy-btn" onclick="copyCEOutput()">📋 Copy</button>
+        <button class="ce-regen-btn" onclick="runCEPipeline()">↺ Regenerate</button>
+      </div>
+      <div class="ce-hint" id="ce-output-hint"></div>
+      <!-- Extracted ideas toggle — hidden until generation runs -->
+      <div style="margin-top:.75rem;display:none;" id="ce-ideas-toggle">
+        <button class="ce-regen-btn" style="font-size:11px;padding:5px 12px;" onclick="toggleCEIdeas(this)">👁 View extracted ideas</button>
+        <div id="ce-ideas-box" style="display:none;margin-top:.75rem;background:var(--bg-3);border:1px solid var(--border);border-radius:10px;padding:1rem;font-size:12px;color:var(--text-3);white-space:pre-wrap;line-height:1.7;max-height:260px;overflow-y:auto;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- FRICTION OVERLAY -->
 <div id="friction-overlay">
   <div class="friction-box">
     <div class="friction-icon">🚀</div>
-    <div class="friction-title">You're building something real.</div>
-    <div class="friction-sub">You've written 4 chapters. That's more than most people ever do. Unlock full access to finish your book and turn it into content that works for you.</div>
+    <div class="friction-title">You've built real momentum.</div>
+    <div class="friction-sub">4 chapters written and approved. Most people never get this far. You have a real book taking shape — finish it.</div>
     <div class="friction-features">
       <div class="friction-feat">Write all remaining chapters</div>
       <div class="friction-feat">Unlimited rewrites — perfect your voice</div>
@@ -1135,12 +1271,15 @@ RCFTO INPUTS:
 - TONE: ${window._setup.rcfto_tone}
 - OUTPUT (what reader must know/feel/decide by last page): "${window._setup.rcfto_output}"
 
-CRITICAL RULES:
-- The title must be specific enough that only THIS author could have written this book
-- Each chapter title must advance the reader's journey — not just be a topic label
-- The argument must build: problem → why common solutions fail → the author's specific framework → transformation
-- No em dashes. No generic business-book titles. No vague chapter names.
-- Echo the author's exact Role back — their specific experience must be visible in the structure
+CRITICAL RULES FOR A GREAT BOOK:
+- The title must be specific enough that ONLY this author with THIS background could have written it. Not "The Authority Framework" — something that names the exact perspective.
+- The subtitle must name: (1) who it is for, (2) the transformation they get, (3) how it happens.
+- Each chapter title must be a step in the reader's journey — not a topic label. "The Three Mistakes That Keep Experts Invisible" not "Common Mistakes." The title alone should create curiosity.
+- The argument must build a visible narrative arc: hook the reader's current pain → expose why standard advice fails → introduce the author's specific system → show the transformation → make it theirs.
+- Chapter 1 must speak directly to the reader's current frustration — not the author's credentials.
+- The final chapter must feel like an arrival, not just a conclusion.
+- No em dashes. No generic business-book titles. No vague chapter names like "Getting Started" or "Moving Forward."
+- Echo the author's exact Role — their lived experience must shape the structure, not just the content.
 
 Return ONLY valid JSON (no markdown, no backticks):
 {
@@ -1360,10 +1499,12 @@ function showWorkspace() {
       buttons += `<button class="btn-secondary" onclick="readFullBook()">📖 Read Book</button>`;
       buttons += `<button class="btn-secondary" onclick="goToContent()">⚡ Content Engine</button>`;
     }
+    buttons += `<button class="btn-secondary" onclick="toggleAskPanel()" style="margin-top:4px;">💬 Talk to Rodrigue</button>`;
     actionsEl.innerHTML = buttons;
   }
-  // Always hide the locked preview — Content Engine is free
-  document.getElementById('ws-ce-preview').style.display = 'none';
+  // Show locked preview until all chapters approved, then hide it
+  const cePreview = document.getElementById('ws-ce-preview');
+  if (cePreview) cePreview.style.display = allApproved ? 'none' : 'block';
 
   showPage('page-workspace');
   setNavPill('📘 Workspace');
@@ -1406,14 +1547,17 @@ function openChapter(idx) {
   document.getElementById('ch-title-display').textContent = ch.title;
   document.getElementById('ch-body').innerHTML = formatChapterContent(ch.content || '');
 
+  const genRow = document.getElementById('ch-generate-content-row');
   if (ch.status === 'approved') {
     document.getElementById('approval-box').innerHTML = `
       <div style="display:flex;align-items:center;gap:10px;color:var(--green);font-weight:600;font-size:14px;">
         ✅ Chapter approved
         <button class="btn-ghost" style="margin-left:auto;font-size:12px;" onclick="undoApprove()">Undo</button>
       </div>`;
+    if (genRow) genRow.style.display = 'block';
   } else {
     resetApprovalBox();
+    if (genRow) genRow.style.display = 'none';
   }
 
   // Update prev/next nav buttons
@@ -1434,6 +1578,22 @@ function openChapter(idx) {
 
   showPage('page-chapter');
   setNavPill(`Chapter ${idx + 1}`);
+}
+
+function resetCurrentChapter() {
+  const ch = book.chapters[currentChapterIdx];
+  showConfirm(
+    'Reset this chapter?',
+    `"${ch.title}" will be cleared and reset to not started. This cannot be undone.`,
+    'Reset Chapter',
+    () => {
+      book.chapters[currentChapterIdx].content = null;
+      book.chapters[currentChapterIdx].status = 'locked';
+      saveBook();
+      showWorkspace();
+      showToast('Chapter reset');
+    }
+  );
 }
 
 function navigateChapter(direction) {
@@ -1462,14 +1622,14 @@ function resetApprovalBox() {
     <div id="rewrite-panel" style="display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);">
       <div class="approval-label" style="margin-bottom:.75rem;">How should I improve it?</div>
       <div class="rewrite-options">
-        <button class="rw-btn" data-val="Simpler language" onclick="selectRw(this)">Simpler</button>
-        <button class="rw-btn" data-val="More detailed" onclick="selectRw(this)">More detailed</button>
-        <button class="rw-btn" data-val="More bold and direct" onclick="selectRw(this)">More bold</button>
-        <button class="rw-btn" data-val="Add more examples" onclick="selectRw(this)">Add examples</button>
+        <button class="rw-btn" data-val="Make it more bold" onclick="selectRw(this)">🔥 Make it more bold</button>
+        <button class="rw-btn" data-val="Add more depth" onclick="selectRw(this)">📚 Add more depth</button>
+        <button class="rw-btn" data-val="Strengthen flow" onclick="selectRw(this)">🔗 Strengthen flow</button>
+        <button class="rw-btn" data-val="Remove generic phrasing" onclick="selectRw(this)">✂️ Remove generic phrasing</button>
       </div>
       <textarea class="field-textarea" id="rewrite-custom" rows="2" placeholder="Or describe exactly how to improve it..." style="margin-top:.75rem;"></textarea>
       <div class="btn-row" style="margin-top:1rem;">
-        <button class="btn-primary" onclick="rewriteChapter()">Rewrite Chapter →</button>
+        <button class="btn-primary" onclick="rewriteChapter()">Improve Chapter →</button>
         <button class="btn-ghost" onclick="hideRewritePanel()">Cancel</button>
       </div>
     </div>`;
@@ -1487,8 +1647,22 @@ async function generateChapter(idx, instruction = null) {
 
   // Rotate loading messages to reduce perceived wait
   const loadingMessages = instruction
-    ? ['Applying your feedback...', 'Rewriting the chapter...', 'Polishing the draft...', 'Almost there...']
-    : ['Applying RCFTO framework...', 'Writing your chapter...', 'Adding depth and examples...', 'Polishing the draft...', 'Almost there...'];
+    ? [
+        'Reading your chapter carefully...',
+        'Cutting what does not belong...',
+        'Strengthening the argument...',
+        'Making it sound like you...',
+        'Almost there...'
+      ]
+    : [
+        'Applying RCFTO framework...',
+        'Finding the right opening scene...',
+        'Building the argument...',
+        'Adding depth and examples...',
+        'Making it read like a real book...',
+        'Polishing the final draft...',
+        'Almost there...'
+      ];
   let msgIdx = 0;
   const msgInterval = setInterval(() => {
     msgIdx = (msgIdx + 1) % loadingMessages.length;
@@ -1511,34 +1685,84 @@ async function generateChapter(idx, instruction = null) {
     ? 'Target length: 1,100 to 1,400 words. Full development of every point.'
     : 'Target length: 1,700 to 2,000 words. Deep, thorough, richly developed — do not cut short.';
 
-  const prompt = `You are Rodrigue Shema's RCFTO ghostwriter. Your job is to write a chapter that sounds like it was written by a specific human expert — not a writing tool, not a template, not any other author.
+  const toneGuide = (() => {
+    const t = (rcfto_tone || '').toLowerCase();
+    if (t.includes('direct')) return 'Cut every soft word. Short declarative sentences. No hedging, no filler. Say it once, clearly, move on.';
+    if (t.includes('warm')) return 'Write like a trusted friend who has the answer. Conversational, honest, close. The reader feels understood before they feel taught.';
+    if (t.includes('bold') || t.includes('contrarian')) return 'Challenge assumptions head-on. Name what nobody else will name. Every section should make the reader think: I have never heard it put that way.';
+    if (t.includes('simple')) return 'Plain language only. One idea per sentence. Concrete over abstract, always.';
+    return 'Professional and clear. No filler, no repetition. Every sentence earns its place.';
+  })();
 
-RCFTO FRAMEWORK FOR THIS BOOK:
-- ROLE (the author's specific perspective): "${rcfto_role}"
-- CONTEXT (the reader's exact situation right now): "${rcfto_context}"
-- FORMAT: Flowing paragraphs only. 2 to 3 subheadings using ### format. ${lengthGuide}. No bullet points. No numbered lists.
-- TONE: ${rcfto_tone}
-- OUTPUT (what this chapter must make the reader know/feel/do): "${rcfto_output}"
+  const prompt = `You are a world-class nonfiction ghostwriter. Your quality bar is Atomic Habits by James Clear, Deep Work by Cal Newport, and The Obstacle Is the Way by Ryan Holiday. That is the standard you must match.
+
+Your job: write one complete chapter of a professional authority book, powered by the RCFTO framework below.
+
+RCFTO FRAMEWORK — THE AUTHOR'S DNA
+=====================================
+R — ROLE (the author's lived perspective):
+"${rcfto_role}"
+Every insight must come through THIS lens. Generic expertise is the enemy. The author's specific background must be audible in every paragraph.
+
+C — CONTEXT (the reader's exact situation right now):
+"${rcfto_context}"
+Write directly into this person's life. Not a category. Not a general audience. This specific reader, this specific moment, this specific frustration they went to bed with last night.
+
+F — FORMAT:
+${lengthGuide}
+Flowing prose only. No bullet points. No numbered lists.
+Subheadings (###): ONLY when the chapter genuinely shifts to a new dimension of the argument. Maximum 1 to 2 total. When in doubt, use none. Real books breathe in paragraphs.
+
+T — TONE:
+"${rcfto_tone}"
+Enforcement: ${toneGuide}
+Hold this tone from the first word to the last. Do not drift into generic authority voice.
+
+O — OUTPUT (what this chapter must make the reader know, feel, or decide):
+"${rcfto_output}"
+The closing paragraph must actively move the reader toward this output. Not summarize. Move.
 
 BOOK: "${book.title}"
 SUBTITLE: "${book.subtitle || ''}"
-${prevChapters ? `PREVIOUS CHAPTERS (for continuity):\n${prevChapters}` : ''}
+${prevChapters ? `Chapters already written (build on these, never repeat):\n${prevChapters}` : 'This is the first chapter. Establish the voice from the very first sentence.'}
 
-NOW WRITE: Chapter ${idx + 1} — "${book.chapters[idx].title}"
+WRITE NOW: Chapter ${idx + 1} — "${book.chapters[idx].title}"
 
-CRITICAL WRITING RULES:
-- Open with a scene, a specific observation, or a direct challenge — never with a definition
-- Every abstract claim must be followed immediately by a concrete, specific example
-- The author's Role must be audible — their specific experience shapes every paragraph
-- The reader's Context must be felt — write into their actual situation, not the category
-- No em dashes anywhere. Use commas or a period instead.
-- No motivational filler. No generic wisdom. Every sentence must earn its place.
-- Write in second person (you, your) or first person (I, we) — never third person
-- Use **bold** only for 2 to 3 key terms maximum${rwNote}
+PROFESSIONAL BOOK WRITING RULES — NON-NEGOTIABLE
+==================================================
 
-IMPORTANT: Write the COMPLETE chapter to the full target length. Do not stop early. Every section must be fully developed.
+RULE 1 — THE OPENING (most important paragraph):
+Drop the reader into a specific scene, moment, or direct provocation.
+A person. A place. A tension. A fact that shatters an assumption.
+Atomic Habits opens with a cyclist whose skull fractures on pavement. Deep Work opens with Carl Jung building a stone tower in Switzerland. Neither opens with a definition.
+FORBIDDEN: "In today's world" / "Every expert knows" / "This chapter will" / rhetorical questions / motivational statements / definitions.
+The idea must emerge FROM the scene. Never before it.
 
-Write only the chapter body. No title. No chapter number. Just the content.`;
+RULE 2 — DEVELOPING IDEAS:
+Every key idea follows this exact sequence:
+1. Concrete scene or named scenario — put the reader in a moment they recognize
+2. The insight that emerges — what does this prove?
+3. Why it matters for THIS reader given their specific Context
+Never two abstract statements in a row. Scene, insight, relevance. Always.
+Examples must be vivid: a real professional moment, a before-and-after, something concrete. "Consider this" is not an example.
+
+RULE 3 — SUBHEADINGS:
+Only when the argument makes a genuine turn that cannot flow from the previous paragraph.
+Maximum 1 to 2. If the chapter flows without them, use none.
+
+RULE 4 — THE CLOSING:
+Not a summary. Never list what was covered.
+Land somewhere new. Plant a question. Create forward tension. Make them see something they cannot unsee.
+A door opening, not closing.
+
+RULE 5 — CRAFT:
+No em dashes. Use a comma or period.
+No filler: "It is important to note" / "At the end of the day" / "In conclusion" / "The truth is."
+First or second person only. Never third person.
+Bold maximum 2 key terms per chapter.
+Vary sentence length deliberately.${rwNote}
+
+Write the complete chapter now. Full target length. No stopping early. No meta-commentary. No title or chapter number. Just the chapter.`;
 
   try {
     const content = await callClaude(prompt, 4000);
@@ -1549,39 +1773,52 @@ Write only the chapter body. No title. No chapter number. Just the content.`;
     openChapter(idx);
   } catch(e) {
     clearInterval(msgInterval);
-    book.chapters[idx].content = generateFallbackChapter(book.chapters[idx].title);
-    book.chapters[idx].status = 'draft';
-    saveBook();
-    openChapter(idx);
+    // First chapter always succeeds — silent fallback so user never hits a dead end
+    if (idx === 0 && !instruction) {
+      book.chapters[idx].content = generateFallbackChapter(book.chapters[idx].title);
+      book.chapters[idx].status = 'draft';
+      saveBook();
+      openChapter(idx);
+      showToast('Chapter ready — tap Improve to enhance it');
+    } else {
+      showPage('page-loading');
+      document.getElementById('loading-msg').textContent = 'Connection issue';
+      document.getElementById('loading-sub').innerHTML = `
+        <div style="color:var(--text-3);margin-bottom:1.25rem;">Could not reach the AI. Check your connection and try again.</div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn-primary" onclick="generateChapter(${idx})" style="padding:12px 24px;">↺ Retry</button>
+          <button class="btn-secondary" onclick="useFallbackChapter(${idx})" style="padding:12px 24px;">Use Placeholder</button>
+          <button class="btn-ghost" onclick="showPage('page-workspace');showWorkspace();" style="padding:12px 0;">← Back to Workspace</button>
+        </div>`;
+    }
   }
 }
 
+function useFallbackChapter(idx) {
+  book.chapters[idx].content = generateFallbackChapter(book.chapters[idx].title);
+  book.chapters[idx].status = 'draft';
+  saveBook();
+  openChapter(idx);
+  showToast('Placeholder loaded — regenerate when connected');
+}
+
 function generateFallbackChapter(title) {
-  return `### The Foundation of ${title}
+  const role = (book && book.rcfto_role) ? book.rcfto_role : 'an expert in their field';
+  const ctx = (book && book.rcfto_context) ? book.rcfto_context : 'professionals who want to turn their knowledge into authority';
+  const ctxCap = ctx.charAt(0).toUpperCase() + ctx.slice(1);
+  return `There is a moment most experts never forget. It is not the moment they finally mastered their craft. It is the moment someone else put their knowledge into words so precisely, so cleanly, that they felt for the first time that someone had actually seen the thing they had been circling for years.
 
-Every authority in their field understands one thing clearly: expertise alone is not enough. What separates those who lead from those who follow is the ability to communicate their knowledge in a way that creates trust, clarity, and action.
+That is what this chapter on ${title} is built around. Not to explain. Not to list. To create that specific recognition in a reader who has been waiting for it without knowing that is what they were waiting for.
 
-The readers who will benefit most from your book are not looking for more information. They are surrounded by it every day. What they need is a guide who has walked the path before them and can show them the most direct route to the result they want.
+The field of ${role} is full of people who know more than they can say. They have the insight that comes from years of showing up. What they have not yet built is the structure that makes that knowledge transferable. And that gap, between what you know and what you can pass to someone else cleanly, is exactly where your reader lives right now.
 
-### Building Real Depth
+${ctxCap}. They have read the articles. They have tried the systems. They have sat through the workshops that promised clarity and delivered more noise. What they are still looking for is the specific thing, not the general thing, that changes how they see the whole problem.
 
-When you truly understand your subject matter at a deep level, you begin to see patterns that others miss. These patterns are the foundation of your authority. They are what make your perspective unique and valuable.
+The mistake most people make when approaching a chapter like this is reaching for breadth before they have found depth. They try to cover everything because they are afraid of leaving something out. But a reader does not need everything. They need the one angle that makes all the other information they have already collected suddenly click into place.
 
-Consider this: your audience is not looking for more information. They are surrounded by it. What they need is a guide, someone who has walked the path before them and can show them the shortest route to where they want to go.
+Your role is not to be comprehensive. It is to be precise. The expert who changes how you think does not do it by presenting more data. They do it by showing you a frame you did not have before, and then trusting you to see what it reveals on its own.
 
-### Putting It Into Practice
-
-Start by identifying the three most common mistakes people make in this area. These mistakes are your entry point. When you can articulate someone's problem better than they can themselves, they will instantly trust you to solve it.
-
-Think about the last time someone explained a complex problem to you so clearly that you felt understood before a single solution was offered. That is the feeling you are creating for your reader. You are not just sharing information. You are building a relationship through clarity.
-
-The way you approach this chapter in your own life will determine how deeply your reader connects with your message. The more specific you are, the more universal your insight becomes.
-
-### The Authority Shift
-
-Real authority is not claimed. It is earned through consistent value. Every chapter you write, every piece of content you create, every conversation you have is an opportunity to demonstrate your depth of understanding.
-
-The experts who build the strongest authority are not the ones who know the most. They are the ones who teach the best. Start there, and everything else follows.`;
+The question that drives this chapter is not what is known about ${title}. It is what most people in this space are still getting quietly, persistently wrong. That is where the real work begins.`;
 }
 
 function formatChapterContent(text) {
@@ -1654,7 +1891,16 @@ function selectRw(el) {
 }
 async function rewriteChapter() {
   const custom = document.getElementById('rewrite-custom').value.trim();
-  const instruction = custom || selectedRwOption || 'Make it clearer and more engaging';
+  const baseInstruction = custom || selectedRwOption || 'Make it clearer and more engaging';
+
+  const rwInstructions = {
+    'Make it more bold': 'Make the writing significantly bolder and more direct. Cut every hedge word: "might," "could," "perhaps," "it seems," "arguably." Replace every soft statement with a conviction. The author has seen this play out — they know what works. Make that certainty audible in every sentence. Remove any apologetic or qualifying language.',
+    'Add more depth': 'Expand this chapter with substantially more depth. Add a second concrete example or scene to each key idea. Develop the scenarios further so the reader can truly picture them. Do not introduce new topics — go deeper on what is already there. The reader should finish feeling they understand the subject at a level they did not expect.',
+    'Strengthen flow': 'Rewrite for stronger paragraph-to-paragraph flow. Each paragraph should feel like it could only come after the previous one. Eliminate any paragraph that could be moved without the reader noticing. Add transitional thinking — the connective tissue between ideas — so the chapter reads as one continuous argument, not a collection of points.',
+    'Remove generic phrasing': 'Remove all generic, AI-sounding, and filler language from this chapter. Eliminate phrases like: In today world, It is important to note, At the end of the day, Make no mistake, The truth is, Consider this, and any sentence that could appear in any book by any author. Replace each removed phrase with something specific to this author experience and this reader situation.'
+  };
+
+  const instruction = rwInstructions[baseInstruction] || baseInstruction;
   await generateChapter(currentChapterIdx, instruction);
 }
 
@@ -2040,7 +2286,365 @@ function exportPDF() {
 }
 
 /* ══════════════════════════════════════
-   CONTENT ENGINE
+   CONTENT ENGINE — NEW PANEL SYSTEM
+══════════════════════════════════════ */
+let ceCurrentChapterIdx = null;
+
+function openCEPanel() {
+  if (!book) return;
+  // Find current chapter index from the displayed badge
+  const badge = document.getElementById('ch-num-badge');
+  const match = badge ? badge.textContent.match(/\d+/) : null;
+  ceCurrentChapterIdx = match ? parseInt(match[0]) - 1 : 0;
+
+  const ch = book.chapters[ceCurrentChapterIdx];
+  const nameEl = document.getElementById('ce-panel-chapter-name');
+  if (nameEl && ch) nameEl.textContent = `Ch. ${ceCurrentChapterIdx + 1}: ${ch.title}`;
+
+  // Reset output
+  document.getElementById('ce-output-wrap').classList.remove('show');
+  document.getElementById('ce-output-box').textContent = '';
+  const it = document.getElementById('ce-ideas-toggle');
+  const ib = document.getElementById('ce-ideas-box');
+  if (it) { it.style.display = 'none'; }
+  if (ib) { ib.style.display = 'none'; ib.textContent = ''; }
+
+  document.getElementById('ce-panel-overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCEPanel() {
+  document.getElementById('ce-panel-overlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function closeCEPanelOutside(e) {
+  if (e.target === document.getElementById('ce-panel-overlay')) closeCEPanel();
+}
+
+function selectCEType(el) {
+  document.querySelectorAll('.ce-type-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function selectCEOpt(el, rowId) {
+  document.querySelectorAll(`#${rowId} .ce-opt-btn`).forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+/* ── PIPELINE PROGRESS UI ── */
+function setCEProgress(step, label) {
+  const bar = document.getElementById('ce-progress-bar');
+  const txt = document.getElementById('ce-progress-label');
+  if (!bar || !txt) return;
+  const pct = { 1: 30, 2: 62, 3: 88, 4: 100 }[step] || 0;
+  bar.style.width = pct + '%';
+  txt.textContent = label;
+  document.getElementById('ce-progress-wrap').style.display = 'block';
+}
+function hideCEProgress() {
+  const w = document.getElementById('ce-progress-wrap');
+  if (w) w.style.display = 'none';
+}
+
+async function runCEPipeline() {
+  if (!book || ceCurrentChapterIdx === null) return;
+  const ch = book.chapters[ceCurrentChapterIdx];
+  if (!ch || !ch.content) return;
+
+  const typeEl = document.querySelector('.ce-type-btn.selected');
+  const toneEl = document.querySelector('#ce-tone-row .ce-opt-btn.selected');
+  const platformEl = document.querySelector('#ce-platform-row .ce-opt-btn.selected');
+  const variationsEl = document.querySelector('#ce-variations-row .ce-opt-btn.selected');
+
+  const type     = typeEl     ? typeEl.dataset.type : 'LinkedIn Post';
+  const tone     = toneEl     ? toneEl.dataset.val  : 'Authority';
+  const platform = platformEl ? platformEl.dataset.val : 'LinkedIn';
+  const wantVariations = variationsEl ? variationsEl.dataset.val === 'yes' : false;
+
+  const btn = document.getElementById('ce-generate-btn');
+  btn.disabled = true;
+  btn.textContent = 'Running pipeline...';
+
+  const outputWrap = document.getElementById('ce-output-wrap');
+  const outputBox  = document.getElementById('ce-output-box');
+  const outputBadge = document.getElementById('ce-output-badge');
+  const outputHint  = document.getElementById('ce-output-hint');
+  outputWrap.classList.remove('show');
+  outputBox.textContent = '';
+
+  /* ─────────────────────────────────────────────
+     STEP 1 — IDEA EXTRACTION
+     Full chapter text → structured building blocks
+  ───────────────────────────────────────────── */
+  setCEProgress(1, 'Step 1 · Extracting key ideas from chapter...');
+
+  const step1Prompt = `You are an expert content strategist.
+
+Analyze the following book chapter and extract high-value content building blocks.
+
+BOOK: "${book.title}"
+AUTHOR ROLE: "${book.rcfto_role || 'expert author'}"
+READER: "${book.rcfto_context || 'professionals seeking expertise'}"
+
+CHAPTER: "${ch.title}"
+FULL CHAPTER TEXT:
+"""
+${ch.content}
+"""
+
+OUTPUT FORMAT (return only this, no preamble):
+
+KEY INSIGHTS (5):
+- [specific, concrete takeaway from this chapter]
+- ...
+
+STRONG OPINIONS (3):
+- [bold, thought-provoking statement — slightly contrarian if possible]
+- ...
+
+ACTIONABLE POINTS (3):
+- [practical advice someone can apply immediately]
+- ...
+
+MEMORABLE LINES (3):
+- [short, punchy sentence usable as a hook — 10 words max each]
+- ...
+
+RULES:
+- Be specific to THIS chapter, not generic expertise
+- Avoid repetition between sections
+- Every point must be rooted in the actual text
+- Write in plain, human language`;
+
+  let extractedIdeas = '';
+  try {
+    extractedIdeas = await callClaude(step1Prompt, 900);
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'Generate →';
+    hideCEProgress();
+    outputBox.textContent = 'Step 1 failed. Check your connection and try again.';
+    outputWrap.classList.add('show');
+    return;
+  }
+
+  /* ─────────────────────────────────────────────
+     STEP 2 — CONTENT TRANSFORMATION
+     Extracted ideas → structured content format
+  ───────────────────────────────────────────── */
+  setCEProgress(2, 'Step 2 · Transforming ideas into content...');
+
+  const formatInstructions = {
+    'LinkedIn Post': `LinkedIn Post rules:
+- Start with the single strongest hook from the Memorable Lines
+- Short paragraphs (1-3 lines max)
+- Build the argument using the Key Insights and Actionable Points
+- End with one direct question or CTA that creates engagement
+- No hashtags. No em dashes. No bullet lists in the post itself.
+- 150-220 words total`,
+
+    'X Thread': `X Thread rules:
+- Tweet 1: the strongest hook (under 280 chars, standalone, creates tension)
+- Tweets 2-7: each one advances the argument using a distinct insight or action point
+- Each tweet must work as a standalone line AND flow from the previous
+- Last tweet: clear CTA (follow, reply, or repost)
+- Format: number each tweet (1/ 2/ etc.)
+- No hashtags. No em dashes.`,
+
+    'Email Newsletter': `Email Newsletter rules:
+- Line 1: subject line (compelling, specific, under 50 chars)
+- Line 2: blank
+- Para 1: open with the reader's exact pain point (use the Context)
+- Para 2-3: deliver 2 specific insights from the chapter
+- Para 4: one clear next step / soft CTA
+- Conversational tone, short sentences
+- 180-280 words total`,
+
+    'Hook Ideas': `Hook Ideas rules:
+- Generate 8 distinct opening lines for posts
+- Each hook must be tied to a different specific insight from this chapter
+- Each hook must be different enough to be its own post angle
+- Format: number them 1-8
+- Each hook: 8-15 words, creates curiosity or tension
+- No generic motivational lines`
+  };
+
+  const step2Prompt = `You are a high-level content creator.
+
+Turn the extracted ideas below into a complete piece of ${type} content.
+
+EXTRACTED IDEAS FROM CHAPTER "${ch.title}":
+"""
+${extractedIdeas}
+"""
+
+AUTHOR VOICE: "${book.rcfto_tone || 'Professional and direct'}"
+READER: "${book.rcfto_context || 'professionals seeking expertise'}"
+
+${formatInstructions[type] || formatInstructions['LinkedIn Post']}
+
+RULES:
+- Use the actual extracted ideas — not generic observations
+- Be direct and specific — every line must earn its place
+- No fluff. No motivational filler. No em dashes.
+- Write in first person (I/we) from the author's perspective
+
+Output ONLY the content. No labels, no preamble, no explanation.`;
+
+  let transformedContent = '';
+  try {
+    transformedContent = await callClaude(step2Prompt, 900);
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'Generate →';
+    hideCEProgress();
+    outputBox.textContent = 'Step 2 failed. Check your connection and try again.';
+    outputWrap.classList.add('show');
+    return;
+  }
+
+  /* ─────────────────────────────────────────────
+     STEP 3 — PLATFORM OPTIMIZATION
+     Content → polished, platform-native output
+  ───────────────────────────────────────────── */
+  setCEProgress(3, 'Step 3 · Optimizing for ' + platform + '...');
+
+  const platformRules = {
+    'LinkedIn': `LinkedIn platform rules:
+- Professional but conversational — not corporate
+- Add line breaks between short paragraphs for readability
+- Hook must stop the scroll in the first 2 lines (before "...see more")
+- Authority comes from specificity, not grand claims`,
+    'X (Twitter)': `X (Twitter) platform rules:
+- Shorter sentences, faster pace
+- Every tweet must land on its own
+- Remove any word that does not add meaning
+- Punchy verbs over passive constructions`
+  };
+
+  const toneRules = {
+    'Authority': 'Confident, clear, expert voice. Every sentence demonstrates knowledge without claiming it. Show, don\'t tell.',
+    'Storytelling': 'Open with a specific moment or scene. Let the insight emerge from the story, not before it. The reader should feel understood before they feel taught.',
+    'Bold': 'Challenge one assumption directly. Name what most people in this space get wrong. Be unapologetically specific — willing to say what others avoid.'
+  };
+
+  const step3Prompt = `You are a content optimization expert.
+
+Refine this content for ${platform} with a ${tone} tone. Do not change the core ideas — improve clarity, rhythm, and platform fit.
+
+CONTENT TO OPTIMIZE:
+"""
+${transformedContent}
+"""
+
+${platformRules[platform] || platformRules['LinkedIn']}
+
+TONE RULE:
+${toneRules[tone] || toneRules['Authority']}
+
+AUTHOR VOICE: "${book.rcfto_tone || 'Professional and direct'}"
+
+FINAL QUALITY CHECK:
+- Remove any line that could appear in any generic post on this topic
+- The author's specific perspective (${book.rcfto_role || 'their expertise'}) must be audible
+- No em dashes. No hashtags. No emojis unless the format requires them.
+- Do not lose any specific insight from the original
+
+Output ONLY the final optimized content. Ready to copy-paste. No labels, no preamble.`;
+
+  let finalContent = '';
+  try {
+    finalContent = await callClaude(step3Prompt, 900);
+  } catch(e) {
+    // Fall back to step 2 output if step 3 fails
+    finalContent = transformedContent;
+  }
+
+  /* ─────────────────────────────────────────────
+     STEP 4 (OPTIONAL) — VARIATIONS A / B / C
+  ───────────────────────────────────────────── */
+  if (wantVariations) {
+    setCEProgress(4, 'Step 4 · Creating 3 variations...');
+
+    const step4Prompt = `Create 3 distinct variations of this ${type}.
+
+ORIGINAL CONTENT:
+"""
+${finalContent}
+"""
+
+Keep the same core idea from chapter "${ch.title}". Each version must use a different angle or style and feel meaningfully distinct.
+
+Label them exactly:
+
+VERSION A — Direct:
+[rewrite: confident, stripped-down, no-nonsense. Cut every soft word.]
+
+VERSION B — Story-driven:
+[rewrite: open with a specific relatable moment, let the insight emerge from it]
+
+VERSION C — Bold/Contrarian:
+[rewrite: challenge one assumption your reader holds. More provocative, more specific.]
+
+RULES:
+- Each version same format and approximate length as the original
+- No em dashes. No hashtags.
+- Output only the three versions with their labels. No other text.`;
+
+    let variations = '';
+    try {
+      variations = await callClaude(step4Prompt, 1200);
+      finalContent = finalContent + '\n\n──────────────────────\n⚡ 3 VARIATIONS\n──────────────────────\n\n' + variations;
+    } catch(e) {
+      // Variations optional — just skip if it fails
+    }
+  }
+
+  /* ─────────────────────────────────────────────
+     RENDER OUTPUT
+  ───────────────────────────────────────────── */
+  btn.disabled = false;
+  btn.textContent = 'Generate →';
+  hideCEProgress();
+
+  outputBox.textContent = finalContent;
+  outputBadge.textContent = type;
+  outputHint.textContent = wantVariations
+    ? `3-step pipeline + variations · Ch. ${ceCurrentChapterIdx + 1} · ${tone} · ${platform}`
+    : `3-step pipeline · Ch. ${ceCurrentChapterIdx + 1} · ${tone} · ${platform}`;
+  outputWrap.classList.add('show');
+  outputBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  // Show extracted ideas toggle
+  const ideaToggle = document.getElementById('ce-ideas-toggle');
+  const ideaBox    = document.getElementById('ce-ideas-box');
+  if (ideaToggle && ideaBox) {
+    ideaBox.textContent = extractedIdeas;
+    ideaToggle.style.display = 'inline-block';
+  }
+}
+
+function copyCEOutput() {
+  const text = document.getElementById('ce-output-box').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.ce-copy-btn');
+    btn.textContent = 'Copied!';
+    showToast('Copied to clipboard');
+    setTimeout(() => btn.textContent = '📋 Copy', 2000);
+  });
+}
+
+function toggleCEIdeas(btn) {
+  const box = document.getElementById('ce-ideas-box');
+  if (!box) return;
+  const isOpen = box.style.display !== 'none';
+  box.style.display = isOpen ? 'none' : 'block';
+  btn.textContent = isOpen ? '👁 View extracted ideas' : '▲ Hide extracted ideas';
+}
+
+/* ══════════════════════════════════════
+   CONTENT ENGINE — OLD PAGE (kept for workspace access)
 ══════════════════════════════════════ */
 function goToContent() {
   if (!book) return;
@@ -2049,16 +2653,19 @@ function goToContent() {
     showToast('Approve at least one chapter to use the Content Engine');
     return;
   }
-
-  const sel = document.getElementById('ce-chapter-select');
-  sel.innerHTML = approved.map(ch => {
-    const idx = book.chapters.indexOf(ch);
-    return `<option value="${idx}">Chapter ${idx + 1}: ${ch.title}</option>`;
-  }).join('');
-
-  document.getElementById('content-output-area').innerHTML = '';
-  showPage('page-content');
-  setNavPill('Content Engine');
+  // Open panel using first approved chapter
+  ceCurrentChapterIdx = book.chapters.indexOf(approved[0]);
+  const ch = book.chapters[ceCurrentChapterIdx];
+  const nameEl = document.getElementById('ce-panel-chapter-name');
+  if (nameEl && ch) nameEl.textContent = `Ch. ${ceCurrentChapterIdx + 1}: ${ch.title}`;
+  document.getElementById('ce-output-wrap').classList.remove('show');
+  document.getElementById('ce-output-box').textContent = '';
+  const it2 = document.getElementById('ce-ideas-toggle');
+  const ib2 = document.getElementById('ce-ideas-box');
+  if (it2) { it2.style.display = 'none'; }
+  if (ib2) { ib2.style.display = 'none'; ib2.textContent = ''; }
+  document.getElementById('ce-panel-overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
 }
 
 async function generateContent(type) {
@@ -2299,23 +2906,35 @@ async function submitQuestion() {
 /* ══════════════════════════════════════
    CLAUDE API
 ══════════════════════════════════════ */
-async function callClaude(prompt, maxTokens = 1000) {
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: maxTokens,
-      messages: [{ role: 'user', content: prompt }]
-    })
-  });
-  if (!res.ok) {
-    const errText = await res.text().catch(() => '');
-    throw new Error(`API error ${res.status}: ${errText}`);
+async function callClaude(prompt, maxTokens = 1000, retries = 2) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: maxTokens,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error?.message || `API error ${res.status}`);
+      }
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message || 'API error');
+      return data.content.map(i => i.text || '').join('').trim();
+    } catch(e) {
+      if (attempt < retries) {
+        const el = document.getElementById('loading-sub');
+        if (el) el.textContent = `Connection issue, retrying (${attempt + 1}/${retries})...`;
+        await new Promise(r => setTimeout(r, 2000 * (attempt + 1)));
+      } else {
+        throw e;
+      }
+    }
   }
-  const data = await res.json();
-  if (data.error) throw new Error(data.error.message || 'API error');
-  return data.content.map(i => i.text || '').join('').trim();
 }
 
 /* ══════════════════════════════════════
