@@ -155,6 +155,9 @@ footer a:hover{color:var(--text-2);}
 .field-input,.field-textarea{width:100%;background:var(--bg-2);border:1px solid var(--border-2);border-radius:var(--radius-sm);padding:13px 16px;font-family:var(--font-body);font-size:14px;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;resize:none;}
 .field-input::placeholder,.field-textarea::placeholder{color:var(--text-3);}
 .field-input:focus,.field-textarea:focus{border-color:rgba(245,158,11,.45);box-shadow:0 0 0 3px rgba(245,158,11,.06);}
+.field-input.error,.field-textarea.error{border-color:rgba(248,113,113,.6);box-shadow:0 0 0 3px rgba(248,113,113,.08);}
+.field-error-msg{font-size:12px;color:var(--red);margin-top:.35rem;display:none;}
+.field-error-msg.show{display:block;}
 .choice-grid{display:flex;gap:8px;flex-wrap:wrap;}
 .choice-btn{font-size:13px;font-weight:500;color:var(--text-2);background:var(--bg-2);border:1px solid var(--border-2);border-radius:20px;padding:8px 18px;cursor:pointer;transition:all .18s;}
 .choice-btn:hover,.choice-btn.selected{border-color:var(--gold-border);color:var(--gold);background:var(--gold-dim);}
@@ -167,7 +170,7 @@ footer a:hover{color:var(--text-2);}
 .btn-primary:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none;}
 .btn-secondary{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--text-2);background:none;border:1px solid var(--border-2);border-radius:var(--radius-sm);padding:11px 22px;cursor:pointer;transition:all .2s;}
 .btn-secondary:hover{color:var(--text);background:var(--bg-3);}
-.btn-ghost{background:none;border:none;cursor:pointer;color:var(--text-3);font-size:13px;font-family:var(--font-body);padding:8px 0;transition:color .2s;}
+.btn-ghost{background:none;border:none;cursor:pointer;color:var(--text-3);font-size:13px;font-family:var(--font-body);padding:12px 0;min-height:44px;transition:color .2s;}
 .btn-ghost:hover{color:var(--text-2);}
 .btn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:2rem;}
 
@@ -179,6 +182,11 @@ footer a:hover{color:var(--text-2);}
 
 /* OUTLINE */
 .outline-wrap{max-width:620px;margin:0 auto;padding:60px 1.5rem 80px;}
+.book-meta{margin-bottom:20px;}
+.book-meta .meta-title-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.3rem;}
+.book-meta .meta-title-value{font-family:var(--font-head);font-size:27px;font-weight:800;color:var(--text);letter-spacing:-.02em;line-height:1.1;margin-bottom:1rem;text-transform:uppercase;}
+.book-meta .meta-subtitle-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.3rem;}
+.book-meta .meta-subtitle-value{font-size:14px;color:var(--text-2);line-height:1.6;margin-bottom:.5rem;}
 .book-outline-card{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:1.5rem;}
 .book-outline-top{padding:1.75rem;background:linear-gradient(135deg,var(--bg-3),var(--bg-2));border-bottom:1px solid var(--border);}
 .book-genre-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:3px 10px;margin-bottom:.75rem;}
@@ -218,7 +226,7 @@ footer a:hover{color:var(--text-2);}
 .ws-ch-name{font-size:14px;color:var(--text-2);flex:1;}
 .ws-ch-name.active{color:var(--text);font-weight:500;}
 .ws-ch-status{font-size:18px;flex-shrink:0;}
-.ws-ch-delete{background:none;border:none;cursor:pointer;color:var(--text-3);font-size:14px;padding:4px;border-radius:4px;transition:color .2s;flex-shrink:0;}
+.ws-ch-delete{background:none;border:none;cursor:pointer;color:var(--text-3);font-size:14px;padding:12px 10px;min-height:44px;border-radius:4px;transition:color .2s;flex-shrink:0;display:flex;align-items:center;}
 .ws-ch-delete:hover{color:var(--red);}
 .ws-actions{display:flex;gap:10px;flex-wrap:wrap;}
 .ws-danger-row{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);}
@@ -400,9 +408,260 @@ footer a:hover{color:var(--text-2);}
 .rcfto-block-title{font-family:var(--font-head);font-size:14px;font-weight:700;color:var(--text);margin-bottom:.25rem;}
 .rcfto-block-sub{font-size:12px;color:var(--text-3);line-height:1.6;margin-bottom:.9rem;}
 .setup-wrap{max-width:620px;margin:0 auto;padding:60px 1.5rem 80px;}
+
+/* ── ENTRY SCREEN ── */
+#entry-screen{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 1.5rem 80px;
+  background:var(--bg);
+}
+.entry-eyebrow{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);
+  border-radius:20px;padding:4px 14px;margin-bottom:1.75rem;
+  animation:fadeUp .5s ease both;
+}
+.entry-eyebrow::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+.entry-h1{
+  font-family:var(--font-head);
+  font-size:clamp(26px,4.5vw,42px);
+  font-weight:800;line-height:1.1;letter-spacing:-.025em;
+  color:var(--text);text-align:center;max-width:600px;
+  margin-bottom:.85rem;animation:fadeUp .5s .08s ease both;
+}
+.entry-h1 span{color:var(--gold);}
+.entry-sub{
+  font-size:14px;color:var(--text-2);line-height:1.75;
+  text-align:center;max-width:480px;margin-bottom:.5rem;
+  animation:fadeUp .5s .14s ease both;
+}
+.entry-sub2{
+  font-size:13px;color:var(--text-3);text-align:center;
+  margin-bottom:2.75rem;animation:fadeUp .5s .18s ease both;
+}
+.entry-cards{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;
+  width:100%;max-width:560px;
+  animation:fadeUp .5s .24s ease both;
+}
+@media(max-width:500px){.entry-cards{grid-template-columns:1fr;}}
+.entry-card{
+  background:var(--bg-2);border:1px solid var(--border);
+  border-radius:16px;padding:1.75rem 1.5rem;
+  cursor:pointer;transition:all .22s;text-align:left;
+  position:relative;overflow:hidden;
+}
+.entry-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),#fbbf24);
+  opacity:0;transition:opacity .22s;
+}
+.entry-card:hover{border-color:var(--gold-border);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.35);}
+.entry-card:hover::before{opacity:1;}
+.entry-card-icon{font-size:26px;margin-bottom:.7rem;}
+.entry-card-title{font-family:var(--font-head);font-size:16px;font-weight:800;color:var(--text);margin-bottom:.4rem;}
+.entry-card-desc{font-size:13px;color:var(--text-2);line-height:1.65;margin-bottom:.6rem;}
+.entry-card-sub{font-size:11px;color:var(--text-3);font-style:italic;margin-bottom:1.1rem;}
+.entry-card-btn{
+  display:inline-block;font-size:11px;font-weight:700;
+  color:var(--gold);background:var(--gold-dim);
+  border:1px solid var(--gold-border);border-radius:20px;padding:4px 13px;
+  transition:all .2s;
+}
+.entry-card:hover .entry-card-btn{background:var(--gold);color:#000;border-color:var(--gold);}
+.entry-tagline{font-size:13px;color:var(--text-3);font-style:italic;margin-top:2rem;animation:fadeUp .5s .32s ease both;}
+
+/* ── CONTENT MODE ── */
+#content-mode{
+  min-height:100vh;background:var(--bg);
+}
+.cm-wrap{max-width:600px;margin:0 auto;padding:60px 1.5rem 100px;}
+.cm-back-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:500;color:var(--text-3);
+  background:none;border:none;cursor:pointer;
+  padding:0;margin-bottom:2rem;transition:color .2s;
+  font-family:var(--font-body);
+}
+.cm-back-btn:hover{color:var(--text-2);}
+.cm-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:.5rem;}
+.cm-title{font-family:var(--font-head);font-size:27px;font-weight:800;color:var(--text);letter-spacing:-.02em;margin-bottom:.45rem;line-height:1.1;}
+.cm-title span{color:var(--gold);}
+.cm-sub{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:2rem;}
+.cm-section{margin-bottom:1.5rem;}
+.cm-section-label{font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:.55rem;display:block;}
+.cm-input{
+  width:100%;background:var(--bg-2);border:1px solid var(--border-2);
+  border-radius:var(--radius-sm);padding:13px 16px;
+  font-family:var(--font-body);font-size:14px;color:var(--text);
+  outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.cm-input::placeholder{color:var(--text-3);}
+.cm-input:focus{border-color:rgba(245,158,11,.45);box-shadow:0 0 0 3px rgba(245,158,11,.06);}
+.cm-radio-row{display:flex;gap:8px;flex-wrap:wrap;}
+.cm-radio-btn{
+  font-size:13px;font-weight:500;color:var(--text-2);
+  background:var(--bg-2);border:1px solid var(--border-2);
+  border-radius:20px;padding:8px 18px;cursor:pointer;transition:all .18s;
+}
+.cm-radio-btn:hover,.cm-radio-btn.cm-selected{
+  border-color:var(--gold-border);color:var(--gold);background:var(--gold-dim);font-weight:600;
+}
+.cm-generate-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-head);font-size:15px;font-weight:800;
+  color:#000;background:var(--gold);border:none;
+  border-radius:50px;padding:14px 32px;cursor:pointer;
+  transition:all .22s;box-shadow:0 4px 16px rgba(245,158,11,.25);
+  margin-top:1rem;
+}
+.cm-generate-btn:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 28px rgba(245,158,11,.38);}
+.cm-generate-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* output */
+.cm-output-card{
+  background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.75rem;margin-top:2rem;animation:slideIn .35s ease both;
+  display:none;
+}
+.cm-output-card.show{display:block;}
+.cm-output-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.cm-output-badge{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:3px 10px;}
+.cm-output-copy-btn{font-size:12px;font-weight:600;color:var(--text-2);background:var(--bg-3);border:1px solid var(--border-2);border-radius:var(--radius-sm);padding:6px 14px;cursor:pointer;transition:all .2s;}
+.cm-output-copy-btn:hover{color:var(--text);}
+.cm-output-content{font-size:14px;color:var(--text-2);line-height:1.85;white-space:pre-wrap;word-break:break-word;}
+.cm-output-actions{display:flex;gap:8px;margin-top:1.25rem;flex-wrap:wrap;}
+.cm-action-btn{font-size:12px;font-weight:600;color:var(--text-2);background:none;border:1px solid var(--border-2);border-radius:20px;padding:6px 14px;cursor:pointer;transition:all .2s;}
+.cm-action-btn:hover{color:var(--text);background:var(--bg-3);}
+.cm-improve-menu{display:none;flex-wrap:wrap;gap:8px;margin-top:.75rem;}
+.cm-improve-menu.open{display:flex;}
+.cm-improve-btn{font-size:12px;font-weight:600;color:var(--text-2);background:var(--bg-3);border:1px solid var(--border-2);border-radius:20px;padding:6px 14px;cursor:pointer;transition:all .18s;}
+.cm-improve-btn:hover{border-color:var(--gold-border);color:var(--gold);background:var(--gold-dim);}
+.cm-upsell{
+  margin-top:1.5rem;padding:1.25rem 1.5rem;
+  background:linear-gradient(135deg,var(--gold-dim),transparent);
+  border:1px solid var(--gold-border);border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+}
+.cm-upsell-text{font-size:13px;color:var(--text-2);}
+.cm-upsell-text strong{color:var(--text);}
+.cm-upsell-btn{
+  font-size:12px;font-weight:700;color:#000;background:var(--gold);
+  border:none;border-radius:20px;padding:7px 18px;cursor:pointer;
+  white-space:nowrap;transition:all .2s;
+}
+.cm-upsell-btn:hover{background:#fbbf24;}
+
+/* library */
+.cm-library-header{display:flex;align-items:center;justify-content:space-between;margin-top:2.5rem;margin-bottom:1rem;}
+.cm-library-title{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);}
+.cm-library-count{font-size:12px;color:var(--gold);font-weight:600;}
+.cm-library-item{
+  background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:1.25rem;margin-bottom:.75rem;
+}
+.cm-library-goal{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+.cm-library-text{font-size:13px;color:var(--text-2);line-height:1.7;white-space:pre-wrap;}
+/* loading spinner for content mode */
+.cm-spinner{width:36px;height:36px;border-radius:50%;border:2px solid var(--border-2);border-top-color:var(--gold);animation:spin .8s linear infinite;margin:2rem auto;}
+
+/* ── GLOBAL TOP NAV (UX ENHANCEMENT v8) ── */
+.top-nav {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.top-nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-2);
+  font-family: var(--font-body);
+  padding: 6px 0;
+  transition: color .2s;
+}
+.top-nav button:hover { color: var(--gold); }
+.soft-switch {
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  background: var(--bg-2);
+  border-radius: var(--radius);
+}
+.soft-switch p { font-size: 13px; color: var(--text-3); margin-bottom: .75rem; }
+.soft-switch button {
+  font-size: 13px; font-weight: 600;
+  color: var(--gold); background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  border-radius: 20px; padding: 8px 20px;
+  cursor: pointer; transition: all .2s;
+  font-family: var(--font-body);
+}
+.soft-switch button:hover { background: var(--gold); color: #000; }
+.bridge {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius);
+  text-align: center;
+}
+.bridge p { font-size: 13px; color: var(--text-2); margin-bottom: .75rem; }
+.bridge button {
+  font-size: 13px; font-weight: 700;
+  color: #000; background: var(--gold);
+  border: none; border-radius: 20px;
+  padding: 8px 20px; cursor: pointer;
+  transition: all .2s; font-family: var(--font-body);
+}
+.bridge button:hover { background: #fbbf24; }
 </style>
 </head>
 <body>
+
+<!-- ══════════════════════════════════════
+     ENTRY SCREEN
+══════════════════════════════════════ -->
+<div id="entry-screen">
+  <div class="entry-eyebrow">📘 Rodrigue's Authority Lab</div>
+  <h1 class="entry-h1">Turn your expertise into a <span>book that attracts clients</span> and grows your brand.</h1>
+  <p class="entry-sub">Built on the RCFTO Framework — so you always know what to say.</p>
+  <p class="entry-sub2">Write without overwhelm. Turn it into content automatically.</p>
+  <div class="entry-cards">
+    <div class="entry-card" onclick="startBookFlow()">
+      <div class="entry-card-icon">📘</div>
+      <div class="entry-card-title">Build a Book</div>
+      <div class="entry-card-desc">Turn your ideas into a structured book — built chapter by chapter to grow your authority and attract opportunities.</div>
+      <div class="entry-card-sub">Write one chapter at a time. Stay in control.</div>
+      <span class="entry-card-btn">Build My Book →</span>
+    </div>
+    <div class="entry-card" onclick="startContentFlow()">
+      <div class="entry-card-icon">⚡</div>
+      <div class="entry-card-title">Create Content</div>
+      <div class="entry-card-desc">Turn your ideas into content for your audience — posts, emails, and more. No book required.</div>
+      <div class="entry-card-sub">Fast. Focused. Ready to post.</div>
+      <span class="entry-card-btn">Create Content →</span>
+    </div>
+  </div>
+  <p class="entry-tagline"><em>Turn what you know into authority.</em></p>
+</div>
+
+<!-- ══════════════════════════════════════
+     MAIN APP (BOOK SYSTEM — UNCHANGED)
+══════════════════════════════════════ -->
+<div id="main-app" style="display:none;">
+
+<!-- TOP NAV (UX ENHANCEMENT v8) -->
+<div class="top-nav" id="main-app-top-nav">
+  <button onclick="startContentFlow()" style="font-size:12px;color:var(--text-3);">⚡ Switch to Content Mode</button>
+</div>
 
 <!-- UPDATE BANNER -->
 <div id="update-banner" style="display:none;">
@@ -496,6 +755,7 @@ footer a:hover{color:var(--text-2);}
           <div class="rcfto-block-sub">Not just what you do — your exact angle of vision. What have you seen, built, or solved that nobody else in your space has?</div>
           <div class="field-group" style="margin-bottom:0;">
             <input class="field-input" id="expert-field" type="text" placeholder="e.g. Leadership coach who spent 8 years inside Fortune 500 teams before going independent — I know why frameworks fail in practice">
+            <div class="field-error-msg" id="err-expert-field">Please describe your expertise and angle.</div>
           </div>
         </div>
       </div>
@@ -508,6 +768,7 @@ footer a:hover{color:var(--text-2);}
           <div class="rcfto-block-sub">Not a category. One person, one moment. What are they struggling with right now, and what do they believe (wrongly) about why?</div>
           <div class="field-group" style="margin-bottom:0;">
             <textarea class="field-textarea" id="expert-audience" rows="2" placeholder="e.g. First-time managers at tech startups, 6 months in, overwhelmed — they think the problem is their team, but it's actually their communication"></textarea>
+            <div class="field-error-msg" id="err-expert-audience">Please describe your reader's exact situation.</div>
           </div>
         </div>
       </div>
@@ -549,6 +810,7 @@ footer a:hover{color:var(--text-2);}
           <div class="rcfto-block-sub">By the last page, what should your reader know, feel, and do? This is the standard everything else is built toward.</div>
           <div class="field-group" style="margin-bottom:.75rem;">
             <textarea class="field-textarea" id="expert-output" rows="2" placeholder="e.g. Understand that their management problem is a clarity problem — and reach out to work with me to fix it"></textarea>
+            <div class="field-error-msg" id="err-expert-output">Please describe what you want your reader to decide or do.</div>
           </div>
           <div class="field-label" style="margin-bottom:.5rem;">Chapter depth</div>
           <div class="choice-grid" id="length-grid">
@@ -655,6 +917,12 @@ footer a:hover{color:var(--text-2);}
 <!-- OUTLINE -->
 <div class="page" id="page-outline">
   <div class="outline-wrap">
+    <div class="book-meta">
+      <div class="meta-title-label">Title</div>
+      <div class="meta-title-value" id="preview-title"></div>
+      <div class="meta-subtitle-label">Subtitle</div>
+      <div class="meta-subtitle-value" id="preview-subtitle"></div>
+    </div>
     <div class="section-label">Step 2 · Your Book Outline</div>
     <h2 class="section-title" style="margin-bottom:2rem;">Here's your <span>book structure</span></h2>
     <div class="book-outline-card">
@@ -683,7 +951,13 @@ footer a:hover{color:var(--text-2);}
 <div class="page" id="page-workspace">
   <div class="workspace-wrap">
     <div class="ws-book-label">📘 Your Book</div>
-    <div class="ws-book-title" id="ws-title">Your Book</div>
+    <div class="ws-book-title" id="ws-title" style="display:none;">Your Book</div>
+    <div class="book-meta">
+      <div class="meta-title-label">Title</div>
+      <div class="meta-title-value" id="ws-preview-title"></div>
+      <div class="meta-subtitle-label">Subtitle</div>
+      <div class="meta-subtitle-value" id="ws-preview-subtitle"></div>
+    </div>
     <div class="progress-bar-wrap"><div class="progress-bar-fill" id="ws-progress-bar" style="width:0%"></div></div>
     <div class="progress-label">Progress: <span id="ws-progress-text">0 / 0</span> chapters completed</div>
     <div class="chapter-list-ws" id="ws-chapter-list"></div>
@@ -700,6 +974,12 @@ footer a:hover{color:var(--text-2);}
     <div class="ws-danger-row">
       <div class="ws-danger-label">Danger Zone</div>
       <button class="btn-danger" onclick="confirmDeleteBook()">🗑 Delete Book</button>
+    </div>
+
+    <!-- SOFT SWITCH: Book → Content (UX ENHANCEMENT v8) -->
+    <div class="soft-switch">
+      <p>Need quick content from this idea?</p>
+      <button onclick="startContentFlow()">Create Content →</button>
     </div>
   </div>
 </div>
@@ -975,6 +1255,108 @@ footer a:hover{color:var(--text-2);}
 <!-- TOAST -->
 <div id="toast"></div>
 
+</div><!-- /#main-app -->
+
+<!-- ══════════════════════════════════════
+     CONTENT MODE (NEW SYSTEM)
+══════════════════════════════════════ -->
+<div id="content-mode" style="display:none;">
+  <!-- TOP NAV (UX ENHANCEMENT v8) -->
+  <div class="top-nav">
+    <button onclick="goHome()">← Back to Home</button>
+    <button onclick="startBookFlow()" style="font-size:12px;color:var(--text-3);">📘 Switch to Book Mode</button>
+  </div>
+  <div class="cm-wrap">
+    <div class="cm-label">Content System · RCFTO Powered</div>
+    <h2 class="cm-title">Turn your ideas into <span>content</span></h2>
+    <p class="cm-sub">Answer a few quick questions so your content connects and sounds like you.</p>
+
+    <!-- AUDIENCE -->
+    <div class="cm-section">
+      <label class="cm-section-label">Who is this for?</label>
+      <input class="cm-input" id="cm-audience" type="text" placeholder="e.g. Early-stage founders who struggle with hiring" />
+    </div>
+
+    <!-- ANGLE -->
+    <div class="cm-section">
+      <label class="cm-section-label">What's your angle or insight?</label>
+      <input class="cm-input" id="cm-angle" type="text" placeholder="e.g. Most founders hire for skills, not values — and regret it" />
+    </div>
+
+    <!-- TAKEAWAY -->
+    <div class="cm-section">
+      <label class="cm-section-label">What should they take away?</label>
+      <input class="cm-input" id="cm-takeaway" type="text" placeholder="e.g. Slow down the process, interview for values first" />
+    </div>
+
+    <!-- GOAL -->
+    <div class="cm-section">
+      <label class="cm-section-label">Content Goal</label>
+      <div class="cm-radio-row" id="cm-goal-row">
+        <button class="cm-radio-btn cm-selected" data-val="Engagement" onclick="cmSelect(this,'cm-goal-row')">Engage</button>
+        <button class="cm-radio-btn" data-val="Authority" onclick="cmSelect(this,'cm-goal-row')">Authority</button>
+        <button class="cm-radio-btn" data-val="Conversation" onclick="cmSelect(this,'cm-goal-row')">Start a Conversation</button>
+      </div>
+    </div>
+
+    <!-- TYPE -->
+    <div class="cm-section">
+      <label class="cm-section-label">Content Type</label>
+      <div class="cm-radio-row" id="cm-type-row">
+        <button class="cm-radio-btn cm-selected" data-val="LinkedIn Post" onclick="cmSelect(this,'cm-type-row')">💼 LinkedIn Post</button>
+        <button class="cm-radio-btn" data-val="X Thread" onclick="cmSelect(this,'cm-type-row')">🧵 X Thread</button>
+        <button class="cm-radio-btn" data-val="Email Newsletter" onclick="cmSelect(this,'cm-type-row')">📧 Email</button>
+      </div>
+    </div>
+
+    <!-- TONE -->
+    <div class="cm-section">
+      <label class="cm-section-label">Tone</label>
+      <div class="cm-radio-row" id="cm-tone-row">
+        <button class="cm-radio-btn cm-selected" data-val="Direct and professional" onclick="cmSelect(this,'cm-tone-row')">Direct</button>
+        <button class="cm-radio-btn" data-val="Bold and contrarian" onclick="cmSelect(this,'cm-tone-row')">Bold</button>
+        <button class="cm-radio-btn" data-val="Warm and conversational" onclick="cmSelect(this,'cm-tone-row')">Warm</button>
+      </div>
+    </div>
+
+    <button class="cm-generate-btn" id="cm-generate-btn" onclick="cmGenerate()">Generate Content →</button>
+
+    <!-- OUTPUT -->
+    <div class="cm-output-card" id="cm-output-card">
+      <div class="cm-output-header">
+        <span class="cm-output-badge" id="cm-output-badge">LinkedIn Post</span>
+        <button class="cm-output-copy-btn" onclick="cmCopy()">📋 Copy</button>
+      </div>
+      <div class="cm-output-content" id="cm-output-content"></div>
+      <div class="cm-output-actions">
+        <button class="cm-action-btn" onclick="cmSave()">💾 Save</button>
+        <button class="cm-action-btn" onclick="cmToggleImprove()">✨ Improve ▾</button>
+        <button class="cm-action-btn" onclick="cmRegenerate()">↺ Regenerate</button>
+      </div>
+      <div class="cm-improve-menu" id="cm-improve-menu">
+        <button class="cm-improve-btn" onclick="cmImprove('more engaging and punchy')">More engaging</button>
+        <button class="cm-improve-btn" onclick="cmImprove('shorter and more concise')">Shorter</button>
+        <button class="cm-improve-btn" onclick="cmImprove('bolder and more contrarian')">Bolder</button>
+        <button class="cm-improve-btn" onclick="cmImprove('with a stronger hook at the start')">Stronger hook</button>
+      </div>
+      <div class="cm-upsell">
+        <div class="cm-upsell-text"><strong>💡 This idea can become a full chapter.</strong><br>Build your book around insights like this one.</div>
+        <button class="cm-upsell-btn" onclick="startBookFlow()">Build a Book →</button>
+      </div>
+    </div>
+
+    <!-- PROGRESS + LIBRARY -->
+    <div id="cm-library-section" style="display:none;">
+      <div class="cm-library-header">
+        <span class="cm-library-title">Saved Content</span>
+        <span class="cm-library-count" id="cm-library-count">0 pieces</span>
+      </div>
+      <div id="cm-library"></div>
+    </div>
+
+  </div>
+</div>
+
 <script>
 /* ══════════════════════════════════════
    THEME TOGGLE
@@ -1040,11 +1422,220 @@ window.addEventListener('load', () => {
   if (!SUPABASE_ANON || SUPABASE_ANON === 'YOUR_SUPABASE_ANON_KEY_HERE') {
     console.warn('⚠️ Authority Lab: Supabase anon key not set. Email collection will not work.');
   }
-  checkUpdateBanner();
+  // Show entry screen first; defer book init until book flow starts
   loadBookFromStorage();
-  showHomePage();
   restoreSetupForm();
+  cmLoadLibrary();
 });
+
+/* ══════════════════════════════════════
+   ENTRY SCREEN NAVIGATION
+══════════════════════════════════════ */
+function showEntryScreen() {
+  document.getElementById('entry-screen').style.display = 'flex';
+  document.getElementById('main-app').style.display = 'none';
+  document.getElementById('content-mode').style.display = 'none';
+}
+
+function startBookFlow() {
+  document.getElementById('entry-screen').style.display = 'none';
+  document.getElementById('content-mode').style.display = 'none';
+  document.getElementById('main-app').style.display = 'block';
+  // Run existing book init
+  checkUpdateBanner();
+  showHomePage();
+}
+
+function startContentFlow() {
+  document.getElementById('entry-screen').style.display = 'none';
+  document.getElementById('main-app').style.display = 'none';
+  document.getElementById('content-mode').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+/* ══════════════════════════════════════
+   CONTENT MODE — STATE
+══════════════════════════════════════ */
+let cmSaved = JSON.parse(localStorage.getItem('cm_saved_content') || '[]');
+let cmLastGenerated = '';
+let cmLastContext = {};
+
+/* ══════════════════════════════════════
+   CONTENT MODE — UI HELPERS
+══════════════════════════════════════ */
+function cmSelect(btn, rowId) {
+  document.querySelectorAll(`#${rowId} .cm-radio-btn`).forEach(b => b.classList.remove('cm-selected'));
+  btn.classList.add('cm-selected');
+}
+
+function cmGetVal(rowId) {
+  const sel = document.querySelector(`#${rowId} .cm-selected`);
+  return sel ? sel.dataset.val : '';
+}
+
+/* ══════════════════════════════════════
+   CONTENT MODE — GENERATE
+══════════════════════════════════════ */
+async function cmGenerate() {
+  const audience  = document.getElementById('cm-audience').value.trim();
+  const angle     = document.getElementById('cm-angle').value.trim();
+  const takeaway  = document.getElementById('cm-takeaway').value.trim();
+  const goal      = cmGetVal('cm-goal-row');
+  const type      = cmGetVal('cm-type-row');
+  const tone      = cmGetVal('cm-tone-row');
+
+  if (!audience || !angle || !takeaway) {
+    alert('Please fill in all three fields before generating.');
+    return;
+  }
+
+  cmLastContext = { audience, angle, takeaway, goal, type, tone };
+
+  const btn = document.getElementById('cm-generate-btn');
+  btn.disabled = true;
+  btn.textContent = 'Generating…';
+
+  // Show spinner in output area
+  const card = document.getElementById('cm-output-card');
+  card.classList.remove('show');
+  const content = document.getElementById('cm-output-content');
+  content.innerHTML = '<div class="cm-spinner"></div>';
+  card.classList.add('show');
+
+  const prompt = `You are a professional content strategist. Write a single, ready-to-post ${type} for the following:
+
+Audience: ${audience}
+Angle / Insight: ${angle}
+Key Takeaway: ${takeaway}
+Goal: ${goal}
+Tone: ${tone}
+
+Instructions:
+- Write ONLY the final content — no preamble, no labels, no commentary.
+- Open with a strong hook.
+- Make it feel native to ${type}.
+- End with a clear call to action or question that drives ${goal.toLowerCase()}.
+- Match the tone: ${tone}.
+- Do NOT use hashtags unless it's a LinkedIn Post.`;
+
+  try {
+    const result = await cmCallClaude(prompt);
+    cmLastGenerated = result;
+    content.innerHTML = '';
+    content.textContent = result;
+    document.getElementById('cm-output-badge').textContent = type;
+    document.getElementById('cm-improve-menu').classList.remove('open');
+  } catch(e) {
+    content.textContent = 'Something went wrong. Please try again.';
+    console.error('Content generation error:', e);
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Generate Content →';
+}
+
+async function cmRegenerate() {
+  if (!cmLastContext.audience) {
+    alert('Generate content first.');
+    return;
+  }
+  await cmGenerate();
+}
+
+async function cmImprove(instruction) {
+  if (!cmLastGenerated) { alert('Generate content first.'); return; }
+
+  const btn = document.querySelector('.cm-action-btn');
+  const content = document.getElementById('cm-output-content');
+  content.innerHTML = '<div class="cm-spinner"></div>';
+
+  const prompt = `Rewrite the following ${cmLastContext.type || 'content'} to make it ${instruction}. Keep the same core message and audience. Return ONLY the rewritten content — no labels or commentary.\n\n${cmLastGenerated}`;
+
+  try {
+    const result = await cmCallClaude(prompt);
+    cmLastGenerated = result;
+    content.textContent = result;
+  } catch(e) {
+    content.textContent = cmLastGenerated;
+  }
+}
+
+function cmToggleImprove() {
+  document.getElementById('cm-improve-menu').classList.toggle('open');
+}
+
+function cmCopy() {
+  if (!cmLastGenerated) return;
+  navigator.clipboard.writeText(cmLastGenerated).then(() => {
+    const btn = document.querySelector('.cm-output-copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy', 2000);
+  });
+}
+
+function cmSave() {
+  if (!cmLastGenerated) return;
+  const item = {
+    text: cmLastGenerated,
+    goal: cmLastContext.goal || 'General',
+    type: cmLastContext.type || 'Content',
+    saved_at: new Date().toISOString()
+  };
+  cmSaved.unshift(item);
+  localStorage.setItem('cm_saved_content', JSON.stringify(cmSaved.slice(0, 50)));
+  cmRenderLibrary();
+  // Brief confirmation
+  const btn = document.querySelector('.cm-action-btn');
+  const allBtns = document.querySelectorAll('.cm-action-btn');
+  allBtns.forEach(b => { if (b.textContent.includes('Save')) { b.textContent = '✅ Saved!'; setTimeout(() => b.textContent = '💾 Save', 2000); } });
+}
+
+function cmLoadLibrary() {
+  cmSaved = JSON.parse(localStorage.getItem('cm_saved_content') || '[]');
+  cmRenderLibrary();
+}
+
+function cmRenderLibrary() {
+  const lib = document.getElementById('cm-library');
+  const section = document.getElementById('cm-library-section');
+  const count = document.getElementById('cm-library-count');
+  if (!lib) return;
+
+  if (cmSaved.length === 0) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = 'block';
+  count.textContent = `${cmSaved.length} piece${cmSaved.length !== 1 ? 's' : ''}`;
+  lib.innerHTML = cmSaved.map((item, i) => `
+    <div class="cm-library-item">
+      <div class="cm-library-goal">${item.type || 'Content'} · ${item.goal || 'General'}</div>
+      <div class="cm-library-text">${item.text.slice(0, 200)}${item.text.length > 200 ? '…' : ''}</div>
+    </div>
+  `).join('');
+}
+
+/* ══════════════════════════════════════
+   CONTENT MODE — CLAUDE API
+══════════════════════════════════════ */
+async function cmCallClaude(prompt) {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || `API error ${res.status}`);
+  }
+  const data = await res.json();
+  return data.content.map(i => i.text || '').join('').trim();
+}
 
 function checkUpdateBanner() {
   const seen = localStorage.getItem('seen_version');
@@ -1107,7 +1698,18 @@ function showHomePage() {
 }
 
 function goHome() {
-  showHomePage();
+  // Check for unsaved content-mode input (UX ENHANCEMENT v8)
+  const audience = document.getElementById('cm-audience')?.value;
+  const angle    = document.getElementById('cm-angle')?.value;
+  const takeaway = document.getElementById('cm-takeaway')?.value;
+  const hasInput = audience || angle || takeaway;
+  if (hasInput && document.getElementById('content-mode').style.display !== 'none') {
+    const confirmLeave = confirm('You have unsaved input. Leave anyway?');
+    if (!confirmLeave) return;
+  }
+  document.getElementById('entry-screen').style.display = 'flex';
+  document.getElementById('main-app').style.display = 'none';
+  document.getElementById('content-mode').style.display = 'none';
 }
 
 function setNavPill(text) {
@@ -1320,6 +1922,12 @@ function showOutline() {
   document.getElementById('ol-title').textContent = outlineData.title;
   document.getElementById('ol-subtitle').textContent = outlineData.subtitle;
 
+  // Populate book-meta display at top of outline screen
+  const previewTitle = document.getElementById('preview-title');
+  const previewSubtitle = document.getElementById('preview-subtitle');
+  if (previewTitle) previewTitle.textContent = outlineData.title || '';
+  if (previewSubtitle) previewSubtitle.textContent = outlineData.subtitle || '';
+
   // Show core insight if present
   const insightEl = document.getElementById('ol-core-insight');
   if (insightEl) {
@@ -1462,6 +2070,13 @@ function showWorkspace() {
   const allApproved = approved === book.total_chapters;
 
   document.getElementById('ws-title').textContent = book.title;
+
+  // Populate book-meta display
+  const wsPT = document.getElementById('ws-preview-title');
+  const wsPST = document.getElementById('ws-preview-subtitle');
+  if (wsPT) wsPT.textContent = book.title || '';
+  if (wsPST) wsPST.textContent = book.subtitle || '';
+
   const pct = (approved / book.total_chapters) * 100;
   document.getElementById('ws-progress-bar').style.width = pct + '%';
   document.getElementById('ws-progress-text').innerHTML = `<span>${approved}</span> / ${book.total_chapters}`;
