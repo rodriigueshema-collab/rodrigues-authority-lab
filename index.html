@@ -29,6 +29,25 @@
   --font-head: 'Syne', sans-serif;
   --font-body: 'DM Sans', sans-serif;
 }
+body.light-mode {
+  --bg: #f8fafc;
+  --bg-2: #ffffff;
+  --bg-3: #f1f5f9;
+  --bg-4: #e2e8f0;
+  --border: rgba(0,0,0,0.07);
+  --border-2: rgba(0,0,0,0.12);
+  --text: #0f172a;
+  --text-2: #334155;
+  --text-3: #64748b;
+  --gold: #d97706;
+  --gold-dim: rgba(217,119,6,0.08);
+  --gold-border: rgba(217,119,6,0.25);
+  --green: #059669;
+  --green-dim: rgba(5,150,105,0.08);
+  --green-border: rgba(5,150,105,0.25);
+  --red: #dc2626;
+  --red-dim: rgba(220,38,38,0.08);
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6;}
@@ -75,23 +94,35 @@ nav{
 .page.active{display:block;}
 
 /* HOME */
-.home-wrap{max-width:660px;margin:0 auto;padding:80px 1.5rem 40px;}
-.home-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:5px 14px;margin-bottom:2rem;animation:fadeUp .5s ease both;}
-.home-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
-.home-h1{font-family:var(--font-head);font-size:clamp(30px,5vw,50px);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:1rem;animation:fadeUp .5s .1s ease both;}
+.home-wrap{max-width:640px;margin:0 auto;padding:72px 1.5rem 40px;}
+.home-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:4px 12px;margin-bottom:1.5rem;animation:fadeUp .5s ease both;}
+.home-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+.home-h1{font-family:var(--font-head);font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.12;letter-spacing:-.02em;margin-bottom:.6rem;animation:fadeUp .5s .1s ease both;}
 .home-h1 span{color:var(--gold);}
-.home-sub{font-size:15px;color:var(--text-2);line-height:1.75;margin-bottom:2.75rem;max-width:480px;animation:fadeUp .5s .2s ease both;}
-.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;animation:fadeUp .5s .3s ease both;}
+.home-tagline{font-size:13px;font-weight:600;color:var(--text-3);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.6rem;animation:fadeUp .5s .15s ease both;}
+.home-sub{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:1.5rem;max-width:460px;animation:fadeUp .5s .2s ease both;}
+.home-proof{display:flex;align-items:center;gap:16px;margin-bottom:2rem;animation:fadeUp .5s .25s ease both;}
+.home-proof-stat{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-3);}
+.home-proof-stat strong{color:var(--text-2);font-weight:600;}
+.home-proof-divider{width:1px;height:14px;background:var(--border-2);}
+.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;animation:fadeUp .5s .3s ease both;}
 @media(max-width:520px){.path-grid{grid-template-columns:1fr;}}
-.path-card{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;padding:1.75rem 1.5rem;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;text-align:left;}
-.path-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),#fbbf24);opacity:0;transition:opacity .22s;}
-.path-card:hover{border-color:var(--gold-border);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.35);}
+.path-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:1.5rem;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;text-align:left;}
+.path-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),#fbbf24);opacity:0;transition:opacity .22s;}
+.path-card:hover{border-color:var(--gold-border);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.3);}
 .path-card:hover::before{opacity:1;}
-.path-icon{font-size:28px;margin-bottom:.75rem;}
-.path-name{font-family:var(--font-head);font-size:17px;font-weight:800;color:var(--text);margin-bottom:.4rem;}
-.path-desc{font-size:13px;color:var(--text-2);line-height:1.65;margin-bottom:1.25rem;}
-.path-cta{font-size:12px;font-weight:700;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:5px 14px;display:inline-block;transition:all .2s;}
+.path-icon{font-size:22px;margin-bottom:.6rem;}
+.path-name{font-family:var(--font-head);font-size:15px;font-weight:800;color:var(--text);margin-bottom:.3rem;}
+.path-desc{font-size:12px;color:var(--text-2);line-height:1.6;margin-bottom:1rem;}
+.path-cta{font-size:11px;font-weight:700;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:4px 12px;display:inline-block;transition:all .2s;}
 .path-card:hover .path-cta{background:var(--gold);color:#000;border-color:var(--gold);}
+.home-author{display:flex;align-items:center;gap:12px;margin-top:1.5rem;padding:1rem 1.25rem;background:var(--bg-2);border:1px solid var(--border);border-radius:12px;animation:fadeUp .5s .35s ease both;}
+.home-author-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#fbbf24);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;border:2px solid var(--gold-border);}
+.home-author-name{font-family:var(--font-head);font-size:13px;font-weight:700;color:var(--text);}
+.home-author-role{font-size:11px;color:var(--text-3);margin-top:1px;}
+.home-author-links{margin-left:auto;display:flex;gap:8px;}
+.home-author-link{font-size:11px;font-weight:600;color:var(--text-3);background:var(--bg-3);border:1px solid var(--border-2);border-radius:20px;padding:4px 10px;text-decoration:none;transition:all .2s;}
+.home-author-link:hover{color:var(--gold);border-color:var(--gold-border);}
 
 /* RESUME BANNER */
 .resume-banner{margin-top:1.5rem;background:var(--bg-2);border:1px solid var(--gold-border);border-radius:var(--radius);padding:1.25rem 1.5rem;cursor:pointer;transition:all .2s;animation:fadeUp .5s .4s ease both;}
@@ -302,12 +333,12 @@ footer a:hover{color:var(--text-2);}
 /* CHAT */
 .chat-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;width:52px;height:52px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;font-size:22px;box-shadow:0 4px 20px rgba(245,158,11,.5);transition:all .22s;display:flex;align-items:center;justify-content:center;}
 .chat-fab:hover{transform:scale(1.08);}
-.chat-panel{position:fixed;bottom:5rem;right:1.5rem;z-index:300;width:300px;background:var(--bg-2);border:1px solid var(--border-2);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.5);display:none;flex-direction:column;animation:slideIn .3s ease both;overflow:hidden;}
+.chat-panel{position:fixed;bottom:5rem;right:1.5rem;z-index:300;width:300px;max-width:calc(100vw - 2rem);background:var(--bg-2);border:1px solid var(--border-2);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.5);display:none;flex-direction:column;animation:slideIn .3s ease both;overflow:hidden;}
 .chat-panel.open{display:flex;}
 .chat-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
 .chat-avatar{width:34px;height:34px;border-radius:50%;background:var(--gold-dim);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:16px;}
 .chat-name{font-size:14px;font-weight:700;color:var(--text);}
-.chat-status{font-size:11px;color:var(--green);}
+.chat-status{font-size:11px;color:var(--text-3);}
 .chat-close{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--text-3);font-size:18px;}
 .chat-msgs{flex:1;padding:1rem;max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:.75rem;}
 .chat-msg{font-size:13px;line-height:1.6;color:var(--text-2);background:var(--bg-3);border-radius:12px 12px 12px 0;padding:.75rem 1rem;max-width:90%;}
@@ -321,13 +352,22 @@ footer a:hover{color:var(--text-2);}
 /* TOAST */
 #toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg-3);border:1px solid var(--border-2);border-radius:20px;padding:10px 20px;font-size:13px;color:var(--text);opacity:0;transition:all .3s;z-index:999;pointer-events:none;}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* RCFTO BLOCKS */
+.rcfto-block{display:flex;gap:16px;margin-bottom:1.75rem;padding:1.5rem;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .2s;}
+.rcfto-block:focus-within{border-color:var(--gold-border);}
+.rcfto-letter{font-family:var(--font-head);font-size:28px;font-weight:800;color:var(--gold);width:36px;flex-shrink:0;line-height:1;padding-top:2px;}
+.rcfto-block-body{flex:1;min-width:0;}
+.rcfto-block-title{font-family:var(--font-head);font-size:14px;font-weight:700;color:var(--text);margin-bottom:.25rem;}
+.rcfto-block-sub{font-size:12px;color:var(--text-3);line-height:1.6;margin-bottom:.9rem;}
+.setup-wrap{max-width:620px;margin:0 auto;padding:60px 1.5rem 80px;}
 </style>
 </head>
 <body>
 
 <!-- UPDATE BANNER -->
 <div id="update-banner" style="display:none;">
-  <span>🔔 New: <strong>My Workspace</strong> + <strong>Locked Content Engine Preview</strong> are live</span>
+  <span>🔔 New: <strong>RCFTO Framework</strong> is now live inside every prompt — Role, Context, Format, Tone, Output</span>
   <a class="banner-link" onclick="dismissBanner()">Got it</a>
   <button class="banner-close" onclick="dismissBanner()">×</button>
 </div>
@@ -342,6 +382,7 @@ footer a:hover{color:var(--text-2);}
     <button class="nav-workspace-btn" id="nav-workspace-btn" onclick="resumeBook()">📘 My Workspace</button>
     <span class="nav-pill" id="nav-pill" style="display:none;"></span>
     <button class="nav-back" id="nav-back" onclick="goHome()">← Home</button>
+    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" style="background:none;border:1px solid var(--border-2);border-radius:20px;padding:5px 11px;cursor:pointer;font-size:14px;color:var(--text-2);transition:all .2s;" aria-label="Toggle theme">🌙</button>
   </div>
 </nav>
 
@@ -349,20 +390,28 @@ footer a:hover{color:var(--text-2);}
 <div class="page active" id="page-home">
   <div class="home-wrap">
     <div class="home-badge">📘 Rodrigue's Authority Lab</div>
-    <h1 class="home-h1">Build your authority.<br><span>Turn your expertise into a book that makes you the expert people trust.</span></h1>
-    <p class="home-sub">Write your book step by step and turn it into content.</p>
+    <div class="home-tagline">Book Strategist</div>
+    <h1 class="home-h1">Your expertise deserves<br><span>a book that opens doors.</span></h1>
+    <p class="home-sub">A real workspace to write your book step by step, one approved chapter at a time, then turn it into content that builds your brand.</p>
+    <div class="home-proof">
+      <div class="home-proof-stat">📘 <strong>Chapter-by-chapter</strong> approval</div>
+      <div class="home-proof-divider"></div>
+      <div class="home-proof-stat">✅ <strong>Your voice</strong> every time</div>
+      <div class="home-proof-divider"></div>
+      <div class="home-proof-stat">⚡ <strong>Content Engine</strong> included</div>
+    </div>
     <div class="path-grid">
       <div class="path-card" onclick="startPath('expert')">
         <div class="path-icon">🏆</div>
         <div class="path-name">I have expertise</div>
-        <div class="path-desc">Turn your knowledge, skills, or experience into an authority book that positions you as the go-to expert.</div>
-        <span class="path-cta">Start Expert Path →</span>
+        <div class="path-desc">You have knowledge worth sharing. Turn it into an authority book that makes clients come to you.</div>
+        <span class="path-cta">Write My Book →</span>
       </div>
       <div class="path-card" onclick="startPath('beginner')">
         <div class="path-icon">🌱</div>
         <div class="path-name">I'm starting from scratch</div>
-        <div class="path-desc">Not sure what your book is about? Get guided from idea to a complete book structure.</div>
-        <span class="path-cta">Start Guided Path →</span>
+        <div class="path-desc">Have a topic but no clear angle? Get guided from raw idea to a complete, structured book.</div>
+        <span class="path-cta">Find My Angle →</span>
       </div>
     </div>
     <div id="resume-book-banner" class="resume-banner" style="display:none;" onclick="resumeBook()">
@@ -370,85 +419,186 @@ footer a:hover{color:var(--text-2);}
       <div class="resume-title" id="resume-book-title">Your Book</div>
       <div class="resume-progress" id="resume-book-progress"></div>
     </div>
-  </div>
-
-  <!-- CONNECT SECTION -->
-  <div class="connect-section">
-    <div class="connect-label">Connect</div>
-    <div class="connect-title">Connect with Rodrigue</div>
-    <div class="connect-sub">Building this in public. Feedback is welcome.</div>
-    <div class="connect-links">
-      <a class="connect-link" href="https://www.linkedin.com/in/rodrigue-shema-4553b4405/" target="_blank">💼 LinkedIn</a>
-      <a class="connect-link" href="https://wa.me/250798878364" target="_blank">💬 WhatsApp</a>
+    <div class="home-author">
+      <div class="home-author-avatar">👨🏾</div>
+      <div>
+        <div class="home-author-name">Rodrigue Shema</div>
+        <div class="home-author-role">Book Strategist · Building in public</div>
+      </div>
+      <div class="home-author-links">
+        <a class="home-author-link" href="https://www.linkedin.com/in/rodrigue-shema-4553b4405/" target="_blank">💼 LinkedIn</a>
+        <a class="home-author-link" href="https://wa.me/250798878364" target="_blank">💬 WhatsApp</a>
+      </div>
     </div>
   </div>
-  <footer>Built by <a href="https://www.linkedin.com/in/rodrigue-shema-4553b4405/" target="_blank">Rodrigue Shema</a> · Book Strategist · Kigali, Rwanda</footer>
+  <footer>Built by <a href="https://www.linkedin.com/in/rodrigue-shema-4553b4405/" target="_blank">Rodrigue Shema</a> &nbsp;·&nbsp; v0.5</footer>
 </div>
 
 <!-- SETUP -->
 <div class="page" id="page-setup">
   <div class="setup-wrap">
-    <div id="setup-expert" style="display:none;">
-      <div class="section-label">Expert Path · Setup</div>
-      <h2 class="section-title">Tell me about your <span>expertise</span></h2>
-      <p class="section-sub">Be specific. The more detail you give, the more powerful your book will be.</p>
-      <div class="field-group">
-        <label class="field-label">What is your expertise? *</label>
-        <input class="field-input" id="expert-field" type="text" placeholder="e.g. Leadership coach for first-time managers at tech startups">
-      </div>
-      <div class="field-group">
-        <label class="field-label">Who is your audience? (optional)</label>
-        <input class="field-input" id="expert-audience" type="text" placeholder="e.g. Ambitious professionals aged 28–40">
-      </div>
+
+    <!-- RCFTO badge -->
+    <div style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:4px 12px;margin-bottom:1.5rem;">
+      RCFTO Framework
     </div>
-    <div id="setup-beginner" style="display:none;">
-      <div class="section-label">Guided Path · Setup</div>
-      <h2 class="section-title">What are you <span>interested in?</span></h2>
-      <p class="section-sub">Start with what excites you. We will shape it into a real book idea.</p>
-      <div class="field-group">
-        <label class="field-label">Your topic or interest *</label>
-        <input class="field-input" id="beginner-interest" type="text" placeholder="e.g. Productivity, money, relationships, health, mindset...">
+
+    <!-- EXPERT PATH -->
+    <div id="setup-expert" style="display:none;">
+      <div class="section-label">Expert Path · RCFTO Setup</div>
+      <h2 class="section-title">Build your <span>book foundation</span></h2>
+      <p class="section-sub">Answer these 5 questions. Each one maps to the RCFTO framework that powers the entire book.</p>
+
+      <!-- R: ROLE -->
+      <div class="rcfto-block">
+        <div class="rcfto-letter">R</div>
+        <div class="rcfto-block-body">
+          <div class="rcfto-block-title">Role — Your specific perspective</div>
+          <div class="rcfto-block-sub">Not just what you do — your exact angle of vision. What have you seen, built, or solved that nobody else in your space has?</div>
+          <div class="field-group" style="margin-bottom:0;">
+            <input class="field-input" id="expert-field" type="text" placeholder="e.g. Leadership coach who spent 8 years inside Fortune 500 teams before going independent — I know why frameworks fail in practice">
+          </div>
+        </div>
       </div>
-      <div class="field-group">
-        <label class="field-label">Direction</label>
-        <div class="choice-grid" id="direction-grid">
-          <button class="choice-btn" data-val="Make Money" onclick="selectChoice(this,'direction-grid')">💰 Make Money</button>
-          <button class="choice-btn" data-val="Personal Growth" onclick="selectChoice(this,'direction-grid')">🌿 Personal Growth</button>
-          <button class="choice-btn" data-val="Business" onclick="selectChoice(this,'direction-grid')">🚀 Business</button>
-          <button class="choice-btn" data-val="Health & Wellness" onclick="selectChoice(this,'direction-grid')">🏃 Health</button>
-          <button class="choice-btn" data-val="Relationships" onclick="selectChoice(this,'direction-grid')">🤝 Relationships</button>
-          <button class="choice-btn" data-val="Mindset" onclick="selectChoice(this,'direction-grid')">🧠 Mindset</button>
+
+      <!-- C: CONTEXT -->
+      <div class="rcfto-block">
+        <div class="rcfto-letter">C</div>
+        <div class="rcfto-block-body">
+          <div class="rcfto-block-title">Context — Your reader's exact situation</div>
+          <div class="rcfto-block-sub">Not a category. One person, one moment. What are they struggling with right now, and what do they believe (wrongly) about why?</div>
+          <div class="field-group" style="margin-bottom:0;">
+            <textarea class="field-textarea" id="expert-audience" rows="2" placeholder="e.g. First-time managers at tech startups, 6 months in, overwhelmed — they think the problem is their team, but it's actually their communication"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- F: FORMAT -->
+      <div class="rcfto-block">
+        <div class="rcfto-letter">F</div>
+        <div class="rcfto-block-body">
+          <div class="rcfto-block-title">Format — Book structure</div>
+          <div class="rcfto-block-sub">How many chapters should carry this argument?</div>
+          <div class="choice-grid" id="chapter-count-grid">
+            <button class="choice-btn selected" data-val="6" onclick="selectChoice(this,'chapter-count-grid')">4–6 chapters</button>
+            <button class="choice-btn" data-val="8" onclick="selectChoice(this,'chapter-count-grid')">6–8 chapters</button>
+            <button class="choice-btn" data-val="12" onclick="selectChoice(this,'chapter-count-grid')">8–12 chapters</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- T: TONE -->
+      <div class="rcfto-block">
+        <div class="rcfto-letter">T</div>
+        <div class="rcfto-block-body">
+          <div class="rcfto-block-title">Tone — Your voice fingerprint</div>
+          <div class="rcfto-block-sub">How do you naturally communicate? Pick the closest match.</div>
+          <div class="choice-grid" id="style-grid">
+            <button class="choice-btn selected" data-val="Professional and direct — short sentences, no fluff, trust the reader to handle honesty" onclick="selectChoice(this,'style-grid')">Direct</button>
+            <button class="choice-btn" data-val="Warm and conversational — like talking to a trusted friend who happens to be an expert" onclick="selectChoice(this,'style-grid')">Warm</button>
+            <button class="choice-btn" data-val="Bold and contrarian — willing to challenge industry assumptions, unapologetically specific" onclick="selectChoice(this,'style-grid')">Bold</button>
+            <button class="choice-btn" data-val="Simple and clear — plain language, concrete examples, nothing abstract" onclick="selectChoice(this,'style-grid')">Simple</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- O: OUTPUT -->
+      <div class="rcfto-block">
+        <div class="rcfto-letter">O</div>
+        <div class="rcfto-block-body">
+          <div class="rcfto-block-title">Output — What should the reader decide?</div>
+          <div class="rcfto-block-sub">By the last page, what should your reader know, feel, and do? This is the standard everything else is built toward.</div>
+          <div class="field-group" style="margin-bottom:.75rem;">
+            <textarea class="field-textarea" id="expert-output" rows="2" placeholder="e.g. Understand that their management problem is a clarity problem — and reach out to work with me to fix it"></textarea>
+          </div>
+          <div class="field-label" style="margin-bottom:.5rem;">Chapter depth</div>
+          <div class="choice-grid" id="length-grid">
+            <button class="choice-btn" data-val="800" onclick="selectChoice(this,'length-grid')">Short (~800 words)</button>
+            <button class="choice-btn selected" data-val="1200" onclick="selectChoice(this,'length-grid')">Standard (~1,200 words)</button>
+            <button class="choice-btn" data-val="1800" onclick="selectChoice(this,'length-grid')">Detailed (~1,800 words)</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- SHARED OPTIONS -->
-    <div class="field-group">
-      <label class="field-label">Chapter count</label>
-      <div class="choice-grid" id="chapter-count-grid">
-        <button class="choice-btn selected" data-val="6" onclick="selectChoice(this,'chapter-count-grid')">4–6</button>
-        <button class="choice-btn" data-val="8" onclick="selectChoice(this,'chapter-count-grid')">6–8</button>
-        <button class="choice-btn" data-val="12" onclick="selectChoice(this,'chapter-count-grid')">8–12</button>
+    <!-- BEGINNER PATH -->
+    <div id="setup-beginner" style="display:none;">
+      <div class="section-label">Guided Path · RCFTO Setup</div>
+      <h2 class="section-title">Shape your <span>book idea</span></h2>
+      <p class="section-sub">Answer these questions and the RCFTO framework will turn your interest into a real book concept.</p>
+
+      <!-- R: ROLE -->
+      <div class="rcfto-block">
+        <div class="rcfto-letter">R</div>
+        <div class="rcfto-block-body">
+          <div class="rcfto-block-title">Role — What's your topic or interest?</div>
+          <div class="rcfto-block-sub">What subject energizes you? What do you find yourself reading, thinking, or talking about most?</div>
+          <div class="field-group" style="margin-bottom:0;">
+            <input class="field-input" id="beginner-interest" type="text" placeholder="e.g. Productivity, building wealth, overcoming anxiety, fitness after 40...">
+          </div>
+        </div>
+      </div>
+
+      <!-- C: CONTEXT -->
+      <div class="rcfto-block">
+        <div class="rcfto-letter">C</div>
+        <div class="rcfto-block-body">
+          <div class="rcfto-block-title">Context — Who is this for?</div>
+          <div class="rcfto-block-sub">Pick the direction. This shapes who the reader is and what problem they're trying to solve.</div>
+          <div class="choice-grid" id="direction-grid">
+            <button class="choice-btn" data-val="Make Money" onclick="selectChoice(this,'direction-grid')">💰 Make Money</button>
+            <button class="choice-btn" data-val="Personal Growth" onclick="selectChoice(this,'direction-grid')">🌿 Personal Growth</button>
+            <button class="choice-btn" data-val="Business" onclick="selectChoice(this,'direction-grid')">🚀 Business</button>
+            <button class="choice-btn" data-val="Health & Wellness" onclick="selectChoice(this,'direction-grid')">🏃 Health</button>
+            <button class="choice-btn" data-val="Relationships" onclick="selectChoice(this,'direction-grid')">🤝 Relationships</button>
+            <button class="choice-btn" data-val="Mindset" onclick="selectChoice(this,'direction-grid')">🧠 Mindset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- F: FORMAT -->
+      <div class="rcfto-block">
+        <div class="rcfto-letter">F</div>
+        <div class="rcfto-block-body">
+          <div class="rcfto-block-title">Format — Chapter count</div>
+          <div class="choice-grid" id="b-chapter-count-grid">
+            <button class="choice-btn selected" data-val="6" onclick="selectChoice(this,'b-chapter-count-grid')">4–6 chapters</button>
+            <button class="choice-btn" data-val="8" onclick="selectChoice(this,'b-chapter-count-grid')">6–8 chapters</button>
+            <button class="choice-btn" data-val="12" onclick="selectChoice(this,'b-chapter-count-grid')">8–12 chapters</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- T: TONE -->
+      <div class="rcfto-block">
+        <div class="rcfto-letter">T</div>
+        <div class="rcfto-block-body">
+          <div class="rcfto-block-title">Tone — How should it feel to read?</div>
+          <div class="choice-grid" id="b-style-grid">
+            <button class="choice-btn selected" data-val="Professional and direct — short sentences, no fluff, trust the reader to handle honesty" onclick="selectChoice(this,'b-style-grid')">Direct</button>
+            <button class="choice-btn" data-val="Warm and conversational — like talking to a trusted friend who happens to be an expert" onclick="selectChoice(this,'b-style-grid')">Warm</button>
+            <button class="choice-btn" data-val="Bold and contrarian — willing to challenge industry assumptions, unapologetically specific" onclick="selectChoice(this,'b-style-grid')">Bold</button>
+            <button class="choice-btn" data-val="Simple and clear — plain language, concrete examples, nothing abstract" onclick="selectChoice(this,'b-style-grid')">Simple</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- O: OUTPUT -->
+      <div class="rcfto-block">
+        <div class="rcfto-letter">O</div>
+        <div class="rcfto-block-body">
+          <div class="rcfto-block-title">Output — Chapter depth</div>
+          <div class="choice-grid" id="b-length-grid">
+            <button class="choice-btn" data-val="800" onclick="selectChoice(this,'b-length-grid')">Short (~800 words)</button>
+            <button class="choice-btn selected" data-val="1200" onclick="selectChoice(this,'b-length-grid')">Standard (~1,200 words)</button>
+            <button class="choice-btn" data-val="1800" onclick="selectChoice(this,'b-length-grid')">Detailed (~1,800 words)</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="field-group">
-      <label class="field-label">Writing tone</label>
-      <div class="choice-grid" id="style-grid">
-        <button class="choice-btn selected" data-val="Professional" onclick="selectChoice(this,'style-grid')">Professional</button>
-        <button class="choice-btn" data-val="Simple" onclick="selectChoice(this,'style-grid')">Simple</button>
-        <button class="choice-btn" data-val="Bold" onclick="selectChoice(this,'style-grid')">Bold</button>
-      </div>
-    </div>
-    <div class="field-group">
-      <label class="field-label">Chapter length</label>
-      <div class="choice-grid" id="length-grid">
-        <button class="choice-btn" data-val="800" onclick="selectChoice(this,'length-grid')">Short (~800 words)</button>
-        <button class="choice-btn selected" data-val="1200" onclick="selectChoice(this,'length-grid')">Standard (~1,200 words)</button>
-        <button class="choice-btn" data-val="1800" onclick="selectChoice(this,'length-grid')">Detailed (~1,800 words)</button>
-      </div>
-    </div>
+
     <div class="btn-row">
-      <button class="btn-primary" onclick="generateOutline()">Generate Book Outline →</button>
+      <button class="btn-primary" id="generate-outline-btn" onclick="generateOutlineWithLoading()">Generate Book Outline →</button>
       <button class="btn-secondary" onclick="goHome()">← Back</button>
     </div>
   </div>
@@ -474,6 +624,10 @@ footer a:hover{color:var(--text-2);}
         <div class="book-title-display" id="ol-title"></div>
         <div class="book-subtitle-display" id="ol-subtitle"></div>
       </div>
+      <div id="ol-core-insight" style="display:none;padding:1rem 1.75rem;border-bottom:1px solid var(--border);background:var(--gold-dim);">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;">Core Insight · RCFTO Output</div>
+        <div id="ol-insight-text" style="font-size:13px;color:var(--text-2);line-height:1.65;font-style:italic;"></div>
+      </div>
       <div class="chapter-list">
         <div class="chapter-list-label">Chapters</div>
         <div id="ol-chapters-list"></div>
@@ -481,7 +635,7 @@ footer a:hover{color:var(--text-2);}
     </div>
     <div class="btn-row">
       <button class="btn-primary" onclick="startWritingBook()">📘 Start Writing Book →</button>
-      <button class="btn-secondary" onclick="regenerateOutline()">↻ Edit Outline</button>
+      <button class="btn-secondary" onclick="regenerateOutline()">✏️ Edit Outline</button>
     </div>
   </div>
 </div>
@@ -540,6 +694,12 @@ footer a:hover{color:var(--text-2);}
         </div>
       </div>
     </div>
+    <!-- Chapter Navigation -->
+    <div id="ch-nav-row" style="display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);gap:10px;flex-wrap:wrap;">
+      <button class="btn-secondary" id="ch-nav-prev" onclick="navigateChapter(-1)" style="padding:10px 18px;font-size:13px;">← Previous</button>
+      <button class="btn-ghost" onclick="showPage('page-workspace');showWorkspace();" style="font-size:13px;">↑ Workspace</button>
+      <button class="btn-secondary" id="ch-nav-next" onclick="navigateChapter(1)" style="padding:10px 18px;font-size:13px;">Next →</button>
+    </div>
   </div>
 </div>
 
@@ -553,9 +713,35 @@ footer a:hover{color:var(--text-2);}
     </div>
     <div id="fb-chapters"></div>
     <div class="btn-row" style="margin-top:2rem;">
-      <button class="btn-primary" onclick="exportBook()">Export Book</button>
+      <button class="btn-primary" onclick="showExportModal()">Export Book</button>
       <button class="btn-secondary" onclick="showPage('page-workspace');showWorkspace()">← Workspace</button>
     </div>
+  </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div id="export-modal" style="position:fixed;inset:0;z-index:700;background:rgba(11,15,26,.95);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:1.5rem;">
+  <div style="background:var(--bg-2);border:1px solid var(--border-2);border-radius:20px;padding:2.5rem 2rem;max-width:440px;width:100%;animation:slideIn .35s ease both;">
+    <div style="font-size:32px;margin-bottom:1rem;">📚</div>
+    <div style="font-family:var(--font-head);font-size:21px;font-weight:800;color:var(--text);margin-bottom:.5rem;">Export your book</div>
+    <div style="font-size:14px;color:var(--text-2);line-height:1.65;margin-bottom:2rem;">Choose your format. Both are self-contained and ready to share or publish.</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:1.5rem;">
+      <button onclick="exportEbook()" style="display:flex;align-items:flex-start;gap:16px;background:var(--bg-3);border:1px solid var(--border-2);border-radius:14px;padding:1.25rem 1.5rem;cursor:pointer;transition:all .2s;text-align:left;" onmouseover="this.style.borderColor='rgba(245,158,11,.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)'">
+        <div style="font-size:28px;flex-shrink:0;">📱</div>
+        <div>
+          <div style="font-family:var(--font-head);font-size:15px;font-weight:700;color:var(--text);margin-bottom:.25rem;">eBook <span style="font-size:11px;font-weight:600;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:2px 8px;margin-left:4px;">HTML</span></div>
+          <div style="font-size:13px;color:var(--text-2);line-height:1.6;">Beautiful formatted book. Opens in any browser. Easy to share as a file or link.</div>
+        </div>
+      </button>
+      <button onclick="exportPDF()" style="display:flex;align-items:flex-start;gap:16px;background:var(--bg-3);border:1px solid var(--border-2);border-radius:14px;padding:1.25rem 1.5rem;cursor:pointer;transition:all .2s;text-align:left;" onmouseover="this.style.borderColor='rgba(245,158,11,.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)'">
+        <div style="font-size:28px;flex-shrink:0;">📄</div>
+        <div>
+          <div style="font-family:var(--font-head);font-size:15px;font-weight:700;color:var(--text);margin-bottom:.25rem;">PDF <span style="font-size:11px;font-weight:600;color:var(--text-3);background:var(--bg-4);border:1px solid var(--border);border-radius:20px;padding:2px 8px;margin-left:4px;">Print-ready</span></div>
+          <div style="font-size:13px;color:var(--text-2);line-height:1.6;">Opens a print view. Use your browser's "Save as PDF" to generate the file.</div>
+        </div>
+      </button>
+    </div>
+    <button onclick="closeExportModal()" style="width:100%;background:none;border:none;font-size:13px;color:var(--text-3);cursor:pointer;padding:.5rem;font-family:var(--font-body);">Cancel</button>
   </div>
 </div>
 
@@ -585,16 +771,16 @@ footer a:hover{color:var(--text-2);}
 <!-- FRICTION OVERLAY -->
 <div id="friction-overlay">
   <div class="friction-box">
-    <div class="friction-icon">🔒</div>
-    <div class="friction-title">Continue building your book</div>
-    <div class="friction-sub">You have started strong. Unlock full access to finish your book and turn it into content.</div>
+    <div class="friction-icon">🚀</div>
+    <div class="friction-title">You're building something real.</div>
+    <div class="friction-sub">You've written 4 chapters. That's more than most people ever do. Unlock full access to finish your book and turn it into content that works for you.</div>
     <div class="friction-features">
-      <div class="friction-feat">Finish all chapters</div>
-      <div class="friction-feat">Unlimited rewrites</div>
-      <div class="friction-feat">Turn your book into content</div>
-      <div class="friction-feat">Export your full book</div>
+      <div class="friction-feat">Write all remaining chapters</div>
+      <div class="friction-feat">Unlimited rewrites — perfect your voice</div>
+      <div class="friction-feat">Export your complete book</div>
+      <div class="friction-feat">Full Content Engine access</div>
     </div>
-    <button class="btn-unlock" onclick="unlockAccess()">Unlock Access →</button>
+    <button class="btn-unlock" onclick="unlockAccess()">Continue Building →</button>
     <div style="margin-top:1rem;">
       <button class="btn-ghost" onclick="closeFriction()">Maybe later</button>
     </div>
@@ -627,22 +813,26 @@ footer a:hover{color:var(--text-2);}
 </div>
 
 <!-- CHAT -->
-<button class="chat-fab" onclick="toggleChat()">💬</button>
-<div class="chat-panel" id="chat-panel">
+<button class="chat-fab" onclick="toggleAskPanel()" title="Ask a question">💬</button>
+
+
+<!-- ASK PANEL -->
+<div class="chat-panel" id="ask-panel">
   <div class="chat-header">
-    <div class="chat-avatar">👨🏾</div>
+    <div class="chat-avatar">💬</div>
     <div>
-      <div class="chat-name">Rodrigue</div>
-      <div class="chat-status">● Online</div>
+      <div class="chat-name">Ask Rodrigue</div>
+      <div class="chat-status">Replies within 24h</div>
     </div>
-    <button class="chat-close" onclick="toggleChat()">×</button>
+    <button class="chat-close" onclick="toggleAskPanel()">×</button>
   </div>
-  <div class="chat-msgs" id="chat-msgs">
-    <div class="chat-msg">Hey 👋 I'm Rodrigue. What are you building today?</div>
-  </div>
-  <div class="chat-input-row">
-    <input class="chat-input" id="chat-input" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendChat()">
-    <button class="chat-send" onclick="sendChat()">→</button>
+  <div style="padding:1rem;display:flex;flex-direction:column;gap:10px;">
+    <div style="font-size:13px;color:var(--text-2);line-height:1.6;">Have a question about your book, the process, or the app? Send it directly and Rodrigue will reply by email.</div>
+    <!-- Sent questions history -->
+    <div id="ask-history" style="display:none;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.75rem;max-height:140px;overflow-y:auto;"></div>
+    <textarea class="field-textarea" id="ask-input" rows="4" placeholder="Type your question here..."></textarea>
+    <button class="btn-primary" style="width:100%;justify-content:center;" onclick="submitQuestion()">Send Question →</button>
+    <div id="ask-thank" style="display:none;font-size:13px;color:var(--green);text-align:center;padding:.5rem 0;">Sent! Rodrigue will reply to your email.</div>
   </div>
 </div>
 
@@ -651,10 +841,53 @@ footer a:hover{color:var(--text-2);}
 
 <script>
 /* ══════════════════════════════════════
+   THEME TOGGLE
+══════════════════════════════════════ */
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light-mode');
+  localStorage.setItem('authority_lab_theme', isLight ? 'light' : 'dark');
+  document.getElementById('theme-toggle').textContent = isLight ? '☀️' : '🌙';
+}
+
+function applyStoredTheme() {
+  const theme = localStorage.getItem('authority_lab_theme');
+  if (theme === 'light') {
+    document.body.classList.add('light-mode');
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = '☀️';
+  }
+}
+
+/* ══════════════════════════════════════
+   SUPABASE
+══════════════════════════════════════ */
+const SUPABASE_URL  = 'https://wqckznuokpniqgnzxoqi.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_oPpeDGSjKGzatY6UHj02_g_NjMUnzb2';
+
+async function saveEmailToSupabase(email) {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON,
+        'Authorization': `Bearer ${SUPABASE_ANON}`,
+        'Prefer': 'resolution=ignore-duplicates,return=minimal'
+      },
+      body: JSON.stringify({ email, source: 'authority_lab', created_at: new Date().toISOString() })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      console.warn('Supabase subscribers error:', err.message || res.status);
+    }
+  } catch(e) { console.warn('Supabase failed:', e.message); }
+}
+
+/* ══════════════════════════════════════
    STATE
 ══════════════════════════════════════ */
-const FREE_CHAPTER_LIMIT = 2;
-const CURRENT_VERSION = '0.4';
+const FREE_CHAPTER_LIMIT = 4;
+const CURRENT_VERSION = '0.5';
 
 let currentPath = 'expert';
 let outlineData = null;
@@ -667,9 +900,14 @@ let confirmCallback = null;
    INIT
 ══════════════════════════════════════ */
 window.addEventListener('load', () => {
+  applyStoredTheme();
+  if (!SUPABASE_ANON || SUPABASE_ANON === 'YOUR_SUPABASE_ANON_KEY_HERE') {
+    console.warn('⚠️ Authority Lab: Supabase anon key not set. Email collection will not work.');
+  }
   checkUpdateBanner();
   loadBookFromStorage();
   showHomePage();
+  restoreSetupForm();
 });
 
 function checkUpdateBanner() {
@@ -726,7 +964,9 @@ function showPage(id) {
 function showHomePage() {
   showPage('page-home');
   document.getElementById('nav-back').style.display = 'none';
-  document.getElementById('nav-pill').style.display = 'none';
+  const pill = document.getElementById('nav-pill');
+  pill.style.display = 'none';
+  pill.textContent = '';
   loadBookFromStorage();
 }
 
@@ -742,6 +982,61 @@ function setNavPill(text) {
 }
 
 /* ══════════════════════════════════════
+   SETUP FORM PERSISTENCE
+══════════════════════════════════════ */
+function saveSetupForm() {
+  const data = {
+    path: currentPath,
+    expert_field: (document.getElementById('expert-field') || {}).value || '',
+    expert_audience: (document.getElementById('expert-audience') || {}).value || '',
+    expert_output: (document.getElementById('expert-output') || {}).value || '',
+    beginner_interest: (document.getElementById('beginner-interest') || {}).value || '',
+    chapter_count: getSelectedChoice('chapter-count-grid') || getSelectedChoice('b-chapter-count-grid') || '6',
+    style: getSelectedChoice('style-grid') || getSelectedChoice('b-style-grid') || '',
+    length: getSelectedChoice('length-grid') || getSelectedChoice('b-length-grid') || '1200',
+    direction: getSelectedChoice('direction-grid') || ''
+  };
+  localStorage.setItem('authority_lab_setup_draft', JSON.stringify(data));
+}
+
+function restoreSetupForm() {
+  const saved = localStorage.getItem('authority_lab_setup_draft');
+  if (!saved) return;
+  try {
+    const d = JSON.parse(saved);
+    // Restore text inputs (elements may not exist yet until path is selected)
+    window._setupDraft = d;
+  } catch(e) {}
+}
+
+function applySetupDraft(path) {
+  const d = window._setupDraft;
+  if (!d || d.path !== path) return;
+  if (path === 'expert') {
+    const f = document.getElementById('expert-field'); if (f && d.expert_field) f.value = d.expert_field;
+    const a = document.getElementById('expert-audience'); if (a && d.expert_audience) a.value = d.expert_audience;
+    const o = document.getElementById('expert-output'); if (o && d.expert_output) o.value = d.expert_output;
+    if (d.chapter_count) restoreChoice('chapter-count-grid', d.chapter_count);
+    if (d.style) restoreChoice('style-grid', d.style);
+    if (d.length) restoreChoice('length-grid', d.length);
+  } else {
+    const i = document.getElementById('beginner-interest'); if (i && d.beginner_interest) i.value = d.beginner_interest;
+    if (d.direction) restoreChoice('direction-grid', d.direction);
+    if (d.chapter_count) restoreChoice('b-chapter-count-grid', d.chapter_count);
+    if (d.style) restoreChoice('b-style-grid', d.style);
+    if (d.length) restoreChoice('b-length-grid', d.length);
+  }
+}
+
+function restoreChoice(gridId, val) {
+  const btns = document.querySelectorAll(`#${gridId} .choice-btn`);
+  btns.forEach(b => {
+    b.classList.remove('selected');
+    if (b.dataset.val === val) b.classList.add('selected');
+  });
+}
+
+/* ══════════════════════════════════════
    PATH SELECTION
 ══════════════════════════════════════ */
 function startPath(path) {
@@ -750,6 +1045,18 @@ function startPath(path) {
   document.getElementById('setup-beginner').style.display = path === 'beginner' ? 'block' : 'none';
   showPage('page-setup');
   setNavPill(path === 'expert' ? '🏆 Expert Path' : '🌱 Guided Path');
+
+  // Restore saved draft after DOM is shown
+  setTimeout(() => {
+    applySetupDraft(path);
+    // Auto-save on every input change
+    document.querySelectorAll('#page-setup input, #page-setup textarea').forEach(el => {
+      el.addEventListener('input', saveSetupForm);
+    });
+    document.querySelectorAll('#page-setup .choice-btn').forEach(btn => {
+      btn.addEventListener('click', () => setTimeout(saveSetupForm, 50));
+    });
+  }, 50);
 }
 
 function resumeBook() {
@@ -770,60 +1077,99 @@ function getSelectedChoice(gridId) {
   return sel ? sel.dataset.val : null;
 }
 
+async function generateOutlineWithLoading() {
+  const btn = document.getElementById('generate-outline-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Generating...'; }
+  await generateOutline();
+  if (btn) { btn.disabled = false; btn.textContent = 'Generate Book Outline →'; }
+}
+
 /* ══════════════════════════════════════
    OUTLINE GENERATION
 ══════════════════════════════════════ */
 async function generateOutline() {
-  const chapterCount = parseInt(getSelectedChoice('chapter-count-grid')) || 6;
-  const style = getSelectedChoice('style-grid') || 'Professional';
-  const chapterLength = parseInt(getSelectedChoice('length-grid')) || 1200;
+  const isExpert = currentPath === 'expert';
+  const chapterCount = parseInt(getSelectedChoice(isExpert ? 'chapter-count-grid' : 'b-chapter-count-grid')) || 6;
+  const style = getSelectedChoice(isExpert ? 'style-grid' : 'b-style-grid') || 'Professional and direct — short sentences, no fluff, trust the reader to handle honesty';
+  const chapterLength = parseInt(getSelectedChoice(isExpert ? 'length-grid' : 'b-length-grid')) || 1200;
 
-  let expertise, audience;
+  // Collect all 5 RCFTO components
+  let rcfto_role, rcfto_context, rcfto_output;
+
   if (currentPath === 'expert') {
-    expertise = document.getElementById('expert-field').value.trim();
-    audience = document.getElementById('expert-audience').value.trim();
-    if (!expertise) { showToast('Please enter your expertise'); return; }
+    rcfto_role = document.getElementById('expert-field').value.trim();
+    rcfto_context = document.getElementById('expert-audience').value.trim();
+    rcfto_output = (document.getElementById('expert-output') || {value:''}).value.trim();
+    if (!rcfto_role) { showToast('Please describe your expertise (Role)'); return; }
   } else {
     const interest = document.getElementById('beginner-interest').value.trim();
     const direction = getSelectedChoice('direction-grid') || 'Personal Growth';
     if (!interest) { showToast('Please enter your topic'); return; }
-    expertise = `${direction}: ${interest}`;
-    audience = 'general audience';
+    rcfto_role = `${direction} writer focused on: ${interest}`;
+    rcfto_context = `Reader pursuing ${direction} through the lens of: ${interest}`;
+    rcfto_output = `Reader understands a clear path forward and feels compelled to take action on ${interest}`;
   }
 
-  window._setup = { expertise, audience, style, chapterCount, chapterLength };
+  // Store full RCFTO data for chapter generation
+  window._setup = {
+    rcfto_role,
+    rcfto_context: rcfto_context || 'Professionals seeking practical expertise they can apply immediately',
+    rcfto_format_chapters: chapterCount,
+    rcfto_tone: style,
+    rcfto_output: rcfto_output || 'Reader understands the framework, trusts the author, and takes the next step',
+    chapterLength
+  };
 
   showPage('page-loading');
   setNavPill('📘 Generating...');
-  document.getElementById('loading-msg').textContent = 'Building your book structure...';
-  document.getElementById('loading-sub').textContent = 'Crafting title, subtitle, and chapters';
+  document.getElementById('loading-msg').textContent = 'Applying RCFTO framework...';
+  document.getElementById('loading-sub').textContent = 'Building your book structure from your specific angle';
 
   try {
-    const prompt = `You are a professional book strategist. Create a compelling book outline for this expertise: "${expertise}".
-Audience: "${audience || 'general professionals'}".
-Generate exactly ${chapterCount} chapters. Writing tone: ${style}.
+    const prompt = `You are Rodrigue Shema's RCFTO book engine. Your only job is to apply the RCFTO framework to produce a book outline that could ONLY come from this specific author with this specific perspective.
+
+RCFTO INPUTS:
+- ROLE (author's specific perspective): "${window._setup.rcfto_role}"
+- CONTEXT (reader's exact situation): "${window._setup.rcfto_context}"
+- FORMAT: Exactly ${chapterCount} chapters that build a complete argument from the reader's current pain to the author's specific solution
+- TONE: ${window._setup.rcfto_tone}
+- OUTPUT (what reader must know/feel/decide by last page): "${window._setup.rcfto_output}"
+
+CRITICAL RULES:
+- The title must be specific enough that only THIS author could have written this book
+- Each chapter title must advance the reader's journey — not just be a topic label
+- The argument must build: problem → why common solutions fail → the author's specific framework → transformation
+- No em dashes. No generic business-book titles. No vague chapter names.
+- Echo the author's exact Role back — their specific experience must be visible in the structure
 
 Return ONLY valid JSON (no markdown, no backticks):
 {
-  "title": "Book title (compelling, specific, no em dash)",
-  "subtitle": "Book subtitle (compelling and specific, no em dash)",
-  "genre": "Category (e.g. Leadership, Business, Personal Development)",
-  "chapters": ["Chapter title 1", "Chapter title 2", ...]
+  "title": "Book title — specific, unmistakably this author",
+  "subtitle": "Subtitle naming: the reader, the transformation, and the method",
+  "genre": "Category",
+  "core_insight": "The one contrarian idea only this author would say, in one sentence",
+  "chapters": ["Chapter 1 title", "Chapter 2 title", ...]
 }`;
 
     const res = await callClaude(prompt);
     let text = res.replace(/```json|```/g, '').trim();
     outlineData = JSON.parse(text);
-    outlineData.style = style;
+    outlineData.rcfto_tone = style;
     outlineData.chapterCount = chapterCount;
     outlineData.chapterLength = chapterLength;
+    localStorage.removeItem('authority_lab_setup_draft');
+    window._setupDraft = null;
     showOutline();
   } catch(e) {
+    const roleWords = rcfto_role.split(' ').slice(0, 4).join(' ');
     outlineData = {
-      title: `The ${expertise.split(' ').slice(0, 3).join(' ')} Authority Guide`,
-      subtitle: 'A proven framework to build your expertise and lead your market',
-      genre: 'Authority and Leadership',
-      style, chapterCount, chapterLength,
+      title: `The ${roleWords} System`,
+      subtitle: 'A specific framework for the people who need exactly this',
+      genre: 'Authority and Expertise',
+      core_insight: 'The gap between your knowledge and your market is a communication problem, not a quality problem.',
+      rcfto_tone: style,
+      chapterCount,
+      chapterLength,
       chapters: Array.from({length: chapterCount}, (_, i) => `Chapter ${i + 1}: Core Principle ${i + 1}`)
     };
     showOutline();
@@ -834,6 +1180,17 @@ function showOutline() {
   document.getElementById('ol-genre').textContent = outlineData.genre || 'Authority Book';
   document.getElementById('ol-title').textContent = outlineData.title;
   document.getElementById('ol-subtitle').textContent = outlineData.subtitle;
+
+  // Show core insight if present
+  const insightEl = document.getElementById('ol-core-insight');
+  if (insightEl) {
+    if (outlineData.core_insight) {
+      insightEl.style.display = 'block';
+      document.getElementById('ol-insight-text').textContent = outlineData.core_insight;
+    } else {
+      insightEl.style.display = 'none';
+    }
+  }
 
   const list = document.getElementById('ol-chapters-list');
   list.innerHTML = outlineData.chapters.map((ch, i) => `
@@ -846,7 +1203,65 @@ function showOutline() {
   setNavPill('📘 Outline');
 }
 
-async function regenerateOutline() {
+function regenerateOutline() {
+  // Show inline edit UI on the outline page instead of regenerating blindly
+  const editId = 'outline-edit-panel';
+  if (document.getElementById(editId)) {
+    document.getElementById(editId).remove();
+    return;
+  }
+
+  const panel = document.createElement('div');
+  panel.id = editId;
+  panel.style.cssText = 'background:var(--bg-3);border:1px solid var(--gold-border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;animation:slideIn .3s ease both;';
+  panel.innerHTML = `
+    <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;">Edit Outline</div>
+    <div style="margin-bottom:.75rem;">
+      <label style="font-size:12px;font-weight:600;color:var(--text-2);display:block;margin-bottom:.35rem;">Book Title</label>
+      <input class="field-input" id="edit-title" value="${outlineData.title || ''}" style="margin-bottom:.5rem;">
+      <label style="font-size:12px;font-weight:600;color:var(--text-2);display:block;margin-bottom:.35rem;">Subtitle</label>
+      <input class="field-input" id="edit-subtitle" value="${outlineData.subtitle || ''}">
+    </div>
+    <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">Chapter Titles</div>
+    <div id="edit-chapters-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:1rem;">
+      ${outlineData.chapters.map((ch, i) => `
+        <div style="display:flex;gap:8px;align-items:center;">
+          <div style="font-family:var(--font-head);font-size:12px;font-weight:700;color:var(--text-3);width:22px;flex-shrink:0;">${i+1}.</div>
+          <input class="field-input edit-ch-input" value="${ch}" style="flex:1;">
+        </div>`).join('')}
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn-primary" onclick="applyOutlineEdits()" style="padding:10px 20px;font-size:13px;">Save Changes →</button>
+      <button class="btn-secondary" onclick="document.getElementById('outline-edit-panel').remove();" style="padding:10px 20px;font-size:13px;">Cancel</button>
+      <button class="btn-ghost" onclick="regenerateOutlineFresh()" style="font-size:12px;padding:10px 0;">↻ Regenerate from scratch</button>
+    </div>
+  `;
+
+  const btnRow = document.querySelector('#page-outline .btn-row');
+  btnRow.parentNode.insertBefore(panel, btnRow);
+}
+
+function applyOutlineEdits() {
+  const newTitle = document.getElementById('edit-title').value.trim();
+  const newSubtitle = document.getElementById('edit-subtitle').value.trim();
+  const chInputs = document.querySelectorAll('.edit-ch-input');
+  const newChapters = Array.from(chInputs).map(inp => inp.value.trim()).filter(Boolean);
+
+  if (!newTitle) { showToast('Title cannot be empty'); return; }
+  if (newChapters.length === 0) { showToast('Add at least one chapter'); return; }
+
+  outlineData.title = newTitle;
+  outlineData.subtitle = newSubtitle;
+  outlineData.chapters = newChapters;
+  outlineData.chapterCount = newChapters.length;
+
+  document.getElementById('outline-edit-panel').remove();
+  showOutline();
+  showToast('Outline updated!');
+}
+
+async function regenerateOutlineFresh() {
+  document.getElementById('outline-edit-panel').remove();
   await generateOutline();
 }
 
@@ -863,11 +1278,15 @@ function startWritingBook() {
   }
 }
 
-function submitEmail() {
+async function submitEmail() {
   const val = document.getElementById('email-input').value.trim();
   if (!val || !val.includes('@')) { showToast('Please enter a valid email'); return; }
+  const btn = document.querySelector('#email-modal .btn-primary');
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
   localStorage.setItem('authority_lab_email', val);
+  await saveEmailToSupabase(val);
   document.getElementById('email-modal').classList.remove('show');
+  if (btn) { btn.disabled = false; btn.textContent = 'Continue →'; }
   createBookAndStart();
 }
 
@@ -875,11 +1294,17 @@ function submitEmail() {
    WORKSPACE CREATION
 ══════════════════════════════════════ */
 function createBookAndStart() {
+  const s = window._setup || {};
   book = {
     id: Date.now().toString(),
     title: outlineData.title,
     subtitle: outlineData.subtitle,
-    writing_style: outlineData.style || 'Professional',
+    // RCFTO stored on the book for use in every chapter prompt
+    rcfto_role: s.rcfto_role || '',
+    rcfto_context: s.rcfto_context || '',
+    rcfto_tone: s.rcfto_tone || outlineData.rcfto_tone || 'Professional and direct',
+    rcfto_output: s.rcfto_output || '',
+    writing_style: s.rcfto_tone || outlineData.rcfto_tone || 'Professional',
     chapter_length: outlineData.chapterLength || 1200,
     total_chapters: outlineData.chapters.length,
     chapters: outlineData.chapters.map(title => ({
@@ -910,7 +1335,7 @@ function showWorkspace() {
     else { statusIcon = '🔒'; statusClass = 'locked'; }
 
     const clickable = ch.status !== 'locked';
-    const deleteBtn = ch.status !== 'locked'
+    const deleteBtn = ch.status === 'draft'
       ? `<button class="ws-ch-delete" onclick="event.stopPropagation();confirmDeleteChapter(${i})" title="Reset chapter">✕</button>`
       : '';
 
@@ -929,17 +1354,16 @@ function showWorkspace() {
       <button class="btn-primary" onclick="goToContent()">⚡ Content Engine</button>
       <button class="btn-secondary" onclick="readFullBook()">📖 Read Full Book</button>
     `;
-    // Hide locked content engine preview
-    document.getElementById('ws-ce-preview').style.display = 'none';
   } else {
     let buttons = `<button class="btn-primary" id="ws-continue-btn" onclick="continueWriting()">Continue Writing →</button>`;
     if (approved > 0) {
       buttons += `<button class="btn-secondary" onclick="readFullBook()">📖 Read Book</button>`;
+      buttons += `<button class="btn-secondary" onclick="goToContent()">⚡ Content Engine</button>`;
     }
     actionsEl.innerHTML = buttons;
-    // Show locked preview
-    document.getElementById('ws-ce-preview').style.display = 'block';
   }
+  // Always hide the locked preview — Content Engine is free
+  document.getElementById('ws-ce-preview').style.display = 'none';
 
   showPage('page-workspace');
   setNavPill('📘 Workspace');
@@ -950,6 +1374,11 @@ function showWorkspace() {
 ══════════════════════════════════════ */
 async function continueWriting() {
   const approved = book.chapters.filter(c => c.status === 'approved').length;
+
+  // Show a heads-up warning when approaching the limit (at chapter 3 approved)
+  if (approved === FREE_CHAPTER_LIMIT - 1) {
+    showToast(`📘 1 free chapter left — make it count!`);
+  }
 
   if (approved >= FREE_CHAPTER_LIMIT) {
     showFriction();
@@ -987,8 +1416,34 @@ function openChapter(idx) {
     resetApprovalBox();
   }
 
+  // Update prev/next nav buttons
+  const prevBtn = document.getElementById('ch-nav-prev');
+  const nextBtn = document.getElementById('ch-nav-next');
+  if (prevBtn) {
+    const prevIdx = idx - 1;
+    const hasPrev = prevIdx >= 0 && book.chapters[prevIdx].status !== 'locked';
+    prevBtn.style.opacity = hasPrev ? '1' : '0.3';
+    prevBtn.disabled = !hasPrev;
+  }
+  if (nextBtn) {
+    const nextIdx = idx + 1;
+    const hasNext = nextIdx < book.total_chapters && book.chapters[nextIdx].status !== 'locked';
+    nextBtn.style.opacity = hasNext ? '1' : '0.3';
+    nextBtn.disabled = !hasNext;
+  }
+
   showPage('page-chapter');
   setNavPill(`Chapter ${idx + 1}`);
+}
+
+function navigateChapter(direction) {
+  const targetIdx = currentChapterIdx + direction;
+  if (targetIdx < 0 || targetIdx >= book.total_chapters) return;
+  if (book.chapters[targetIdx].status === 'locked') {
+    showToast('That chapter hasn\'t been written yet');
+    return;
+  }
+  openChapter(targetIdx);
 }
 
 function undoApprove() {
@@ -1027,46 +1482,73 @@ async function generateChapter(idx, instruction = null) {
 
   showPage('page-loading');
   setNavPill(`Writing Chapter ${idx + 1}...`);
-  document.getElementById('loading-msg').textContent = `Writing Chapter ${idx + 1}: ${book.chapters[idx].title}`;
+  document.getElementById('loading-msg').textContent = `Writing Chapter ${idx + 1}: ${book.chapters[idx].title.replace(/^Chapter \d+[:\-–—]?\s*/i, '')}`;
   document.getElementById('loading-sub').textContent = instruction ? 'Rewriting with your feedback...' : 'This takes about 20 seconds';
 
+  // Rotate loading messages to reduce perceived wait
+  const loadingMessages = instruction
+    ? ['Applying your feedback...', 'Rewriting the chapter...', 'Polishing the draft...', 'Almost there...']
+    : ['Applying RCFTO framework...', 'Writing your chapter...', 'Adding depth and examples...', 'Polishing the draft...', 'Almost there...'];
+  let msgIdx = 0;
+  const msgInterval = setInterval(() => {
+    msgIdx = (msgIdx + 1) % loadingMessages.length;
+    const el = document.getElementById('loading-sub');
+    if (el) el.textContent = loadingMessages[msgIdx];
+  }, 4000);
+
   const setup = window._setup || {};
-  const expertise = setup.expertise || book.title;
-  const style = book.writing_style;
+  // Pull RCFTO from book object (persisted) with fallback to live setup
+  const rcfto_role    = book.rcfto_role    || setup.rcfto_role    || book.title;
+  const rcfto_context = book.rcfto_context || setup.rcfto_context || 'professionals seeking practical expertise';
+  const rcfto_tone    = book.rcfto_tone    || setup.rcfto_tone    || 'Professional and direct';
+  const rcfto_output  = book.rcfto_output  || setup.rcfto_output  || 'reader understands and takes action';
   const length = book.chapter_length || 1200;
   const prevChapters = book.chapters.slice(0, idx).filter(c => c.content).map((c, i) => `Chapter ${i + 1}: ${c.title}`).join('\n');
-  const rwNote = instruction ? `\n\nRewrite instruction: ${instruction}` : '';
-  const lengthGuide = length <= 800 ? '700 to 900 words' : length <= 1200 ? '1100 to 1300 words' : '1600 to 1900 words';
+  const rwNote = instruction ? `\n\nREWRITE INSTRUCTION: ${instruction}` : '';
+  const lengthGuide = length <= 800
+    ? 'Target length: 750 to 900 words. Be concise but complete.'
+    : length <= 1200
+    ? 'Target length: 1,100 to 1,400 words. Full development of every point.'
+    : 'Target length: 1,700 to 2,000 words. Deep, thorough, richly developed — do not cut short.';
 
-  const prompt = `You are a professional ghostwriter writing a chapter for an authority book.
+  const prompt = `You are Rodrigue Shema's RCFTO ghostwriter. Your job is to write a chapter that sounds like it was written by a specific human expert — not a writing tool, not a template, not any other author.
 
-Book: "${book.title}"
-Subtitle: "${book.subtitle || ''}"
-Expertise: "${expertise}"
-Writing tone: ${style}
-${prevChapters ? `Previous chapters: ${prevChapters}` : ''}
+RCFTO FRAMEWORK FOR THIS BOOK:
+- ROLE (the author's specific perspective): "${rcfto_role}"
+- CONTEXT (the reader's exact situation right now): "${rcfto_context}"
+- FORMAT: Flowing paragraphs only. 2 to 3 subheadings using ### format. ${lengthGuide}. No bullet points. No numbered lists.
+- TONE: ${rcfto_tone}
+- OUTPUT (what this chapter must make the reader know/feel/do): "${rcfto_output}"
 
-Write Chapter ${idx + 1}: "${book.chapters[idx].title}"
+BOOK: "${book.title}"
+SUBTITLE: "${book.subtitle || ''}"
+${prevChapters ? `PREVIOUS CHAPTERS (for continuity):\n${prevChapters}` : ''}
+
+NOW WRITE: Chapter ${idx + 1} — "${book.chapters[idx].title}"
 
 CRITICAL WRITING RULES:
-- Length: ${lengthGuide}
-- Write in flowing paragraphs only. No bullet points. No numbered lists. No short broken lines.
-- Use subheadings with ### format to organize sections (2 to 3 subheadings)
+- Open with a scene, a specific observation, or a direct challenge — never with a definition
+- Every abstract claim must be followed immediately by a concrete, specific example
+- The author's Role must be audible — their specific experience shapes every paragraph
+- The reader's Context must be felt — write into their actual situation, not the category
 - No em dashes anywhere. Use commas or a period instead.
-- Natural, professional flow. Every sentence must add value.
-- Write in second person (you, your) or first person (I, we)
-- Use **bold** only for key terms or emphasis, sparingly
-${rwNote}
+- No motivational filler. No generic wisdom. Every sentence must earn its place.
+- Write in second person (you, your) or first person (I, we) — never third person
+- Use **bold** only for 2 to 3 key terms maximum${rwNote}
+
+IMPORTANT: Write the COMPLETE chapter to the full target length. Do not stop early. Every section must be fully developed.
 
 Write only the chapter body. No title. No chapter number. Just the content.`;
 
   try {
-    const content = await callClaude(prompt, 1800);
+    const content = await callClaude(prompt, 4000);
+    clearInterval(msgInterval);
     book.chapters[idx].content = content;
     book.chapters[idx].status = 'draft';
     saveBook();
     openChapter(idx);
   } catch(e) {
+    clearInterval(msgInterval);
     book.chapters[idx].content = generateFallbackChapter(book.chapters[idx].title);
     book.chapters[idx].status = 'draft';
     saveBook();
@@ -1151,7 +1633,7 @@ function showBookComplete() {
     <div class="book-complete-sub">All chapters have been approved. You can now read the full book, export it, or jump into the Content Engine to start creating posts and emails.</div>
     <div class="book-complete-actions">
       <button class="btn-primary" onclick="readFullBook()">📖 Read Book</button>
-      <button class="btn-secondary" onclick="exportBook()">Export Book</button>
+      <button class="btn-secondary" onclick="showExportModal()">Export Book</button>
     </div>
   `;
   // Insert before the chapter list
@@ -1203,8 +1685,10 @@ function confirmDeleteBook() {
     () => {
       localStorage.removeItem('authority_lab_book');
       book = null;
-      document.getElementById('nav-workspace-btn').style.display = 'none';
-      document.getElementById('resume-book-banner').style.display = 'none';
+      const wsBtn = document.getElementById('nav-workspace-btn');
+      if (wsBtn) wsBtn.style.display = 'none';
+      const banner = document.getElementById('resume-book-banner');
+      if (banner) banner.style.display = 'none';
       goHome();
       showToast('Book deleted');
     }
@@ -1214,13 +1698,15 @@ function confirmDeleteBook() {
 function showConfirm(title, sub, actionLabel, callback) {
   document.getElementById('confirm-title').textContent = title;
   document.getElementById('confirm-sub').textContent = sub;
-  document.getElementById('confirm-action-btn').textContent = actionLabel;
+  const btn = document.getElementById('confirm-action-btn');
+  btn.textContent = actionLabel;
+  // Set onclick BEFORE showing to avoid race condition
+  btn.onclick = () => {
+    closeConfirm();
+    if (callback) callback();
+  };
   confirmCallback = callback;
   document.getElementById('confirm-modal').classList.add('show');
-  document.getElementById('confirm-action-btn').onclick = () => {
-    closeConfirm();
-    if (confirmCallback) confirmCallback();
-  };
 }
 
 function closeConfirm() {
@@ -1252,26 +1738,305 @@ function readFullBook() {
   setNavPill('📖 Full Book');
 }
 
-function exportBook() {
+function showExportModal() {
   if (!book) return;
   const approved = book.chapters.filter(c => c.status === 'approved');
-  let text = `${book.title}\n${book.subtitle || ''}\n\n${'='.repeat(60)}\n\n`;
-  text += approved.map(ch => {
-    const idx = book.chapters.indexOf(ch);
-    const raw = (ch.content || '')
-      .replace(/###/g, '').replace(/\*\*/g, '').replace(/—/g, ', ');
-    return `CHAPTER ${idx + 1}: ${ch.title}\n\n${raw}`;
-  }).join('\n\n' + '-'.repeat(60) + '\n\n');
-  text += `\n\nCreated with Rodrigue's Authority Lab`;
+  if (approved.length === 0) { showToast('No approved chapters to export'); return; }
+  const draft = book.chapters.filter(c => c.status === 'draft').length;
+  const locked = book.chapters.filter(c => c.status === 'locked').length;
+  const exportModal = document.getElementById('export-modal');
+  // Inject a warning banner if not all chapters approved
+  const warningId = 'export-warning-banner';
+  let existing = exportModal.querySelector(`#${warningId}`);
+  if (existing) existing.remove();
+  if (draft > 0 || locked > 0) {
+    const warn = document.createElement('div');
+    warn.id = warningId;
+    warn.style.cssText = 'background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:.75rem 1rem;font-size:13px;color:var(--text-2);margin-bottom:1.25rem;line-height:1.6;';
+    warn.innerHTML = `⚠️ Only your <strong style="color:var(--text);">${approved.length} approved</strong> chapter${approved.length !== 1 ? 's' : ''} will be exported. ${draft + locked} chapter${draft + locked !== 1 ? 's' : ''} ${draft + locked !== 1 ? 'are' : 'is'} not yet approved and will not appear in the export.`;
+    const modalInner = exportModal.querySelector('div');
+    const firstBtn = modalInner.querySelector('button, div[onclick]');
+    modalInner.insertBefore(warn, modalInner.querySelector('div[style*="flex-direction:column"]'));
+  }
+  exportModal.style.display = 'flex';
+}
 
-  const blob = new Blob([text], {type: 'text/plain'});
+function closeExportModal() {
+  document.getElementById('export-modal').style.display = 'none';
+}
+
+function buildBookHTML(forPrint) {
+  const approved = book.chapters.filter(c => c.status === 'approved');
+  const tocItems = approved.map((ch, i) => {
+    const idx = book.chapters.indexOf(ch);
+    return `<li><span class="toc-num">${idx + 1}</span><span class="toc-title">${ch.title}</span></li>`;
+  }).join('');
+
+  const chaptersHTML = approved.map((ch) => {
+    const idx = book.chapters.indexOf(ch);
+    const body = (ch.content || '')
+      .replace(/—/g, ', ')
+      .replace(/^[\-\*] (.+)$/gm, '<p>$1</p>')
+      .replace(/^\d+\. (.+)$/gm, '<p>$1</p>')
+      .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .split(/\n\n+/)
+      .map(block => {
+        block = block.trim();
+        if (!block) return '';
+        if (block.startsWith('<h3>') || block.startsWith('<p>')) return block;
+        return `<p>${block.replace(/\n/g, ' ')}</p>`;
+      })
+      .filter(Boolean)
+      .join('\n');
+
+    return `
+      <div class="chapter-section" id="ch-${idx + 1}">
+        <div class="chapter-num">Chapter ${idx + 1}</div>
+        <h2 class="chapter-title">${ch.title}</h2>
+        <div class="chapter-body">${body}</div>
+      </div>`;
+  }).join('');
+
+  const printStyles = forPrint ? `
+    @page { margin: 2.4cm 2.8cm; }
+    body { font-size: 11pt; }
+    .cover { page-break-after: always; min-height: auto; padding: 6cm 0 4cm; }
+    .toc-page { page-break-after: always; }
+    .chapter-section { page-break-before: always; }
+    nav, .print-hint { display: none !important; }
+  ` : '';
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${book.title}</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a;
+    --ink-2: #3d3d3d;
+    --ink-3: #6b6b6b;
+    --ink-4: #9b9b9b;
+    --accent: #c8963e;
+    --page: #fdfaf5;
+    --rule: #e8e0d0;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Lora', Georgia, serif;
+    background: var(--page);
+    color: var(--ink);
+    line-height: 1.85;
+    font-size: 17px;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(253,250,245,0.96); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+    padding: 14px 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: 'Inter', sans-serif;
+  }
+  .nav-book-title { font-size: 13px; font-weight: 600; color: var(--ink-2); }
+  .nav-links { display: flex; gap: 16px; }
+  .nav-links a { font-size: 12px; color: var(--ink-3); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* COVER */
+  .cover {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 3rem 6rem;
+    max-width: 680px; margin: 0 auto;
+    border-bottom: 1px solid var(--rule);
+  }
+  .cover-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 2rem;
+  }
+  .cover-title {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700; line-height: 1.1;
+    letter-spacing: -.02em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .cover-divider { width: 48px; height: 2px; background: var(--accent); margin-bottom: 1.5rem; }
+  .cover-subtitle {
+    font-size: 18px; font-style: italic;
+    color: var(--ink-2); line-height: 1.6;
+    max-width: 520px;
+  }
+  .cover-meta {
+    margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--rule);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; color: var(--ink-3);
+  }
+
+  /* TOC */
+  .toc-page {
+    max-width: 680px; margin: 0 auto;
+    padding: 6rem 3rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .toc-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-4);
+    margin-bottom: 2.5rem;
+  }
+  .toc-list { list-style: none; }
+  .toc-list li {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: .75rem 0; border-bottom: 1px solid var(--rule);
+    font-size: 15px; color: var(--ink-2);
+  }
+  .toc-list li:last-child { border-bottom: none; }
+  .toc-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600; color: var(--accent);
+    min-width: 20px;
+  }
+  .toc-title { flex: 1; }
+  .toc-list a { color: inherit; text-decoration: none; }
+  .toc-list a:hover .toc-title { color: var(--accent); }
+
+  /* CHAPTERS */
+  .chapter-section {
+    max-width: 680px; margin: 0 auto;
+    padding: 7rem 3rem 5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .chapter-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+  .chapter-title {
+    font-size: clamp(24px, 3.5vw, 34px);
+    font-weight: 700; line-height: 1.15;
+    letter-spacing: -.01em; color: var(--ink);
+    margin-bottom: 3rem;
+  }
+  .chapter-body { color: var(--ink-2); }
+  .chapter-body p { margin-bottom: 1.4rem; }
+  .chapter-body p:first-child::first-letter {
+    font-size: 3.5em; font-weight: 700; line-height: .75;
+    float: left; margin: .1em .12em -.05em 0;
+    color: var(--accent);
+  }
+  .chapter-body h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 600; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--ink-3);
+    margin: 2.5rem 0 1rem;
+  }
+  .chapter-body strong { color: var(--ink); font-weight: 600; }
+
+  /* PRINT HINT */
+  .print-hint {
+    text-align: center; padding: 2.5rem 1.5rem;
+    font-family: 'Inter', sans-serif; font-size: 13px; color: var(--ink-3);
+    background: #f5f0e8; border-top: 1px solid var(--rule);
+  }
+  .print-hint strong { color: var(--ink-2); }
+
+  /* PRINT */
+  @media print {
+    nav, .print-hint { display: none !important; }
+    .cover { page-break-after: always; min-height: auto; padding: 6cm 3rem 4cm; }
+    .toc-page { page-break-after: always; }
+    .chapter-section { page-break-before: always; padding: 3rem; }
+    @page { margin: 2.4cm 2.8cm; }
+    body { font-size: 11pt; background: white; }
+  }
+  ${printStyles}
+
+  @media (max-width: 600px) {
+    .cover, .toc-page, .chapter-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    nav { padding: 12px 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-book-title">${book.title}</span>
+  <div class="nav-links">
+    <a href="#toc">Contents</a>
+    ${approved.map((ch, i) => `<a href="#ch-${book.chapters.indexOf(ch) + 1}">Ch. ${book.chapters.indexOf(ch) + 1}</a>`).join('')}
+  </div>
+</nav>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-label">Authority Book</div>
+  <h1 class="cover-title">${book.title}</h1>
+  <div class="cover-divider"></div>
+  ${book.subtitle ? `<div class="cover-subtitle">${book.subtitle}</div>` : ''}
+  <div class="cover-meta">${approved.length} Chapter${approved.length !== 1 ? 's' : ''} &nbsp;·&nbsp; ${new Date().getFullYear()}</div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc-page" id="toc">
+  <div class="toc-label">Table of Contents</div>
+  <ul class="toc-list">
+    ${approved.map((ch) => {
+      const idx = book.chapters.indexOf(ch);
+      return `<li><a href="#ch-${idx + 1}"><span class="toc-num">${idx + 1}</span><span class="toc-title">${ch.title}</span></a></li>`;
+    }).join('')}
+  </ul>
+</div>
+
+<!-- CHAPTERS -->
+${chaptersHTML}
+
+${forPrint ? '' : `<div class="print-hint">To save as PDF: <strong>File → Print → Save as PDF</strong> in your browser.</div>`}
+
+</body>
+</html>`;
+}
+
+function exportEbook() {
+  closeExportModal();
+  if (!book) return;
+  const html = buildBookHTML(false);
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `${book.title.replace(/[^a-z0-9]/gi, '_')}.txt`;
+  a.download = `${book.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_ebook.html`;
+  document.body.appendChild(a);
   a.click();
+  document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  showToast('Book exported!');
+  showToast('eBook downloaded!');
+}
+
+function exportPDF() {
+  closeExportModal();
+  if (!book) return;
+  const html = buildBookHTML(true);
+  const win = window.open('', '_blank');
+  if (!win) { showToast('Allow pop-ups to open the PDF view'); return; }
+  win.document.write(html);
+  win.document.close();
+  win.addEventListener('load', () => {
+    setTimeout(() => {
+      win.focus();
+      win.print();
+    }, 800);
+  });
+  showToast('Print window opened — save as PDF');
 }
 
 /* ══════════════════════════════════════
@@ -1280,8 +2045,8 @@ function exportBook() {
 function goToContent() {
   if (!book) return;
   const approved = book.chapters.filter(c => c.status === 'approved');
-  if (approved.length < book.total_chapters) {
-    showToast('Finish all chapters first to unlock the Content Engine');
+  if (approved.length === 0) {
+    showToast('Approve at least one chapter to use the Content Engine');
     return;
   }
 
@@ -1300,24 +2065,46 @@ async function generateContent(type) {
   const idx = parseInt(document.getElementById('ce-chapter-select').value);
   const ch = book.chapters[idx];
 
-  document.getElementById('content-output-area').innerHTML = `
-    <div class="loading-wrap" style="padding:3rem 0;">
+  // Show spinner as a temporary top card
+  const spinnerId = 'spinner-' + Date.now();
+  const spinnerEl = document.createElement('div');
+  spinnerEl.id = spinnerId;
+  spinnerEl.className = 'co-card';
+  spinnerEl.style.marginBottom = '1rem';
+  spinnerEl.innerHTML = `
+    <div class="loading-wrap" style="padding:2rem 0;">
       <div class="spinner"></div>
-      <div class="loading-msg">Creating your ${type}...</div>
+      <div class="loading-msg" style="font-size:15px;">Creating your ${type}...</div>
     </div>`;
+  const outputArea = document.getElementById('content-output-area');
+  if (outputArea.firstChild) outputArea.insertBefore(spinnerEl, outputArea.firstChild);
+  else outputArea.appendChild(spinnerEl);
 
-  const prompt = `You are an expert content strategist. Create a ${type} based on this book chapter.
+  const prompt = `You are Rodrigue Shema's RCFTO content engine. Your job is to create a ${type} that carries the author's specific perspective to a new reader — not a generic post about the topic, but content that could only come from this specific book and this specific author.
 
-Book: "${book.title}"
-Chapter: "${ch.title}"
-Content excerpt: "${(ch.content || '').substring(0, 1000)}"
+RCFTO FRAMEWORK:
+- ROLE (author's perspective): "${book.rcfto_role || book.title}"
+- CONTEXT (reader's situation): "${book.rcfto_context || 'professionals seeking practical expertise'}"
+- FORMAT: ${type === 'LinkedIn Post' ? '5 to 8 short lines. First line stops the scroll. Build with specifics. End with one question or CTA. No hashtags.' : type === 'X Thread' ? '6 to 8 tweets. Tweet 1 is the hook (under 280 chars). Each tweet advances the argument. Last tweet is CTA.' : type === 'Email Newsletter' ? 'Subject line + 3 to 4 short paragraphs. Opens with the reader\'s exact pain. Delivers one specific insight. Ends with a direct next step.' : '8 to 10 specific content angles — each one tied to this chapter\'s argument, each different enough to be its own post.'}
+- TONE: "${book.rcfto_tone || 'Professional and direct'}"
+- OUTPUT: Content that makes the ideal reader feel understood and want to know more from this author
+
+BOOK: "${book.title}"
+CHAPTER: "${ch.title}"
+CHAPTER EXCERPT (first 1200 chars): "${(ch.content || '').substring(0, 1200)}"
+
+CRITICAL RULES:
+- Echo the author's specific Role — their exact experience must be in the content
+- Speak directly into the reader's Context — their situation, not the general topic
+- No generic insights. No motivational filler. Every line must be specific.
+- No em dashes. No hashtags. No emojis unless the format requires them.
 
 Return ONLY valid JSON (no markdown, no backticks):
 {
   "type": "${type}",
-  "hook": "Opening hook — scroll-stopping, 1 to 2 sentences, no em dash",
-  "body": "Main content in flowing paragraphs. No bullet points. No em dashes. Natural professional tone. 150 to 250 words.",
-  "closing": "Closing call to action or reflection. One sentence."
+  "hook": "Opening line — scroll-stopping, specific to this author's perspective, 1 to 2 sentences",
+  "body": "Main content formatted for ${type}. Specific, human, no filler. 150 to 280 words.",
+  "closing": "Closing line or CTA — direct, specific, one sentence."
 }`;
 
   let content;
@@ -1334,24 +2121,49 @@ Return ONLY valid JSON (no markdown, no backticks):
     };
   }
 
+  // Remove spinner
+  const sp = document.getElementById(spinnerId);
+  if (sp) sp.remove();
+
   renderContent(content, ch, idx);
 }
 
 function renderContent(content, ch, idx) {
   const id = 'co-' + Date.now();
+  const outputArea = document.getElementById('content-output-area');
 
-  document.getElementById('content-output-area').innerHTML = `
-    <div class="co-card" id="${id}">
+  // Prepend new card to top (history stacks below)
+  const card = document.createElement('div');
+  card.className = 'co-card';
+  card.id = id;
+  card.style.marginBottom = '1rem';
+  card.innerHTML = `
       <div class="co-header">
         <div class="co-type-badge">${content.type}</div>
-        <button class="co-copy-btn" onclick="copyContent('${id}')">📋 Copy</button>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span style="font-size:11px;color:var(--text-3);">Ch. ${idx + 1}</span>
+          <button class="co-copy-btn" onclick="copyContent('${id}')">📋 Copy</button>
+          <button onclick="this.closest('.co-card').remove()" style="font-size:16px;background:none;border:none;cursor:pointer;color:var(--text-3);padding:4px;" title="Remove">×</button>
+        </div>
       </div>
       <div class="co-hook">${content.hook}</div>
       <div class="co-body">${content.body}</div>
       <div class="co-closing">${content.closing}</div>
       <div class="co-branding">Created with Rodrigue's Authority Lab</div>
-    </div>
-    <div class="feedback-box">
+    `;
+
+  // Insert new card at top
+  if (outputArea.firstChild) {
+    outputArea.insertBefore(card, outputArea.firstChild);
+  } else {
+    outputArea.appendChild(card);
+  }
+
+  // Feedback box only on most recent card
+  outputArea.querySelectorAll('.feedback-box').forEach(fb => fb.remove());
+  const feedback = document.createElement('div');
+  feedback.className = 'feedback-box';
+  feedback.innerHTML = `
       <div class="feedback-q">Was this content useful?</div>
       <div class="feedback-row">
         <button class="fb-btn" onclick="feedbackYes(this)">👍</button>
@@ -1365,8 +2177,11 @@ function renderContent(content, ch, idx) {
           <div class="fb-reason" onclick="sendFbReason(this)">Too short</div>
         </div>
         <textarea class="fb-custom" rows="2" placeholder="Anything else to add..."></textarea>
-      </div>
-    </div>`;
+      </div>`;
+  card.appendChild(feedback);
+
+  // Scroll to new card
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function copyContent(id) {
@@ -1390,7 +2205,8 @@ function feedbackYes(btn) {
   btn.closest('.feedback-box').innerHTML = '<div class="fb-thank">Thanks for the feedback!</div>';
 }
 function feedbackNo(btn) {
-  document.getElementById('fb-detail').style.display = 'block';
+  const detail = btn.closest('.feedback-box').querySelector('#fb-detail');
+  if (detail) detail.style.display = 'block';
 }
 function sendFbReason(el) {
   el.closest('.feedback-box').innerHTML = '<div class="fb-thank">Thanks. I will use this to improve.</div>';
@@ -1411,34 +2227,74 @@ function unlockAccess() {
 }
 
 /* ══════════════════════════════════════
-   CHAT
+   ASK PANEL
 ══════════════════════════════════════ */
-function toggleChat() {
-  document.getElementById('chat-panel').classList.toggle('open');
-}
-
-async function sendChat() {
-  const input = document.getElementById('chat-input');
-  const msg = input.value.trim();
-  if (!msg) return;
-  input.value = '';
-
-  const msgs = document.getElementById('chat-msgs');
-  msgs.innerHTML += `<div class="chat-msg user">${msg}</div>`;
-  msgs.scrollTop = msgs.scrollHeight;
-
-  const context = book
-    ? `The user is building a book titled "${book.title}" with ${book.total_chapters} chapters. ${book.chapters.filter(c => c.status === 'approved').length} chapters are approved.`
-    : 'The user has not started a book yet.';
-
-  try {
-    const reply = await callClaude(`You are Rodrigue, a book strategist and ghostwriter. Be helpful, warm, and concise. Maximum 2 sentences. No em dashes. Context: ${context}\n\nUser: ${msg}`, 200);
-    msgs.innerHTML += `<div class="chat-msg">${reply}</div>`;
-  } catch(e) {
-    msgs.innerHTML += `<div class="chat-msg">Happy to help! Keep building, one chapter at a time.</div>`;
+function toggleAskPanel() {
+  const panel = document.getElementById('ask-panel');
+  panel.classList.toggle('open');
+  if (panel.classList.contains('open')) {
+    renderAskHistory();
+    setTimeout(() => document.getElementById('ask-input').focus(), 100);
   }
-  msgs.scrollTop = msgs.scrollHeight;
 }
+
+function renderAskHistory() {
+  const questions = JSON.parse(localStorage.getItem('authority_lab_questions') || '[]');
+  const historyEl = document.getElementById('ask-history');
+  if (!historyEl) return;
+  if (questions.length === 0) { historyEl.style.display = 'none'; return; }
+  historyEl.style.display = 'block';
+  historyEl.innerHTML = questions.slice(-5).reverse().map(q => `
+    <div style="margin-bottom:.6rem;padding-bottom:.6rem;border-bottom:1px solid var(--border);">
+      <div style="font-size:12px;color:var(--text-2);line-height:1.5;">${q.question}</div>
+      <div style="font-size:10px;color:var(--text-3);margin-top:.2rem;">⏳ Awaiting reply · ${new Date(q.created_at).toLocaleDateString()}</div>
+    </div>`).join('');
+}
+
+async function submitQuestion() {
+  const question = document.getElementById('ask-input').value.trim();
+  if (!question) { showToast('Please type a question first'); return; }
+
+  const email = localStorage.getItem('authority_lab_email') || 'anonymous';
+  const btn = document.querySelector('#ask-panel .btn-primary');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+
+  // Save to Supabase
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/questions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON,
+        'Authorization': `Bearer ${SUPABASE_ANON}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        email,
+        question,
+        created_at: new Date().toISOString()
+      })
+    });
+    if (!res.ok) console.warn('Question save failed:', res.status);
+  } catch(e) { console.warn('Supabase error:', e.message); }
+
+  // Save to localStorage for history display
+  const questions = JSON.parse(localStorage.getItem('authority_lab_questions') || '[]');
+  questions.push({ question, created_at: new Date().toISOString() });
+  localStorage.setItem('authority_lab_questions', JSON.stringify(questions.slice(-20)));
+
+  // Show thank you
+  document.getElementById('ask-input').value = '';
+  document.getElementById('ask-thank').style.display = 'block';
+  renderAskHistory();
+  if (btn) { btn.disabled = false; btn.textContent = 'Send Question →'; }
+  setTimeout(() => {
+    document.getElementById('ask-thank').style.display = 'none';
+    document.getElementById('ask-panel').classList.remove('open');
+  }, 3000);
+}
+
+
 
 /* ══════════════════════════════════════
    CLAUDE API
@@ -1453,8 +2309,12 @@ async function callClaude(prompt, maxTokens = 1000) {
       messages: [{ role: 'user', content: prompt }]
     })
   });
-  if (!res.ok) throw new Error('API error');
+  if (!res.ok) {
+    const errText = await res.text().catch(() => '');
+    throw new Error(`API error ${res.status}: ${errText}`);
+  }
   const data = await res.json();
+  if (data.error) throw new Error(data.error.message || 'API error');
   return data.content.map(i => i.text || '').join('').trim();
 }
 
