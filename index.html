@@ -165,6 +165,42 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .micro-pop{animation:microPop .25s ease both;}
 .micro-glow{animation:softGlow .6s ease both;}
 
+/* ══════════════════════════════════════
+   SITE FOOTER
+══════════════════════════════════════ */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: 2rem;
+}
+.site-footer-copy {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+.site-footer-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+.site-footer-links a {
+  font-size: 12px;
+  color: var(--text-3);
+  text-decoration: none;
+  transition: color .2s;
+  white-space: nowrap;
+}
+.site-footer-links a:hover { color: var(--text-2); }
+@media(max-width:480px) {
+  .site-footer { flex-direction: column; align-items: flex-start; gap: .75rem; }
+}
+
 /* MOBILE IMPROVEMENTS */
 @media(max-width:640px){
   nav{padding:0 1rem;}
@@ -495,6 +531,40 @@ nav{
 /* PAGES */
 .page{display:none;}
 .page.active{display:block;}
+
+/* ── BETA / TEST-MODE UI ── */
+.beta-notice{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;color:var(--text-3);
+  opacity:.65;margin-top:.6rem;
+  transition:opacity .2s;
+}
+.beta-notice::before{content:'◈';font-size:9px;color:var(--gold);opacity:.7;}
+.beta-notice:hover{opacity:1;}
+
+.usage-limit-msg{
+  display:none;align-items:center;gap:8px;
+  background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.2);
+  border-radius:10px;padding:.75rem 1rem;
+  font-size:12.5px;color:var(--red);line-height:1.5;
+  margin-top:.75rem;animation:fadeSlideDown .3s ease both;
+}
+.usage-limit-msg.show{display:flex;}
+.usage-limit-msg .ulm-icon{font-size:15px;flex-shrink:0;}
+
+.usage-counter{
+  font-size:11px;color:var(--text-3);
+  margin-top:.4rem;opacity:.7;
+  transition:opacity .2s;
+}
+.usage-counter.warning{color:var(--gold);opacity:1;font-weight:600;}
+
+/* Cooldown state on generate buttons */
+.btn-cooldown{
+  opacity:.55 !important;
+  cursor:not-allowed !important;
+  pointer-events:none !important;
+}
 
 /* HOME */
 .home-wrap{max-width:640px;margin:0 auto;padding:72px 1.5rem 40px;}
@@ -2811,6 +2881,9 @@ footer a:hover{color:var(--text-2);}
       </div>
 
       <button class="qm-generate-btn" id="qm-generate-btn" onclick="qmGenerate()">⚡ Generate Content →</button>
+      <div class="beta-notice" id="qm-beta-notice">AI generation in testing — results are being improved.</div>
+      <div class="usage-counter" id="qm-usage-counter"></div>
+      <div class="usage-limit-msg" id="qm-limit-msg"><span class="ulm-icon">⚠️</span>Free testing limit reached. Full access coming soon.</div>
       <div class="cm-kbd-hint">
         <span class="cm-kbd">⌘</span><span class="cm-kbd">↵</span>
         <span>to generate</span>
@@ -2885,6 +2958,9 @@ footer a:hover{color:var(--text-2);}
     </div>
 
     <button class="cm-generate-btn" id="cm-generate-btn" onclick="cmGenerate()">Generate Content →</button>
+    <div class="beta-notice" id="cm-beta-notice">AI generation in testing — results are being improved.</div>
+    <div class="usage-counter" id="cm-usage-counter"></div>
+    <div class="usage-limit-msg" id="cm-limit-msg"><span class="ulm-icon">⚠️</span>Free testing limit reached. Full access coming soon.</div>
     <div class="cm-kbd-hint" style="margin-top:.5rem;">
       <span class="cm-kbd">⌘</span><span class="cm-kbd">↵</span>
       <span>to generate</span>
@@ -6093,12 +6169,189 @@ function applyThemeFromSettings(btn, val) {
 /* ══════════════════════════════════════
    TOAST
 ══════════════════════════════════════ */
+/* ══════════════════════════════════════
+   TEST-PHASE SECURITY SYSTEM
+   - Generation cooldown (anti-spam)
+   - Usage limit per session (localStorage)
+   - Owner bypass (unlimited)
+   - Beta mode indicator
+══════════════════════════════════════ */
+const TEST_USAGE_KEY    = 'al_test_usage';
+const TEST_USAGE_LIMIT  = 10;
+const GEN_COOLDOWN_MS   = 1800; // 1.8s cooldown window
+let   _genCooldownActive = false;
+let   _genCooldownTimer  = null;
+
+/* ── Helpers ── */
+function isOwnerUser() {
+  const email = localStorage.getItem('authority_lab_email') || '';
+  return email.toLowerCase() === OWNER_EMAIL;
+}
+
+function getTestUsage() {
+  return parseInt(localStorage.getItem(TEST_USAGE_KEY) || '0', 10);
+}
+
+function incrementTestUsage() {
+  const n = getTestUsage() + 1;
+  localStorage.setItem(TEST_USAGE_KEY, String(n));
+  return n;
+}
+
+function isTestLimitReached() {
+  if (isOwnerUser()) return false;      // Owner always bypasses
+  return getTestUsage() >= TEST_USAGE_LIMIT;
+}
+
+/* ── Counter display ── */
+function refreshUsageCounters() {
+  const used  = getTestUsage();
+  const left  = Math.max(0, TEST_USAGE_LIMIT - used);
+  const owner = isOwnerUser();
+
+  ['qm', 'cm'].forEach(prefix => {
+    const counterEl = document.getElementById(prefix + '-usage-counter');
+    const limitEl   = document.getElementById(prefix + '-limit-msg');
+    const btn        = document.getElementById(prefix + '-generate-btn');
+
+    if (!counterEl) return;
+
+    if (owner) {
+      counterEl.textContent = '∞ unlimited (owner mode)';
+      counterEl.classList.remove('warning');
+      if (limitEl) limitEl.classList.remove('show');
+      return;
+    }
+
+    if (used >= TEST_USAGE_LIMIT) {
+      counterEl.textContent = 'Testing limit reached.';
+      counterEl.classList.add('warning');
+      if (limitEl) limitEl.classList.add('show');
+      if (btn) btn.disabled = true;
+    } else if (left <= 3) {
+      counterEl.textContent = left + ' generation' + (left !== 1 ? 's' : '') + ' left in testing mode';
+      counterEl.classList.add('warning');
+      if (limitEl) limitEl.classList.remove('show');
+    } else {
+      counterEl.textContent = used + ' / ' + TEST_USAGE_LIMIT + ' generations used in testing';
+      counterEl.classList.remove('warning');
+      if (limitEl) limitEl.classList.remove('show');
+    }
+  });
+}
+
+/* ── Cooldown: disable all generate buttons temporarily ── */
+function startGenCooldown() {
+  if (_genCooldownActive) return false; // already cooling
+  _genCooldownActive = true;
+  ['qm-generate-btn', 'cm-generate-btn'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.classList.add('btn-cooldown');
+  });
+  clearTimeout(_genCooldownTimer);
+  _genCooldownTimer = setTimeout(endGenCooldown, GEN_COOLDOWN_MS);
+  return true;
+}
+
+function endGenCooldown() {
+  _genCooldownActive = false;
+  ['qm-generate-btn', 'cm-generate-btn'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.classList.remove('btn-cooldown');
+  });
+  refreshUsageCounters(); // also re-apply limit state
+}
+
+/* ── Gate: called at the top of _qmGenerateCore and _cmGenerateCore ── */
+function testPhaseGate() {
+  // 1. Cooldown check
+  if (_genCooldownActive) return false;
+
+  // 2. Usage limit (owner exempt)
+  if (isTestLimitReached()) {
+    refreshUsageCounters();
+    return false;
+  }
+
+  // 3. Passed — start cooldown & increment
+  startGenCooldown();
+  if (!isOwnerUser()) incrementTestUsage();
+  refreshUsageCounters();
+  return true;
+}
+
+/* ── Patch _qmGenerateCore to use gate ── */
+const _orig_qmGenerateCore = window._qmGenerateCore || null;
+(function patchQm() {
+  const origFn = _qmGenerateCore;
+  // We override at the call-site by wrapping qmGenerate
+  const _origQmGenerate = window.qmGenerate;
+  window.qmGenerate = async function() {
+    const idea = document.getElementById('qm-idea')?.value.trim();
+    if (!idea) { showQmError('Please write your idea first.'); return; }
+    if (!testPhaseGate()) return;
+    if (!isAuthenticated()) {
+      checkGuestWall(() => _qmGenerateCore(idea));
+      return;
+    }
+    _qmGenerateCore(idea);
+  };
+})();
+
+/* ── Patch cmGenerate to use gate ── */
+(function patchCm() {
+  window.cmGenerate = async function() {
+    const audience  = document.getElementById('cm-audience')?.value.trim();
+    const angle     = document.getElementById('cm-angle')?.value.trim();
+    const takeaway  = document.getElementById('cm-takeaway')?.value.trim();
+    const goal      = cmGetVal('cm-goal-row');
+    const type      = cmGetVal('cm-type-row');
+    const tone      = cmGetVal('cm-tone-row');
+
+    if (!audience || !angle || !takeaway) {
+      alert('Please fill in all three fields before generating.');
+      return;
+    }
+    if (!testPhaseGate()) return;
+    if (!isAuthenticated()) {
+      checkGuestWall(() => _cmGenerateCore(audience, angle, takeaway, goal, type, tone));
+      return;
+    }
+    _cmGenerateCore(audience, angle, takeaway, goal, type, tone);
+  };
+})();
+
+/* ── Init on load ── */
+document.addEventListener('DOMContentLoaded', function() {
+  refreshUsageCounters();
+});
+// Also refresh now in case DOMContentLoaded already fired
+if (document.readyState !== 'loading') {
+  setTimeout(refreshUsageCounters, 200);
+}
+
+/* ══════════════════════════════════════
+   TOAST
+══════════════════════════════════════ */
 function showToast(msg) {
   const t = document.getElementById('toast');
+  if (!t) return;
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 </script>
+
+<!-- SITE FOOTER -->
+<footer class="site-footer">
+  <span class="site-footer-copy">© 2025 Authority Lab. All rights reserved.</span>
+  <nav class="site-footer-links" aria-label="Legal links">
+    <a href="/pricing">Pricing</a>
+    <a href="/terms">Terms</a>
+    <a href="/privacy">Privacy</a>
+    <a href="/refund">Refund</a>
+  </nav>
+</footer>
+
 </body>
 </html>

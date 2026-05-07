@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — Authority Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0f1a;
+  --bg-2: #111827;
+  --bg-3: #1a2235;
+  --bg-4: #1e2a3e;
+  --border: rgba(255,255,255,0.07);
+  --border-2: rgba(255,255,255,0.12);
+  --text: #f1f5f9;
+  --text-2: #94a3b8;
+  --text-3: #64748b;
+  --gold: #f59e0b;
+  --gold-dim: rgba(245,158,11,0.08);
+  --gold-border: rgba(245,158,11,0.22);
+  --green: #10b981;
+  --green-dim: rgba(16,185,129,0.08);
+  --green-border: rgba(16,185,129,0.22);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--bg-4);border-radius:2px;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(11,15,26,0.94);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  height:58px;padding:0 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{font-family:var(--font-head);font-size:15px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:pulse 2s infinite;}
+.nav-back{font-size:13px;font-weight:500;color:var(--text-2);background:none;border:1px solid var(--border-2);border-radius:20px;padding:6px 16px;cursor:pointer;transition:all .2s;text-decoration:none;}
+.nav-back:hover{color:var(--text);background:var(--bg-3);}
+
+/* LAYOUT */
+.page-wrap{max-width:960px;margin:0 auto;padding:72px 1.5rem 80px;}
+
+/* HERO */
+.page-eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold);display:inline-flex;align-items:center;gap:6px;margin-bottom:1.25rem;
+}
+.page-eyebrow::before{content:'';width:20px;height:1px;background:var(--gold);display:inline-block;}
+.page-title{
+  font-family:var(--font-head);font-size:clamp(32px,5vw,52px);
+  font-weight:800;color:var(--text);line-height:1.15;margin-bottom:1rem;
+}
+.page-sub{font-size:16px;color:var(--text-2);max-width:520px;line-height:1.7;margin-bottom:3.5rem;}
+
+/* PRICING GRID */
+.plans-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  animation:fadeUp .5s ease both;
+}
+@media(max-width:768px){.plans-grid{grid-template-columns:1fr;max-width:400px;}}
+
+.plan-card{
+  background:var(--bg-2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:2rem 1.75rem;
+  position:relative;transition:border-color .2s,transform .2s;
+}
+.plan-card:hover{border-color:var(--border-2);transform:translateY(-3px);}
+.plan-card.featured{
+  border-color:var(--gold-border);
+  background:linear-gradient(135deg,var(--bg-2) 0%,rgba(245,158,11,0.04) 100%);
+}
+.plan-badge{
+  position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--gold);color:#0b0f1a;
+  border-radius:20px;padding:3px 14px;white-space:nowrap;
+}
+
+.plan-name{
+  font-family:var(--font-head);font-size:14px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);
+  margin-bottom:.75rem;
+}
+.plan-price{
+  font-family:var(--font-head);font-size:42px;font-weight:800;
+  color:var(--text);line-height:1;margin-bottom:.25rem;
+}
+.plan-price span{font-size:16px;font-weight:500;color:var(--text-3);vertical-align:top;margin-top:8px;display:inline-block;}
+.plan-period{font-size:12px;color:var(--text-3);margin-bottom:1.5rem;}
+.plan-divider{height:1px;background:var(--border);margin-bottom:1.5rem;}
+
+.plan-features{list-style:none;margin-bottom:2rem;}
+.plan-features li{
+  font-size:13.5px;color:var(--text-2);
+  padding:6px 0;display:flex;align-items:flex-start;gap:10px;
+}
+.plan-features li::before{
+  content:'✓';font-size:12px;font-weight:700;
+  color:var(--green);background:var(--green-dim);
+  border:1px solid var(--green-border);border-radius:50%;
+  width:18px;height:18px;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:2px;
+}
+.plan-card.featured .plan-features li::before{color:var(--gold);background:var(--gold-dim);border-color:var(--gold-border);}
+
+.plan-cta{
+  display:block;width:100%;text-align:center;
+  font-family:var(--font-head);font-size:13px;font-weight:700;letter-spacing:.04em;
+  padding:13px 20px;border-radius:var(--radius-sm);cursor:pointer;
+  text-decoration:none;transition:all .2s;border:none;
+}
+.plan-cta-outline{
+  background:transparent;color:var(--text-2);border:1px solid var(--border-2);
+}
+.plan-cta-outline:hover{background:var(--bg-3);color:var(--text);border-color:var(--border-2);}
+.plan-cta-gold{
+  background:var(--gold);color:#0b0f1a;
+}
+.plan-cta-gold:hover{background:#fbbf24;box-shadow:0 4px 20px rgba(245,158,11,.3);}
+
+/* FOOTER NOTE */
+.pricing-note{
+  text-align:center;margin-top:3rem;
+  font-size:12px;color:var(--text-3);line-height:1.7;
+}
+.pricing-note a{color:var(--gold);text-decoration:none;}
+.pricing-note a:hover{text-decoration:underline;}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:2rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+  max-width:100%;
+}
+.footer-copy{font-size:12px;color:var(--text-3);}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+.footer-links a{font-size:12px;color:var(--text-3);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--text-2);}
+.footer-links a.active{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">
+    <span class="nav-dot"></span>
+    Authority Lab
+  </a>
+  <a class="nav-back" href="/">← Back to App</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-eyebrow">Pricing</div>
+  <h1 class="page-title">Simple, transparent plans</h1>
+  <p class="page-sub">Start free. Upgrade when you're ready. No hidden fees, no surprises.</p>
+
+  <div class="plans-grid">
+
+    <!-- FREE -->
+    <div class="plan-card">
+      <div class="plan-name">Free</div>
+      <div class="plan-price"><span>$</span>0</div>
+      <div class="plan-period">forever free</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Limited platform access</li>
+        <li>Basic content generation</li>
+        <li>Up to 10 generations/month</li>
+        <li>Standard output quality</li>
+      </ul>
+      <a href="/" class="plan-cta plan-cta-outline">Get Started</a>
+    </div>
+
+    <!-- PRO -->
+    <div class="plan-card featured">
+      <div class="plan-badge">Most Popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price"><span>$</span>29</div>
+      <div class="plan-period">per month</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Full content generation</li>
+        <li>Structured writing tools</li>
+        <li>Priority access & processing</li>
+        <li>Voice Memory profile</li>
+        <li>Unlimited saves & library</li>
+      </ul>
+      <a href="/" class="plan-cta plan-cta-gold">Upgrade to Pro</a>
+    </div>
+
+    <!-- BUSINESS -->
+    <div class="plan-card">
+      <div class="plan-name">Business</div>
+      <div class="plan-price"><span>$</span>79</div>
+      <div class="plan-period">per month</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Unlimited usage</li>
+        <li>All advanced features</li>
+        <li>Priority support</li>
+        <li>Team collaboration tools</li>
+        <li>Custom voice profiles</li>
+      </ul>
+      <a href="/" class="plan-cta plan-cta-outline">Get Started</a>
+    </div>
+
+  </div>
+
+  <p class="pricing-note">
+    All plans are billed monthly. Cancel anytime. <br>
+    By upgrading you agree to our <a href="/terms.html">Terms of Service</a> and <a href="/refund.html">Refund Policy</a>.
+  </p>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2025 Authority Lab. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="/pricing.html" class="active">Pricing</a>
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/refund.html">Refund</a>
+  </div>
+</footer>
+
+</body>
+</html>

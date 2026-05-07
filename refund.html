@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refund Policy — Authority Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0f1a;
+  --bg-2: #111827;
+  --bg-3: #1a2235;
+  --bg-4: #1e2a3e;
+  --border: rgba(255,255,255,0.07);
+  --border-2: rgba(255,255,255,0.12);
+  --text: #f1f5f9;
+  --text-2: #94a3b8;
+  --text-3: #64748b;
+  --gold: #f59e0b;
+  --gold-dim: rgba(245,158,11,0.08);
+  --gold-border: rgba(245,158,11,0.22);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--bg-4);border-radius:2px;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(11,15,26,0.94);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  height:58px;padding:0 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{font-family:var(--font-head);font-size:15px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:pulse 2s infinite;}
+.nav-back{font-size:13px;font-weight:500;color:var(--text-2);background:none;border:1px solid var(--border-2);border-radius:20px;padding:6px 16px;cursor:pointer;transition:all .2s;text-decoration:none;}
+.nav-back:hover{color:var(--text);background:var(--bg-3);}
+
+/* LAYOUT */
+.page-wrap{max-width:720px;margin:0 auto;padding:72px 1.5rem 80px;animation:fadeUp .4s ease both;}
+
+/* HEADER */
+.page-eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold);display:inline-flex;align-items:center;gap:6px;margin-bottom:1.25rem;
+}
+.page-eyebrow::before{content:'';width:20px;height:1px;background:var(--gold);display:inline-block;}
+.page-title{
+  font-family:var(--font-head);font-size:clamp(28px,4vw,42px);
+  font-weight:800;color:var(--text);line-height:1.2;margin-bottom:.75rem;
+}
+.page-meta{
+  font-size:12px;color:var(--text-3);
+  padding:.5rem 0 2.5rem;border-bottom:1px solid var(--border);margin-bottom:2.5rem;
+}
+
+/* SUMMARY CARDS */
+.refund-summary{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  margin-bottom:2.5rem;
+}
+@media(max-width:600px){.refund-summary{grid-template-columns:1fr;}}
+.refund-card{
+  background:var(--bg-2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:1.25rem;
+}
+.refund-card-icon{font-size:20px;margin-bottom:.5rem;}
+.refund-card-label{
+  font-family:var(--font-head);font-size:12px;font-weight:700;
+  color:var(--text);margin-bottom:.25rem;
+}
+.refund-card-desc{font-size:12px;color:var(--text-3);line-height:1.5;}
+
+/* LEGAL CONTENT */
+.legal-section{margin-bottom:2.5rem;}
+.legal-h2{
+  font-family:var(--font-head);font-size:16px;font-weight:700;
+  color:var(--text);margin-bottom:.75rem;
+  display:flex;align-items:center;gap:10px;
+}
+.legal-h2-num{
+  font-size:11px;font-weight:700;color:var(--gold);
+  background:var(--gold-dim);border:1px solid var(--gold-border);
+  border-radius:20px;padding:2px 10px;flex-shrink:0;
+}
+.legal-p{font-size:14.5px;color:var(--text-2);line-height:1.8;margin-bottom:.75rem;}
+.legal-p:last-child{margin-bottom:0;}
+
+/* CONTACT BOX */
+.contact-box{
+  background:var(--bg-2);border:1px solid var(--border-2);
+  border-radius:var(--radius-sm);padding:1.5rem;
+  margin-top:2.5rem;
+}
+.contact-box-title{
+  font-family:var(--font-head);font-size:14px;font-weight:700;
+  color:var(--text);margin-bottom:.5rem;
+}
+.contact-box-text{font-size:13.5px;color:var(--text-2);line-height:1.7;}
+.contact-box-email{
+  display:inline-block;margin-top:.75rem;
+  font-size:13px;font-weight:600;color:var(--gold);text-decoration:none;
+}
+.contact-box-email:hover{text-decoration:underline;}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:2rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-copy{font-size:12px;color:var(--text-3);}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+.footer-links a{font-size:12px;color:var(--text-3);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--text-2);}
+.footer-links a.active{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">
+    <span class="nav-dot"></span>
+    Authority Lab
+  </a>
+  <a class="nav-back" href="/">← Back to App</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-eyebrow">Legal</div>
+  <h1 class="page-title">Refund Policy</h1>
+  <p class="page-meta">Last updated: June 1, 2025 &nbsp;·&nbsp; Applies to all paid subscriptions</p>
+
+  <div class="refund-summary">
+    <div class="refund-card">
+      <div class="refund-card-icon">📅</div>
+      <div class="refund-card-label">Subscription-Based</div>
+      <div class="refund-card-desc">Billed monthly or annually. Cancel anytime.</div>
+    </div>
+    <div class="refund-card">
+      <div class="refund-card-icon">⚠️</div>
+      <div class="refund-card-label">Non-Refundable</div>
+      <div class="refund-card-desc">Payments are generally not refundable.</div>
+    </div>
+    <div class="refund-card">
+      <div class="refund-card-icon">💬</div>
+      <div class="refund-card-label">Exceptions Considered</div>
+      <div class="refund-card-desc">Exceptional cases reviewed individually.</div>
+    </div>
+  </div>
+
+  <div class="legal-section">
+    <h2 class="legal-h2"><span class="legal-h2-num">01</span> Subscription Billing</h2>
+    <p class="legal-p">Authority Lab operates on a recurring subscription model. Payments are processed automatically on your billing cycle (monthly or annually) using your chosen payment method. By subscribing, you authorize these recurring charges.</p>
+    <p class="legal-p">You may cancel your subscription at any time. Cancellation takes effect at the end of your current billing period — you will retain full access until that date.</p>
+  </div>
+
+  <div class="legal-section">
+    <h2 class="legal-h2"><span class="legal-h2-num">02</span> General Non-Refundable Policy</h2>
+    <p class="legal-p">All payments made to Authority Lab are generally non-refundable. This includes payments for the current billing period, any unused portion of a subscription, and any previous billing periods.</p>
+    <p class="legal-p">We encourage you to use the Free plan to evaluate the Service before upgrading to a paid plan.</p>
+  </div>
+
+  <div class="legal-section">
+    <h2 class="legal-h2"><span class="legal-h2-num">03</span> Exceptional Circumstances</h2>
+    <p class="legal-p">We understand that exceptional situations arise. Refunds may be considered on a case-by-case basis in circumstances such as:</p>
+    <p class="legal-p" style="padding-left:1rem;border-left:2px solid var(--border-2);">Significant technical failures caused solely by our platform that prevented reasonable use of the Service for an extended period — and which our support team was unable to resolve in a timely manner.</p>
+    <p class="legal-p">Refund requests must be submitted within 7 days of the charge in question. We do not guarantee approval of any refund request and reserve the right to make final determinations at our discretion.</p>
+  </div>
+
+  <div class="legal-section">
+    <h2 class="legal-h2"><span class="legal-h2-num">04</span> Chargebacks</h2>
+    <p class="legal-p">If you initiate a chargeback with your payment provider without first contacting us, we reserve the right to suspend or terminate your account pending resolution. We ask that you contact our support team first — we are committed to resolving issues fairly and promptly.</p>
+  </div>
+
+  <div class="contact-box">
+    <div class="contact-box-title">Questions about a charge?</div>
+    <div class="contact-box-text">If you believe a charge was made in error or want to discuss your situation, please reach out before initiating a dispute. We're happy to help.</div>
+    <a class="contact-box-email" href="mailto:support@authoritylab.io">support@authoritylab.io</a>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2025 Authority Lab. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="/pricing.html">Pricing</a>
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/refund.html" class="active">Refund</a>
+  </div>
+</footer>
+
+</body>
+</html>

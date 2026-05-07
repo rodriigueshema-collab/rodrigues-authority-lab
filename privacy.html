@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Authority Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0f1a;
+  --bg-2: #111827;
+  --bg-3: #1a2235;
+  --bg-4: #1e2a3e;
+  --border: rgba(255,255,255,0.07);
+  --border-2: rgba(255,255,255,0.12);
+  --text: #f1f5f9;
+  --text-2: #94a3b8;
+  --text-3: #64748b;
+  --gold: #f59e0b;
+  --gold-dim: rgba(245,158,11,0.08);
+  --gold-border: rgba(245,158,11,0.22);
+  --green: #10b981;
+  --green-dim: rgba(16,185,129,0.08);
+  --green-border: rgba(16,185,129,0.22);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--bg-4);border-radius:2px;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(11,15,26,0.94);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  height:58px;padding:0 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{font-family:var(--font-head);font-size:15px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:pulse 2s infinite;}
+.nav-back{font-size:13px;font-weight:500;color:var(--text-2);background:none;border:1px solid var(--border-2);border-radius:20px;padding:6px 16px;cursor:pointer;transition:all .2s;text-decoration:none;}
+.nav-back:hover{color:var(--text);background:var(--bg-3);}
+
+/* LAYOUT */
+.page-wrap{max-width:720px;margin:0 auto;padding:72px 1.5rem 80px;animation:fadeUp .4s ease both;}
+
+/* HEADER */
+.page-eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold);display:inline-flex;align-items:center;gap:6px;margin-bottom:1.25rem;
+}
+.page-eyebrow::before{content:'';width:20px;height:1px;background:var(--gold);display:inline-block;}
+.page-title{
+  font-family:var(--font-head);font-size:clamp(28px,4vw,42px);
+  font-weight:800;color:var(--text);line-height:1.2;margin-bottom:.75rem;
+}
+.page-meta{
+  font-size:12px;color:var(--text-3);
+  padding:.5rem 0 2.5rem;border-bottom:1px solid var(--border);margin-bottom:2.5rem;
+}
+
+/* HIGHLIGHT BOX */
+.privacy-highlight{
+  background:var(--green-dim);border:1px solid var(--green-border);
+  border-radius:var(--radius-sm);padding:1.25rem 1.5rem;
+  margin-bottom:2.5rem;display:flex;align-items:flex-start;gap:12px;
+}
+.privacy-highlight-icon{
+  font-size:16px;flex-shrink:0;margin-top:2px;
+}
+.privacy-highlight-text{
+  font-size:13.5px;color:var(--text-2);line-height:1.7;
+}
+.privacy-highlight-text strong{color:var(--green);font-weight:600;}
+
+/* LEGAL CONTENT */
+.legal-section{margin-bottom:2.5rem;}
+.legal-h2{
+  font-family:var(--font-head);font-size:16px;font-weight:700;
+  color:var(--text);margin-bottom:.75rem;
+  display:flex;align-items:center;gap:10px;
+}
+.legal-h2-num{
+  font-size:11px;font-weight:700;color:var(--gold);
+  background:var(--gold-dim);border:1px solid var(--gold-border);
+  border-radius:20px;padding:2px 10px;flex-shrink:0;
+}
+.legal-p{font-size:14.5px;color:var(--text-2);line-height:1.8;margin-bottom:.75rem;}
+.legal-p:last-child{margin-bottom:0;}
+
+.data-list{list-style:none;margin:.75rem 0;}
+.data-list li{
+  font-size:14px;color:var(--text-2);
+  padding:6px 0 6px 1.5rem;position:relative;border-bottom:1px solid var(--border);
+}
+.data-list li:last-child{border-bottom:none;}
+.data-list li::before{
+  content:'·';position:absolute;left:0;
+  color:var(--gold);font-size:20px;line-height:1.2;
+}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:2rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-copy{font-size:12px;color:var(--text-3);}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+.footer-links a{font-size:12px;color:var(--text-3);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--text-2);}
+.footer-links a.active{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">
+    <span class="nav-dot"></span>
+    Authority Lab
+  </a>
+  <a class="nav-back" href="/">← Back to App</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-eyebrow">Legal</div>
+  <h1 class="page-title">Privacy Policy</h1>
+  <p class="page-meta">Last updated: June 1, 2025 &nbsp;·&nbsp; Applies to all Authority Lab users</p>
+
+  <div class="privacy-highlight">
+    <div class="privacy-highlight-icon">🔒</div>
+    <div class="privacy-highlight-text">
+      <strong>Our commitment:</strong> We do not sell your personal data to third parties. Ever. Your data is used solely to operate and improve Authority Lab.
+    </div>
+  </div>
+
+  <div class="legal-section">
+    <h2 class="legal-h2"><span class="legal-h2-num">01</span> Information We Collect</h2>
+    <p class="legal-p">When you use Authority Lab, we collect minimal data necessary to operate the Service:</p>
+    <ul class="data-list">
+      <li>Email address (used for authentication and account management)</li>
+      <li>Usage activity (content generation events, feature interactions)</li>
+      <li>Device and browser metadata (for security and compatibility)</li>
+      <li>Content you voluntarily submit to the platform (prompts, preferences)</li>
+    </ul>
+    <p class="legal-p">We do not collect sensitive personal information such as financial data, government IDs, or biometric data.</p>
+  </div>
+
+  <div class="legal-section">
+    <h2 class="legal-h2"><span class="legal-h2-num">02</span> How We Use Your Data</h2>
+    <p class="legal-p">The data we collect is used exclusively to:</p>
+    <ul class="data-list">
+      <li>Provide and operate the Authority Lab platform</li>
+      <li>Improve product quality, features, and performance</li>
+      <li>Monitor for security threats and prevent abuse</li>
+      <li>Communicate important service updates or account notices</li>
+    </ul>
+    <p class="legal-p">We do not use your data for advertising targeting or sell it to data brokers.</p>
+  </div>
+
+  <div class="legal-section">
+    <h2 class="legal-h2"><span class="legal-h2-num">03</span> Data Sharing</h2>
+    <p class="legal-p">We do not sell, rent, or trade your personal information. We may share limited data only with trusted third-party service providers (such as infrastructure and payment processors) strictly for the purpose of operating the Service. These providers are contractually bound to protect your data.</p>
+    <p class="legal-p">We may also disclose data if required by law, court order, or to protect the rights and safety of our users.</p>
+  </div>
+
+  <div class="legal-section">
+    <h2 class="legal-h2"><span class="legal-h2-num">04</span> Data Security</h2>
+    <p class="legal-p">We handle your data with industry-standard security practices. This includes encrypted data transmission (HTTPS), access controls, and regular security reviews. While no system is 100% immune to breaches, we take all reasonable measures to protect your information.</p>
+  </div>
+
+  <div class="legal-section">
+    <h2 class="legal-h2"><span class="legal-h2-num">05</span> Your Rights</h2>
+    <p class="legal-p">You have the right to access, correct, or request deletion of your personal data at any time. To exercise these rights, contact us at the email below. We will respond to all requests within a reasonable timeframe in accordance with applicable law.</p>
+  </div>
+
+  <div class="legal-section">
+    <h2 class="legal-h2"><span class="legal-h2-num">06</span> Cookies & Local Storage</h2>
+    <p class="legal-p">Authority Lab uses browser local storage to save your preferences and session state. We do not use third-party tracking cookies. You can clear local storage at any time through your browser settings without affecting your account.</p>
+  </div>
+
+  <div class="legal-section">
+    <h2 class="legal-h2"><span class="legal-h2-num">07</span> Contact</h2>
+    <p class="legal-p">For privacy-related inquiries, contact us at <strong style="color:var(--text);">privacy@authoritylab.io</strong>.</p>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2025 Authority Lab. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="/pricing.html">Pricing</a>
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html" class="active">Privacy</a>
+    <a href="/refund.html">Refund</a>
+  </div>
+</footer>
+
+</body>
+</html>
