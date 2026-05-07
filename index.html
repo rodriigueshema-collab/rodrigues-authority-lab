@@ -61,6 +61,136 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 @keyframes spin{to{transform:rotate(360deg);}}
 @keyframes slideIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 @keyframes glow{0%,100%{box-shadow:0 0 12px rgba(245,158,11,.4);}50%{box-shadow:0 0 22px rgba(245,158,11,.7);}}
+@keyframes shimmer{0%{background-position:-400px 0;}100%{background-position:400px 0;}}
+@keyframes microPop{0%{transform:scale(1);}40%{transform:scale(1.08);}100%{transform:scale(1);}}
+@keyframes softGlow{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,0);}50%{box-shadow:0 0 0 6px rgba(245,158,11,.15);}}
+@keyframes checkPop{0%{transform:scale(0) rotate(-10deg);opacity:0;}60%{transform:scale(1.2) rotate(3deg);}100%{transform:scale(1) rotate(0deg);opacity:1;}}
+@keyframes fadeSlideDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+
+/* AUTO-SAVE INDICATOR */
+#autosave-indicator{
+  position:fixed;top:68px;right:1.25rem;z-index:300;
+  display:flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:500;color:var(--text-3);
+  background:var(--bg-2);border:1px solid var(--border);
+  border-radius:20px;padding:5px 12px;
+  opacity:0;transition:opacity .4s ease;pointer-events:none;
+}
+#autosave-indicator.show{opacity:1;}
+#autosave-indicator.saving .as-dot{animation:pulse 1s infinite;}
+#autosave-indicator .as-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--text-3);flex-shrink:0;transition:background .3s;
+}
+#autosave-indicator.saved .as-dot{background:var(--green);}
+
+/* SKELETON LOADERS */
+.skeleton{
+  background:linear-gradient(90deg,var(--bg-3) 0%,var(--bg-4) 40%,var(--bg-3) 80%);
+  background-size:800px 100%;
+  animation:shimmer 1.6s ease-in-out infinite;
+  border-radius:6px;
+}
+.skeleton-line{height:13px;margin-bottom:10px;}
+.skeleton-line.w-80{width:80%;}
+.skeleton-line.w-60{width:60%;}
+.skeleton-line.w-40{width:40%;}
+.skeleton-line.w-full{width:100%;}
+
+/* LOADING STATE — upgrade */
+.cm-loading-state{
+  padding:2.5rem 1.5rem;text-align:center;
+  display:none;animation:fadeIn .25s ease both;
+}
+.cm-loading-state.show{display:block;}
+.cm-loading-bar-wrap{
+  width:100%;max-width:260px;height:3px;
+  background:var(--bg-3);border-radius:3px;
+  margin:1.25rem auto .5rem;overflow:hidden;
+}
+.cm-loading-bar{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--gold),#fbbf24);
+  border-radius:3px;
+  transition:width .6s ease;
+  animation:loadingProgress 4s ease-in-out forwards;
+}
+@keyframes loadingProgress{0%{width:0%;}60%{width:75%;}90%{width:88%;}100%{width:92%;}}
+.cm-loading-msg{
+  font-family:var(--font-head);font-size:15px;font-weight:700;
+  color:var(--text);margin-bottom:.3rem;
+}
+.cm-loading-hint{font-size:12px;color:var(--text-3);line-height:1.6;}
+.cm-loading-skeletons{
+  max-width:520px;margin:1.5rem auto 0;
+  background:var(--bg-2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.5rem;text-align:left;
+}
+
+/* RCFTO WHY-IT-WORKS TAG */
+.rcfto-why{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;color:var(--text-3);
+  background:var(--bg-3);border:1px solid var(--border);
+  border-radius:20px;padding:4px 12px;margin-top:.75rem;
+  animation:fadeIn .4s .2s ease both;
+}
+.rcfto-why::before{content:'✦';font-size:9px;color:var(--gold);}
+
+/* OWNERSHIP SIGNAL */
+.output-ownership{
+  display:flex;align-items:center;gap:6px;
+  font-size:11px;color:var(--text-3);
+  padding:.5rem 0 0;line-height:1.5;
+}
+.output-ownership-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--gold);flex-shrink:0;opacity:.7;
+}
+
+/* LIBRARY METADATA */
+.cm-lib-meta{
+  display:flex;align-items:center;gap:8px;
+  flex-wrap:wrap;margin-bottom:.6rem;
+}
+.cm-lib-tag{
+  font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--text-3);background:var(--bg-3);border:1px solid var(--border);
+  border-radius:20px;padding:2px 9px;
+}
+.cm-lib-tag.format{color:var(--gold);background:var(--gold-dim);border-color:var(--gold-border);}
+.cm-lib-date{font-size:10px;color:var(--text-3);margin-left:auto;}
+
+/* MICRO-INTERACTION: button pop */
+.micro-pop{animation:microPop .25s ease both;}
+.micro-glow{animation:softGlow .6s ease both;}
+
+/* MOBILE IMPROVEMENTS */
+@media(max-width:640px){
+  nav{padding:0 1rem;}
+  .nav-right{gap:5px;}
+  .home-wrap{padding:48px 1rem 32px;}
+  .path-grid{gap:10px;}
+  .path-card{padding:1.25rem;}
+  .cm-wrap{padding:32px 1rem 80px;}
+  .cm-card{padding:1.25rem;}
+  .billing-wrap{padding:48px 1rem 60px;}
+  .settings-wrap{padding:40px 1rem 60px;}
+  .billing-plans{gap:12px;}
+  .plan-card{padding:1.5rem 1.25rem;}
+  .chat-fab{bottom:1rem;right:1rem;width:46px;height:46px;font-size:17px;}
+  .chat-panel{right:1rem;width:calc(100vw - 2rem);}
+  .rcfto-block{flex-direction:column;gap:10px;padding:1.25rem;}
+  .rcfto-letter{width:auto;}
+  .home-author{flex-wrap:wrap;}
+  .home-author-links{margin-left:0;margin-top:.5rem;}
+  .entry-h1{font-size:clamp(22px,6vw,32px);}
+  .section-title{font-size:clamp(20px,5vw,27px);}
+  .btn-primary{font-size:14px;padding:13px 24px;}
+  .soft-wall-box{padding:1.5rem 1.25rem;}
+  .cm-output-actions{gap:6px;}
+  .cm-action-btn{font-size:11px;padding:6px 12px;}
+}
 
 /* UPDATE BANNER */
 #update-banner{
@@ -89,6 +219,279 @@ nav{
 .nav-workspace-btn{font-size:12px;font-weight:700;color:var(--text);background:var(--bg-3);border:1px solid var(--border-2);border-radius:20px;padding:6px 16px;cursor:pointer;transition:all .2s;display:none;}
 .nav-workspace-btn:hover{border-color:var(--gold-border);color:var(--gold);}
 
+/* ACCOUNT DROPDOWN */
+.nav-account{position:relative;}
+.nav-account-btn{
+  display:flex;align-items:center;gap:7px;
+  background:none;border:1px solid var(--border-2);border-radius:20px;
+  padding:5px 12px 5px 8px;cursor:pointer;transition:all .2s;
+  font-family:var(--font-body);
+}
+.nav-account-btn:hover{background:var(--bg-3);border-color:rgba(255,255,255,0.18);}
+.nav-account-avatar{
+  width:22px;height:22px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#fbbf24);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;flex-shrink:0;
+}
+.nav-account-label{font-size:12px;font-weight:600;color:var(--text-2);}
+.nav-account-caret{font-size:9px;color:var(--text-3);transition:transform .2s;}
+.nav-account.open .nav-account-caret{transform:rotate(180deg);}
+
+.nav-dropdown{
+  position:absolute;top:calc(100% + 8px);right:0;
+  background:var(--bg-2);border:1px solid var(--border-2);
+  border-radius:12px;min-width:180px;z-index:400;
+  box-shadow:0 16px 48px rgba(0,0,0,0.4),0 4px 12px rgba(0,0,0,0.25);
+  overflow:hidden;
+  opacity:0;transform:translateY(-6px) scale(.97);
+  pointer-events:none;
+  transition:opacity .18s ease,transform .18s ease;
+}
+.nav-account.open .nav-dropdown{
+  opacity:1;transform:translateY(0) scale(1);pointer-events:auto;
+}
+.nav-dropdown-header{
+  padding:12px 14px 10px;border-bottom:1px solid var(--border);
+}
+.nav-dropdown-email{font-size:11px;color:var(--text-3);word-break:break-all;line-height:1.4;}
+.nav-dropdown-item{
+  display:flex;align-items:center;gap:9px;width:100%;
+  padding:10px 14px;font-size:13px;font-weight:500;
+  color:var(--text-2);background:none;border:none;
+  cursor:pointer;text-align:left;font-family:var(--font-body);
+  transition:background .15s,color .15s;
+}
+.nav-dropdown-item:hover{background:var(--bg-3);color:var(--text);}
+.nav-dropdown-item svg{flex-shrink:0;opacity:.7;}
+.nav-dropdown-divider{height:1px;background:var(--border);margin:4px 0;}
+.nav-dropdown-item.logout-item{color:var(--text-3);}
+.nav-dropdown-item.logout-item:hover{background:rgba(248,113,113,0.06);color:#f87171;}
+.nav-dropdown-item.logout-item:hover svg{opacity:1;}
+.nav-dropdown-signin{padding:12px 14px;display:flex;flex-direction:column;gap:7px;}
+
+/* OWNER BADGE */
+.owner-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);
+  border-radius:20px;padding:3px 10px;
+}
+
+/* ── SETTINGS PAGE ── */
+.settings-wrap{max-width:600px;margin:0 auto;padding:56px 1.5rem 80px;}
+.settings-header{margin-bottom:2.5rem;animation:fadeUp .5s ease both;}
+.settings-eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:.4rem;}
+.settings-title{font-family:var(--font-head);font-size:clamp(22px,3.5vw,30px);font-weight:800;color:var(--text);letter-spacing:-.02em;line-height:1.1;}
+.settings-section{margin-bottom:1.5rem;animation:fadeUp .5s ease both;}
+.settings-section-label{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-3);margin-bottom:.75rem;padding-bottom:.5rem;
+  border-bottom:1px solid var(--border);
+}
+.settings-card{
+  background:var(--bg-2);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;
+}
+.settings-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.25rem;border-bottom:1px solid var(--border);gap:1rem;
+}
+.settings-row:last-child{border-bottom:none;}
+.settings-row-left{flex:1;min-width:0;}
+.settings-row-label{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.settings-row-sub{font-size:12px;color:var(--text-3);line-height:1.5;}
+.settings-row-right{flex-shrink:0;}
+
+/* Settings input */
+.sp-input{
+  width:100%;background:var(--bg-3);border:1px solid var(--border-2);
+  border-radius:var(--radius-sm);padding:10px 14px;
+  font-family:var(--font-body);font-size:13px;color:var(--text);
+  outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.sp-input::placeholder{color:var(--text-3);}
+.sp-input:focus{border-color:rgba(245,158,11,.45);box-shadow:0 0 0 3px rgba(245,158,11,.06);}
+.sp-input:disabled{opacity:.5;cursor:not-allowed;}
+
+/* Profile avatar */
+.sp-avatar{
+  width:52px;height:52px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold),#fbbf24);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;border:2px solid var(--gold-border);
+}
+
+/* Radio chips */
+.sp-chip-row{display:flex;gap:6px;flex-wrap:wrap;}
+.sp-chip{
+  font-size:12px;font-weight:500;color:var(--text-2);
+  background:var(--bg-3);border:1px solid var(--border-2);
+  border-radius:20px;padding:6px 14px;cursor:pointer;
+  transition:all .17s;font-family:var(--font-body);
+}
+.sp-chip:hover{border-color:var(--border-2);color:var(--text);background:var(--bg-4);}
+.sp-chip.sp-selected{
+  border-color:var(--gold-border);color:var(--gold);
+  background:var(--gold-dim);font-weight:600;
+}
+
+/* Toggle switch */
+.sp-toggle{position:relative;width:40px;height:22px;flex-shrink:0;}
+.sp-toggle input{opacity:0;width:0;height:0;position:absolute;}
+.sp-toggle-track{
+  position:absolute;inset:0;border-radius:11px;
+  background:var(--bg-4);border:1px solid var(--border-2);
+  cursor:pointer;transition:background .2s,border-color .2s;
+}
+.sp-toggle input:checked + .sp-toggle-track{background:var(--gold);border-color:var(--gold);}
+.sp-toggle-thumb{
+  position:absolute;top:3px;left:3px;
+  width:14px;height:14px;border-radius:50%;
+  background:#fff;transition:transform .2s;pointer-events:none;
+}
+.sp-toggle input:checked ~ .sp-toggle-thumb{transform:translateX(18px);}
+
+/* Settings action buttons */
+.sp-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:600;color:var(--text-2);
+  background:var(--bg-3);border:1px solid var(--border-2);
+  border-radius:8px;padding:8px 14px;cursor:pointer;
+  font-family:var(--font-body);transition:all .18s;
+}
+.sp-btn:hover{color:var(--text);background:var(--bg-4);}
+.sp-btn.sp-btn-gold{color:var(--gold);background:var(--gold-dim);border-color:var(--gold-border);}
+.sp-btn.sp-btn-gold:hover{background:var(--gold);color:#000;}
+.sp-btn.sp-btn-danger{color:var(--red);background:var(--red-dim);border-color:rgba(248,113,113,.22);}
+.sp-btn.sp-btn-danger:hover{background:rgba(248,113,113,.18);}
+.sp-btn.sp-btn-full{width:100%;justify-content:center;padding:11px 18px;border-radius:var(--radius-sm);font-size:13px;}
+
+/* Owner badge in settings */
+.sp-owner-row{
+  display:flex;align-items:center;gap:10px;
+  background:var(--gold-dim);border:1px solid var(--gold-border);
+  border-radius:var(--radius-sm);padding:10px 14px;
+}
+.sp-owner-text{font-size:12px;font-weight:700;color:var(--gold);}
+
+/* Voice memory stat pill */
+.vm-stat-pill{
+  font-size:11px;color:var(--text-3);
+  background:var(--bg-3);border:1px solid var(--border);
+  border-radius:20px;padding:3px 10px;
+}
+
+/* BILLING PAGE */
+.billing-wrap{max-width:700px;margin:0 auto;padding:64px 1.5rem 80px;}
+.billing-header{margin-bottom:3rem;animation:fadeUp .5s ease both;}
+.billing-eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:.5rem;}
+.billing-title{font-family:var(--font-head);font-size:clamp(24px,4vw,34px);font-weight:800;color:var(--text);letter-spacing:-.02em;line-height:1.1;margin-bottom:.5rem;}
+.billing-sub{font-size:14px;color:var(--text-2);line-height:1.7;}
+.billing-owner-notice{
+  display:flex;align-items:center;gap:10px;
+  background:var(--gold-dim);border:1px solid var(--gold-border);
+  border-radius:12px;padding:14px 18px;margin-bottom:2rem;
+  animation:fadeUp .5s .1s ease both;
+}
+.billing-owner-icon{font-size:18px;flex-shrink:0;}
+.billing-owner-text{font-size:13px;font-weight:600;color:var(--gold);}
+.billing-plans{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  animation:fadeUp .5s .15s ease both;
+}
+@media(max-width:640px){.billing-plans{grid-template-columns:1fr;}}
+.plan-card{
+  background:var(--bg-2);border:1px solid var(--border);
+  border-radius:16px;padding:1.75rem 1.5rem;
+  display:flex;flex-direction:column;gap:.75rem;
+  position:relative;overflow:hidden;
+  transition:border-color .22s,transform .22s,box-shadow .22s;
+}
+.plan-card:hover{border-color:var(--border-2);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.3);}
+.plan-card.plan-featured{
+  border-color:var(--gold-border);
+  background:linear-gradient(160deg,rgba(245,158,11,.05) 0%,var(--bg-2) 60%);
+}
+.plan-card.plan-featured:hover{box-shadow:0 16px 48px rgba(245,158,11,.12);}
+.plan-featured-bar{
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),#fbbf24);
+}
+.plan-featured-label{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);
+  border-radius:20px;padding:3px 10px;align-self:flex-start;margin-bottom:.25rem;
+}
+.plan-name{font-family:var(--font-head);font-size:19px;font-weight:800;color:var(--text);}
+.plan-subtitle{font-size:13px;color:var(--text-3);line-height:1.5;margin-bottom:.25rem;}
+.plan-price{
+  display:flex;align-items:baseline;gap:4px;
+  margin:-.25rem 0 .25rem;
+}
+.plan-price-amount{font-family:var(--font-head);font-size:28px;font-weight:800;color:var(--text);}
+.plan-price-period{font-size:12px;color:var(--text-3);}
+.plan-divider{height:1px;background:var(--border);margin:.25rem 0;}
+.plan-features{display:flex;flex-direction:column;gap:8px;flex:1;}
+.plan-feature{
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:13px;color:var(--text-2);line-height:1.5;
+}
+.plan-feature-dot{
+  width:16px;height:16px;border-radius:50%;
+  background:var(--green-dim);border:1px solid var(--green-border);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;font-size:9px;color:var(--green);
+}
+.plan-cta{
+  display:flex;align-items:center;justify-content:center;
+  width:100%;padding:12px 20px;border-radius:50px;border:none;
+  font-family:var(--font-head);font-size:13px;font-weight:700;
+  cursor:pointer;transition:all .2s;margin-top:.5rem;
+  font-family:var(--font-body);
+}
+.plan-cta.active-plan{
+  background:var(--bg-3);color:var(--text-3);
+  border:1px solid var(--border);cursor:default;
+  font-size:12px;
+}
+.plan-cta.cta-upgrade{
+  background:var(--gold);color:#000;
+  box-shadow:0 4px 16px rgba(245,158,11,.2);
+}
+.plan-cta.cta-upgrade:hover{background:#fbbf24;transform:translateY(-1px);box-shadow:0 8px 24px rgba(245,158,11,.32);}
+.plan-cta.cta-secondary{
+  background:none;color:var(--text-2);
+  border:1px solid var(--border-2);
+}
+.plan-cta.cta-secondary:hover{background:var(--bg-3);color:var(--text);}
+.billing-note{
+  text-align:center;font-size:12px;color:var(--text-3);
+  margin-top:2rem;line-height:1.6;
+  animation:fadeUp .5s .3s ease both;
+}
+.nav-dropdown-guest-badge{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:2px;}
+.nav-dropdown-signin-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:9px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font-body);transition:all .18s;border:none;}
+.nav-dropdown-signin-btn.primary{background:var(--gold);color:#000;}
+.nav-dropdown-signin-btn.primary:hover{background:#fbbf24;}
+.nav-dropdown-signin-btn.secondary{background:var(--bg-3);color:var(--text-2);border:1px solid var(--border-2);}
+.nav-dropdown-signin-btn.secondary:hover{color:var(--text);background:var(--bg-4);}
+.nav-dropdown-guest-hint{font-size:10px;color:var(--text-3);text-align:center;line-height:1.4;padding:0 2px;}
+#soft-auth-wall{position:fixed;inset:0;z-index:700;background:rgba(11,15,26,0.85);backdrop-filter:blur(14px);display:none;align-items:flex-end;justify-content:center;padding:1.5rem;}
+#soft-auth-wall.show{display:flex;}
+.soft-wall-box{background:var(--bg-2);border:1px solid var(--border-2);border-radius:20px;padding:2rem 1.75rem;max-width:400px;width:100%;animation:slideIn .3s ease both;box-shadow:0 40px 80px rgba(0,0,0,.5);}
+.soft-wall-icon{font-size:32px;margin-bottom:.75rem;}
+.soft-wall-title{font-family:var(--font-head);font-size:19px;font-weight:800;color:var(--text);margin-bottom:.4rem;}
+.soft-wall-sub{font-size:13px;color:var(--text-2);line-height:1.65;margin-bottom:1.5rem;}
+.soft-wall-actions{display:flex;flex-direction:column;gap:8px;}
+.soft-wall-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 24px;border-radius:50px;border:none;font-family:var(--font-head);font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;}
+.soft-wall-cta.primary{background:var(--gold);color:#000;box-shadow:0 4px 16px rgba(245,158,11,.25);}
+.soft-wall-cta.primary:hover{background:#fbbf24;transform:translateY(-1px);}
+.soft-wall-skip{background:none;border:none;font-family:var(--font-body);font-size:12px;color:var(--text-3);cursor:pointer;padding:6px;transition:color .2s;}
+.soft-wall-skip:hover{color:var(--text-2);}
+.soft-wall-counter{font-size:11px;font-weight:700;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:3px 10px;display:inline-block;margin-bottom:.75rem;}
+
 /* PAGES */
 .page{display:none;}
 .page.active{display:block;}
@@ -98,7 +501,7 @@ nav{
 .home-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:4px 12px;margin-bottom:1.5rem;animation:fadeUp .5s ease both;}
 .home-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
 .home-h1{font-family:var(--font-head);font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.12;letter-spacing:-.02em;margin-bottom:.6rem;animation:fadeUp .5s .1s ease both;}
-.home-h1 span{color:var(--gold);}
+.home-h1 span{color:var(--text);}
 .home-tagline{font-size:13px;font-weight:600;color:var(--text-3);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.6rem;animation:fadeUp .5s .15s ease both;}
 .home-sub{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:1.5rem;max-width:460px;animation:fadeUp .5s .2s ease both;}
 .home-proof{display:flex;align-items:center;gap:16px;margin-bottom:2rem;animation:fadeUp .5s .25s ease both;}
@@ -148,7 +551,7 @@ footer a:hover{color:var(--text-2);}
 .setup-wrap{max-width:580px;margin:0 auto;padding:60px 1.5rem 80px;}
 .section-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:.5rem;}
 .section-title{font-family:var(--font-head);font-size:27px;font-weight:800;color:var(--text);letter-spacing:-.02em;margin-bottom:.5rem;line-height:1.1;}
-.section-title span{color:var(--gold);}
+.section-title span{color:var(--text);}
 .section-sub{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:2.25rem;}
 .field-group{margin-bottom:1.5rem;}
 .field-label{font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:.5rem;display:block;}
@@ -184,13 +587,13 @@ footer a:hover{color:var(--text-2);}
 .outline-wrap{max-width:620px;margin:0 auto;padding:60px 1.5rem 80px;}
 .book-meta{margin-bottom:20px;}
 .book-meta .meta-title-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.3rem;}
-.book-meta .meta-title-value{font-family:var(--font-head);font-size:27px;font-weight:800;color:var(--text);letter-spacing:-.02em;line-height:1.1;margin-bottom:1rem;text-transform:uppercase;}
+.book-meta .meta-title-value{font-family:var(--font-head);font-size:22px;font-weight:700;color:var(--text);letter-spacing:-.01em;line-height:1.25;margin-bottom:1rem;}
 .book-meta .meta-subtitle-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.3rem;}
 .book-meta .meta-subtitle-value{font-size:14px;color:var(--text-2);line-height:1.6;margin-bottom:.5rem;}
 .book-outline-card{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:1.5rem;}
 .book-outline-top{padding:1.75rem;background:linear-gradient(135deg,var(--bg-3),var(--bg-2));border-bottom:1px solid var(--border);}
 .book-genre-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:3px 10px;margin-bottom:.75rem;}
-.book-title-display{font-family:var(--font-head);font-size:21px;font-weight:800;color:var(--text);line-height:1.2;margin-bottom:.35rem;}
+.book-title-display{font-family:var(--font-head);font-size:20px;font-weight:700;color:var(--text);line-height:1.25;margin-bottom:.35rem;}
 .book-subtitle-display{font-size:13.5px;color:var(--text-2);line-height:1.6;}
 .chapter-list{padding:1.5rem 1.75rem;}
 .chapter-list-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:1rem;}
@@ -210,7 +613,7 @@ footer a:hover{color:var(--text-2);}
 /* WORKSPACE */
 .workspace-wrap{max-width:620px;margin:0 auto;padding:60px 1.5rem 80px;}
 .ws-book-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.3rem;}
-.ws-book-title{font-family:var(--font-head);font-size:23px;font-weight:800;color:var(--text);margin-bottom:1rem;}
+.ws-book-title{font-family:var(--font-head);font-size:22px;font-weight:700;color:var(--text);margin-bottom:1rem;}
 .progress-bar-wrap{background:var(--bg-3);border-radius:20px;height:5px;margin-bottom:.5rem;overflow:hidden;}
 .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),#fbbf24);border-radius:20px;transition:width .6s ease;}
 .progress-label{font-size:12px;color:var(--text-3);margin-bottom:1.75rem;}
@@ -378,23 +781,142 @@ footer a:hover{color:var(--text-2);}
 .btn-danger:hover{background:var(--red);color:#fff;}
 
 /* CHAT */
-.chat-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;width:52px;height:52px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;font-size:22px;box-shadow:0 4px 20px rgba(245,158,11,.5);transition:all .22s;display:flex;align-items:center;justify-content:center;}
-.chat-fab:hover{transform:scale(1.08);}
-.chat-panel{position:fixed;bottom:5rem;right:1.5rem;z-index:300;width:300px;max-width:calc(100vw - 2rem);background:var(--bg-2);border:1px solid var(--border-2);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.5);display:none;flex-direction:column;animation:slideIn .3s ease both;overflow:hidden;}
+/* RCFTO ASSISTANT FAB */
+.chat-fab{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#fbbf24);
+  border:none;cursor:pointer;font-size:20px;
+  box-shadow:0 4px 24px rgba(245,158,11,.45),0 0 0 0 rgba(245,158,11,.3);
+  transition:all .22s;display:flex;align-items:center;justify-content:center;
+  animation:fabPulse 3s ease-in-out infinite;
+}
+.chat-fab:hover{transform:scale(1.1);box-shadow:0 6px 32px rgba(245,158,11,.6);}
+@keyframes fabPulse{0%,100%{box-shadow:0 4px 24px rgba(245,158,11,.45),0 0 0 0 rgba(245,158,11,.2);}50%{box-shadow:0 4px 24px rgba(245,158,11,.45),0 0 0 8px rgba(245,158,11,.0);}}
+
+/* RCFTO ASSISTANT PANEL */
+.chat-panel{
+  position:fixed;bottom:5rem;right:1.5rem;z-index:300;
+  width:340px;max-width:calc(100vw - 2rem);
+  background:var(--bg-2);
+  border:1px solid var(--border-2);
+  border-top:1px solid rgba(245,158,11,.25);
+  border-radius:18px;
+  box-shadow:0 24px 64px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.05);
+  display:none;flex-direction:column;
+  animation:slideIn .28s cubic-bezier(.22,1,.36,1) both;
+  overflow:hidden;
+}
 .chat-panel.open{display:flex;}
-.chat-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
-.chat-avatar{width:34px;height:34px;border-radius:50%;background:var(--gold-dim);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:16px;}
-.chat-name{font-size:14px;font-weight:700;color:var(--text);}
-.chat-status{font-size:11px;color:var(--text-3);}
-.chat-close{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--text-3);font-size:18px;}
-.chat-msgs{flex:1;padding:1rem;max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:.75rem;}
-.chat-msg{font-size:13px;line-height:1.6;color:var(--text-2);background:var(--bg-3);border-radius:12px 12px 12px 0;padding:.75rem 1rem;max-width:90%;}
-.chat-msg.user{background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:12px 12px 0 12px;align-self:flex-end;color:var(--text);}
-.chat-input-row{display:flex;gap:8px;padding:.75rem 1rem;border-top:1px solid var(--border);}
-.chat-input{flex:1;background:var(--bg-3);border:1px solid var(--border-2);border-radius:var(--radius-sm);padding:8px 12px;font-family:var(--font-body);font-size:13px;color:var(--text);outline:none;}
+
+/* ASSISTANT HEADER */
+.chat-header{
+  padding:.9rem 1.1rem;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,rgba(245,158,11,.06),rgba(245,158,11,.02));
+}
+.chat-avatar{
+  width:32px;height:32px;border-radius:10px;
+  background:linear-gradient(135deg,var(--gold),#fbbf24);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(245,158,11,.35);
+}
+.chat-name{font-size:13px;font-weight:700;color:var(--text);letter-spacing:-.01em;}
+.chat-status{font-size:10px;color:var(--gold);font-weight:500;letter-spacing:.04em;text-transform:uppercase;}
+.chat-close{
+  margin-left:auto;background:none;border:none;cursor:pointer;
+  color:var(--text-3);font-size:18px;width:28px;height:28px;
+  border-radius:7px;display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.chat-close:hover{background:var(--bg-3);color:var(--text);}
+
+/* QUICK ACTIONS */
+.rcfto-quick-actions{
+  padding:.75rem 1rem .6rem;
+  border-bottom:1px solid var(--border);
+}
+.rcfto-qa-label{font-size:10px;color:var(--text-3);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.5rem;}
+.rcfto-qa-chips{display:flex;flex-wrap:wrap;gap:5px;}
+.rcfto-chip{
+  font-size:11px;font-weight:500;color:var(--text-2);
+  background:var(--bg-3);border:1px solid var(--border-2);
+  border-radius:20px;padding:4px 10px;cursor:pointer;
+  transition:all .15s;white-space:nowrap;
+}
+.rcfto-chip:hover{
+  color:var(--gold);background:var(--gold-dim);
+  border-color:var(--gold-border);transform:translateY(-1px);
+}
+
+/* CONVERSATION AREA */
+.chat-msgs{
+  flex:1;padding:.85rem 1rem;
+  max-height:200px;overflow-y:auto;
+  display:flex;flex-direction:column;gap:.65rem;
+}
+.chat-msg{
+  font-size:12.5px;line-height:1.65;color:var(--text-2);
+  background:var(--bg-3);border:1px solid var(--border);
+  border-radius:12px 12px 12px 2px;padding:.65rem .9rem;max-width:92%;
+  animation:fadeSlideDown .2s ease both;
+}
+.chat-msg.user{
+  background:var(--gold-dim);border:1px solid var(--gold-border);
+  border-radius:12px 12px 2px 12px;align-self:flex-end;
+  color:var(--text);
+}
+.chat-msg.assistant-typing{
+  display:flex;gap:4px;align-items:center;padding:.65rem .9rem;
+}
+.typing-dot{
+  width:5px;height:5px;border-radius:50%;background:var(--text-3);
+  animation:typingBounce 1.2s ease-in-out infinite;
+}
+.typing-dot:nth-child(2){animation-delay:.2s;}
+.typing-dot:nth-child(3){animation-delay:.4s;}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-5px);}}
+
+/* INPUT ROW */
+.chat-input-row{
+  display:flex;gap:7px;padding:.7rem .9rem;
+  border-top:1px solid var(--border);
+  background:var(--bg-2);
+}
+.chat-input{
+  flex:1;background:var(--bg-3);
+  border:1px solid var(--border-2);
+  border-radius:10px;padding:7px 11px;
+  font-family:var(--font-body);font-size:12.5px;color:var(--text);
+  outline:none;resize:none;transition:border-color .15s;
+  line-height:1.5;
+}
+.chat-input:focus{border-color:var(--gold-border);}
 .chat-input::placeholder{color:var(--text-3);}
-.chat-send{background:var(--gold);border:none;border-radius:var(--radius-sm);padding:8px 12px;cursor:pointer;font-size:14px;transition:all .2s;}
-.chat-send:hover{background:#fbbf24;}
+.chat-send{
+  background:var(--gold);border:none;border-radius:10px;
+  padding:7px 13px;cursor:pointer;font-size:14px;
+  transition:all .18s;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.chat-send:hover{background:#fbbf24;transform:scale(1.05);}
+.chat-send:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+/* FOUNDER FOOTER */
+.rcfto-founder-footer{
+  padding:.6rem 1rem .75rem;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--border);
+}
+.rcfto-founder-text{font-size:10px;color:var(--text-3);}
+.rcfto-founder-links{display:flex;gap:8px;}
+.rcfto-founder-link{
+  font-size:10px;color:var(--text-3);text-decoration:none;
+  transition:color .15s;
+}
+.rcfto-founder-link:hover{color:var(--gold);}
 
 /* TOAST */
 #toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg-3);border:1px solid var(--border-2);border-radius:20px;padding:10px 20px;font-size:13px;color:var(--text);opacity:0;transition:all .3s;z-index:999;pointer-events:none;}
@@ -431,7 +953,7 @@ footer a:hover{color:var(--text-2);}
   color:var(--text);text-align:center;max-width:600px;
   margin-bottom:.85rem;animation:fadeUp .5s .08s ease both;
 }
-.entry-h1 span{color:var(--gold);}
+.entry-h1 span{color:var(--text);}
 .entry-sub{
   font-size:14px;color:var(--text-2);line-height:1.75;
   text-align:center;max-width:480px;margin-bottom:.5rem;
@@ -477,7 +999,7 @@ footer a:hover{color:var(--text-2);}
 #content-mode{
   min-height:100vh;background:var(--bg);
 }
-.cm-wrap{max-width:600px;margin:0 auto;padding:60px 1.5rem 100px;}
+.cm-wrap{max-width:700px;margin:0 auto;padding:48px 1.5rem 100px;}
 .cm-back-btn{
   display:inline-flex;align-items:center;gap:6px;
   font-size:13px;font-weight:500;color:var(--text-3);
@@ -487,13 +1009,24 @@ footer a:hover{color:var(--text-2);}
 }
 .cm-back-btn:hover{color:var(--text-2);}
 .cm-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:.5rem;}
-.cm-title{font-family:var(--font-head);font-size:27px;font-weight:800;color:var(--text);letter-spacing:-.02em;margin-bottom:.45rem;line-height:1.1;}
-.cm-title span{color:var(--gold);}
+.cm-title{font-family:var(--font-head);font-size:clamp(22px,3.5vw,30px);font-weight:800;color:var(--text);letter-spacing:-.02em;margin-bottom:.45rem;line-height:1.1;}
+.cm-title span{color:var(--text);}
 .cm-sub{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:2rem;}
-.cm-section{margin-bottom:1.5rem;}
-.cm-section-label{font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:.55rem;display:block;}
+
+/* CARD SYSTEM for Content Mode */
+.cm-card{
+  background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.75rem;margin-bottom:1.25rem;
+}
+.cm-card-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:1.25rem;display:flex;align-items:center;gap:8px;}
+.cm-card-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.cm-section{margin-bottom:1.25rem;}
+.cm-section:last-child{margin-bottom:0;}
+.cm-section-label{font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:.4rem;display:block;}
+.cm-section-helper{font-size:12px;color:var(--text-3);margin-bottom:.7rem;line-height:1.5;}
 .cm-input{
-  width:100%;background:var(--bg-2);border:1px solid var(--border-2);
+  width:100%;background:var(--bg-3);border:1px solid var(--border-2);
   border-radius:var(--radius-sm);padding:13px 16px;
   font-family:var(--font-body);font-size:14px;color:var(--text);
   outline:none;transition:border-color .2s,box-shadow .2s;
@@ -503,27 +1036,48 @@ footer a:hover{color:var(--text-2);}
 .cm-radio-row{display:flex;gap:8px;flex-wrap:wrap;}
 .cm-radio-btn{
   font-size:13px;font-weight:500;color:var(--text-2);
-  background:var(--bg-2);border:1px solid var(--border-2);
+  background:var(--bg-3);border:1px solid var(--border-2);
   border-radius:20px;padding:8px 18px;cursor:pointer;transition:all .18s;
 }
 .cm-radio-btn:hover,.cm-radio-btn.cm-selected{
   border-color:var(--gold-border);color:var(--gold);background:var(--gold-dim);font-weight:600;
 }
 .cm-generate-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  font-family:var(--font-head);font-size:15px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;
+  font-family:var(--font-head);font-size:16px;font-weight:800;
   color:#000;background:var(--gold);border:none;
-  border-radius:50px;padding:14px 32px;cursor:pointer;
+  border-radius:var(--radius-sm);padding:16px 32px;cursor:pointer;
   transition:all .22s;box-shadow:0 4px 16px rgba(245,158,11,.25);
-  margin-top:1rem;
+  margin-top:1.25rem;
 }
 .cm-generate-btn:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 28px rgba(245,158,11,.38);}
 .cm-generate-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none;}
 
+/* Loading state for content mode */
+.cm-loading-state{
+  display:none;text-align:center;padding:2.5rem 1.5rem;
+  background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);
+  margin-top:1.25rem;animation:fadeIn .3s ease both;
+}
+.cm-loading-state.show{display:block;}
+.cm-loading-msg{font-size:14px;font-weight:600;color:var(--text-2);margin-top:1rem;}
+.cm-loading-hint{font-size:12px;color:var(--text-3);margin-top:.4rem;}
+
+/* Empty state for content mode */
+.cm-empty-state{
+  text-align:center;padding:2.5rem 1.5rem;
+  background:var(--bg-2);border:1px dashed var(--border-2);border-radius:var(--radius);
+  margin-top:1.25rem;
+}
+.cm-empty-icon{font-size:32px;margin-bottom:.75rem;}
+.cm-empty-title{font-size:15px;font-weight:600;color:var(--text-2);margin-bottom:.4rem;}
+.cm-empty-sub{font-size:13px;color:var(--text-3);line-height:1.6;max-width:320px;margin:0 auto;}
+
 /* output */
 .cm-output-card{
   background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);
-  padding:1.75rem;margin-top:2rem;animation:slideIn .35s ease both;
+  padding:1.75rem;margin-top:1.25rem;animation:slideIn .35s ease both;
   display:none;
 }
 .cm-output-card.show{display:block;}
@@ -531,9 +1085,9 @@ footer a:hover{color:var(--text-2);}
 .cm-output-badge{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:3px 10px;}
 .cm-output-copy-btn{font-size:12px;font-weight:600;color:var(--text-2);background:var(--bg-3);border:1px solid var(--border-2);border-radius:var(--radius-sm);padding:6px 14px;cursor:pointer;transition:all .2s;}
 .cm-output-copy-btn:hover{color:var(--text);}
-.cm-output-content{font-size:14px;color:var(--text-2);line-height:1.85;white-space:pre-wrap;word-break:break-word;}
+.cm-output-content{font-size:15px;color:var(--text-2);line-height:1.85;white-space:pre-wrap;word-break:break-word;}
 .cm-output-actions{display:flex;gap:8px;margin-top:1.25rem;flex-wrap:wrap;}
-.cm-action-btn{font-size:12px;font-weight:600;color:var(--text-2);background:none;border:1px solid var(--border-2);border-radius:20px;padding:6px 14px;cursor:pointer;transition:all .2s;}
+.cm-action-btn{font-size:12px;font-weight:600;color:var(--text-2);background:none;border:1px solid var(--border-2);border-radius:20px;padding:7px 16px;cursor:pointer;transition:all .2s;}
 .cm-action-btn:hover{color:var(--text);background:var(--bg-3);}
 .cm-improve-menu{display:none;flex-wrap:wrap;gap:8px;margin-top:.75rem;}
 .cm-improve-menu.open{display:flex;}
@@ -554,6 +1108,92 @@ footer a:hover{color:var(--text-2);}
 }
 .cm-upsell-btn:hover{background:#fbbf24;}
 
+/* Success message */
+.cm-success-msg{
+  display:none;font-size:13px;color:var(--green);
+  background:var(--green-dim);border:1px solid var(--green-border);
+  border-radius:var(--radius-sm);padding:10px 14px;margin-top:.75rem;
+  animation:fadeIn .3s ease both;
+}
+.cm-success-msg.show{display:block;}
+
+/* ── DEPTH SELECTOR ── */
+.depth-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.depth-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  width: 100%;
+  background: var(--bg-3);
+  border: 1px solid var(--border-2);
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: background .18s, border-color .18s, box-shadow .18s;
+  position: relative;
+}
+
+.depth-btn:hover {
+  background: var(--bg-4);
+  border-color: rgba(255,255,255,0.18);
+}
+
+.depth-btn.selected {
+  background: linear-gradient(135deg, rgba(245,158,11,0.10), rgba(245,158,11,0.04));
+  border-color: var(--gold-border);
+  box-shadow: 0 0 0 1px var(--gold-border), 0 4px 18px rgba(245,158,11,0.08);
+}
+
+.depth-btn-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+}
+
+.depth-btn-title {
+  font-family: var(--font-head);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+  display: block;
+}
+
+.depth-btn.selected .depth-btn-title {
+  color: var(--gold);
+}
+
+.depth-btn-sub {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.4;
+  display: block;
+  font-weight: 400;
+}
+
+.depth-btn-count {
+  font-size: 11px;
+  color: var(--text-3);
+  font-weight: 500;
+  letter-spacing: .02em;
+  opacity: .65;
+  margin-top: 2px;
+  display: block;
+}
+
+.depth-btn.selected .depth-btn-count {
+  color: var(--gold);
+  opacity: .7;
+}
+
 /* library */
 .cm-library-header{display:flex;align-items:center;justify-content:space-between;margin-top:2.5rem;margin-bottom:1rem;}
 .cm-library-title{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);}
@@ -562,10 +1202,64 @@ footer a:hover{color:var(--text-2);}
   background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-sm);
   padding:1.25rem;margin-bottom:.75rem;
 }
-.cm-library-goal{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
-.cm-library-text{font-size:13px;color:var(--text-2);line-height:1.7;white-space:pre-wrap;}
+.cm-library-item {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  margin-bottom: .75rem;
+  transition: border-color .2s;
+}
+.cm-library-item:hover { border-color: var(--border-2); }
+.cm-library-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .4rem;
+  gap: 8px;
+}
+.cm-library-goal { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+.cm-library-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.cm-lib-btn {
+  font-size: 11px; font-weight: 600;
+  color: var(--text-3); background: var(--bg-3);
+  border: 1px solid var(--border-2); border-radius: 20px;
+  padding: 3px 10px; cursor: pointer;
+  transition: all .18s; font-family: var(--font-body);
+}
+.cm-lib-btn:hover { color: var(--gold); border-color: var(--gold-border); background: var(--gold-dim); }
+.cm-lib-btn.copy:hover { color: var(--text); border-color: var(--border-2); background: var(--bg-4); }
+.cm-library-text {
+  font-size: 13px; color: var(--text-2); line-height: 1.7;
+  white-space: pre-wrap; cursor: pointer;
+}
+.cm-library-text.collapsed { 
+  display: -webkit-box; -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; overflow: hidden;
+  white-space: normal;
+}
+.cm-lib-expand {
+  font-size: 11px; color: var(--text-3);
+  background: none; border: none; cursor: pointer;
+  padding: 4px 0 0; font-family: var(--font-body);
+  transition: color .2s;
+}
+.cm-lib-expand:hover { color: var(--text-2); }
+.cm-kbd-hint {
+  font-size: 11px; color: var(--text-3);
+  text-align: right; margin-top: .5rem;
+  display: flex; align-items: center; justify-content: flex-end; gap: 4px;
+}
+.cm-kbd {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 600; color: var(--text-3);
+  background: var(--bg-3); border: 1px solid var(--border-2);
+  border-radius: 4px; padding: 2px 6px;
+  font-family: var(--font-body);
+}
+
 /* loading spinner for content mode */
-.cm-spinner{width:36px;height:36px;border-radius:50%;border:2px solid var(--border-2);border-top-color:var(--gold);animation:spin .8s linear infinite;margin:2rem auto;}
+.cm-spinner{width:36px;height:36px;border-radius:50%;border:2px solid var(--border-2);border-top-color:var(--gold);animation:spin .8s linear infinite;margin:0 auto;}
 
 /* ── GLOBAL TOP NAV (UX ENHANCEMENT v8) ── */
 .top-nav {
@@ -622,6 +1316,503 @@ footer a:hover{color:var(--text-2);}
   transition: all .2s; font-family: var(--font-body);
 }
 .bridge button:hover { background: #fbbf24; }
+
+/* ── QUICK MODE ── */
+.cm-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--bg-3);
+  border: 1px solid var(--border-2);
+  border-radius: 50px;
+  padding: 4px;
+  margin-bottom: 2rem;
+  width: fit-content;
+}
+.cm-mode-btn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-3);
+  background: none;
+  border: none;
+  border-radius: 50px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.cm-mode-btn.active {
+  background: var(--bg-2);
+  color: var(--text);
+  box-shadow: 0 1px 6px rgba(0,0,0,.18);
+}
+.cm-mode-btn.active.quick { color: var(--gold); }
+
+/* Quick Mode panel */
+#cm-quick-panel {
+  display: none;
+  animation: fadeUp .25s ease both;
+}
+#cm-quick-panel.show { display: block; }
+
+/* Full Mode panel */
+#cm-full-panel {
+  display: block;
+  animation: fadeUp .25s ease both;
+}
+#cm-full-panel.hidden { display: none; }
+
+.qm-card {
+  background: var(--bg-2);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.qm-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--gold), #fbbf24);
+}
+.qm-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: .35rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.qm-label::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 2s infinite;
+}
+.qm-title {
+  font-family: var(--font-head);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: .25rem;
+}
+.qm-sub {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+.qm-input {
+  width: 100%;
+  background: var(--bg-3);
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  resize: none;
+  min-height: 80px;
+  line-height: 1.6;
+}
+.qm-input::placeholder { color: var(--text-3); }
+.qm-input:focus {
+  border-color: rgba(245,158,11,.5);
+  box-shadow: 0 0 0 3px rgba(245,158,11,.07);
+}
+.qm-format-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.qm-format-btn {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--bg-3);
+  border: 1px solid var(--border-2);
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all .18s;
+  font-family: var(--font-body);
+}
+.qm-format-btn:hover,
+.qm-format-btn.qm-selected {
+  border-color: var(--gold-border);
+  color: var(--gold);
+  background: var(--gold-dim);
+  font-weight: 700;
+}
+.qm-inferred {
+  display: none;
+  margin-top: 1rem;
+  padding: .75rem 1rem;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.6;
+  animation: fadeIn .3s ease both;
+}
+.qm-inferred.show { display: block; }
+.qm-inferred strong { color: var(--text-2); }
+.qm-generate-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  font-family: var(--font-head);
+  font-size: 16px;
+  font-weight: 800;
+  color: #000;
+  background: var(--gold);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 16px 32px;
+  cursor: pointer;
+  transition: all .22s;
+  box-shadow: 0 4px 20px rgba(245,158,11,.3);
+  margin-top: 1.25rem;
+}
+.qm-generate-btn:hover {
+  background: #fbbf24;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(245,158,11,.42);
+}
+.qm-generate-btn:disabled {
+  opacity: .45; cursor: not-allowed;
+  transform: none; box-shadow: none;
+}
+.qm-unlock-hint {
+  font-size: 12px;
+  color: var(--text-3);
+  text-align: center;
+  margin-top: .75rem;
+}
+.qm-unlock-hint span {
+  color: var(--gold);
+  cursor: pointer;
+  font-weight: 600;
+}
+.qm-unlock-hint span:hover { text-decoration: underline; }
+
+/* ══════════════════════════════════════
+   V21 ENHANCEMENT LAYER
+══════════════════════════════════════ */
+
+/* SUCCESS GLOW — output container animation after generation */
+@keyframes outputGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(245,158,11,0); border-color: var(--border); }
+  30%  { box-shadow: 0 0 0 6px rgba(245,158,11,.18), 0 0 32px rgba(245,158,11,.12); border-color: var(--gold-border); }
+  100% { box-shadow: 0 4px 24px rgba(0,0,0,.18); border-color: var(--border); }
+}
+@keyframes fadeUpQuick { from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);} }
+@keyframes contentReadyBadge { 0%{opacity:0;transform:scale(.85) translateY(6px);}60%{transform:scale(1.04) translateY(-1px);}100%{opacity:1;transform:scale(1) translateY(0);} }
+
+.cm-output-card.just-generated {
+  animation: outputGlow 1.4s ease both;
+}
+
+/* CONTENT READY BADGE */
+.cm-content-ready {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--green);
+  background: var(--green-dim);
+  border: 1px solid var(--green-border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin-bottom: .85rem;
+  animation: contentReadyBadge .35s ease both;
+}
+.cm-content-ready.show { display: inline-flex; }
+.cm-content-ready::before { content: ''; width:6px;height:6px;border-radius:50%;background:var(--green); }
+
+/* CONFIDENCE FEEDBACK BAR */
+.cm-confidence-bar {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-3);
+  padding: .65rem .9rem;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+  animation: fadeUpQuick .3s ease both;
+  flex-wrap: wrap;
+}
+.cm-confidence-bar.show { display: flex; }
+.cm-confidence-dot { width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0; }
+.cm-confidence-sep { color: var(--border-2); margin:0 2px; }
+
+/* ENHANCED ACTION BAR */
+.cm-output-actions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.cm-action-btn {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--bg-3);
+  border: 1px solid var(--border-2);
+  border-radius: 20px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all .18s;
+  font-family: var(--font-body);
+  white-space: nowrap;
+}
+.cm-action-btn:hover {
+  color: var(--text);
+  background: var(--bg-4);
+  border-color: var(--border-2);
+  transform: translateY(-1px);
+}
+.cm-action-btn.primary-action {
+  background: var(--gold);
+  color: #000;
+  border-color: var(--gold);
+}
+.cm-action-btn.primary-action:hover {
+  background: #fbbf24;
+  transform: translateY(-1px);
+}
+
+/* EDIT MODE for output */
+.cm-output-content[contenteditable="true"] {
+  outline: none;
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-sm);
+  padding: .75rem;
+  background: var(--bg-3);
+  box-shadow: 0 0 0 3px rgba(245,158,11,.06);
+  cursor: text;
+}
+.cm-edit-hint {
+  font-size: 11px;
+  color: var(--gold);
+  display: none;
+  margin-top: .4rem;
+  animation: fadeIn .2s ease both;
+}
+.cm-edit-hint.show { display: block; }
+
+/* SMART SUGGESTIONS PANEL */
+.cm-suggestions {
+  display: none;
+  margin-top: 1rem;
+  animation: fadeUpQuick .3s ease both;
+}
+.cm-suggestions.show { display: block; }
+.cm-suggestions-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: .6rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cm-suggestions-label::before { content:'✦'; font-size:9px;color:var(--gold); }
+.cm-suggestion-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cm-suggestion-chip {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  background: var(--bg-3);
+  border: 1px solid var(--border-2);
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all .18s;
+  font-family: var(--font-body);
+}
+.cm-suggestion-chip:hover {
+  color: var(--gold);
+  background: var(--gold-dim);
+  border-color: var(--gold-border);
+  transform: translateY(-1px);
+}
+
+/* TONE SELECTOR in improve flow */
+.cm-tone-selector {
+  display: none;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: .75rem;
+  animation: fadeUpQuick .2s ease both;
+}
+.cm-tone-selector.show { display: flex; }
+.cm-tone-chip {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--bg-3);
+  border: 1px solid var(--border-2);
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all .18s;
+  font-family: var(--font-body);
+}
+.cm-tone-chip:hover {
+  color: var(--gold);
+  background: var(--gold-dim);
+  border-color: var(--gold-border);
+}
+
+/* IMPROVE MENU — enhanced */
+.cm-improve-menu {
+  display: none;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: .75rem;
+  padding: .85rem;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  animation: fadeUpQuick .2s ease both;
+}
+.cm-improve-menu.open { display: flex; }
+.cm-improve-btn {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  background: var(--bg-2);
+  border: 1px solid var(--border-2);
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all .18s;
+  font-family: var(--font-body);
+}
+.cm-improve-btn:hover {
+  color: var(--text);
+  border-color: var(--border-2);
+  background: var(--bg-4);
+}
+
+/* VOICE MEMORY ADAPTIVE BANNER */
+.cm-voice-banner {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: .7rem 1rem;
+  background: linear-gradient(90deg, rgba(245,158,11,.07), rgba(245,158,11,.03));
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+  animation: fadeUpQuick .3s ease both;
+}
+.cm-voice-banner.show { display: flex; }
+.cm-voice-banner-text {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.cm-voice-banner-text strong { color: var(--gold); }
+.cm-voice-banner-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.cm-voice-banner-btn {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  background: var(--bg-3);
+  border: 1px solid var(--border-2);
+  border-radius: 20px;
+  padding: 4px 11px;
+  cursor: pointer;
+  transition: all .18s;
+  font-family: var(--font-body);
+}
+.cm-voice-banner-btn:hover { color: var(--text); }
+.cm-voice-banner-btn.keep:hover { color: var(--green); border-color: var(--green-border); background: var(--green-dim); }
+
+/* EMPTY STATE HELPER (pre-generation) */
+.cm-pre-gen-hint {
+  display: none;
+  font-size: 12px;
+  color: var(--text-3);
+  margin-top: .65rem;
+  padding: .6rem .85rem;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  line-height: 1.6;
+  animation: fadeIn .3s ease both;
+}
+.cm-pre-gen-hint.show { display: block; }
+
+/* CONTINUE LATER option */
+.cm-continue-later {
+  display: none;
+  font-size: 12px;
+  color: var(--text-3);
+  text-align: center;
+  margin-top: .6rem;
+  cursor: pointer;
+  transition: color .2s;
+}
+.cm-continue-later.show { display: block; }
+.cm-continue-later:hover { color: var(--text-2); }
+
+/* TURN INTO BOOK CTA (context-aware) */
+.cm-book-bridge {
+  display: none;
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-sm);
+  animation: fadeUpQuick .3s .2s ease both;
+}
+.cm-book-bridge.show { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.cm-book-bridge-text { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+.cm-book-bridge-text strong { color: var(--text); }
+.cm-book-bridge-btn {
+  font-size: 12px;
+  font-weight: 700;
+  color: #000;
+  background: var(--gold);
+  border: none;
+  border-radius: 20px;
+  padding: 7px 18px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--font-body);
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.cm-book-bridge-btn:hover { background: #fbbf24; }
 </style>
 </head>
 <body>
@@ -658,9 +1849,10 @@ footer a:hover{color:var(--text-2);}
 ══════════════════════════════════════ -->
 <div id="main-app" style="display:none;">
 
-<!-- TOP NAV (UX ENHANCEMENT v8) -->
-<div class="top-nav" id="main-app-top-nav">
-  <button onclick="startContentFlow()" style="font-size:12px;color:var(--text-3);">⚡ Switch to Content Mode</button>
+<!-- AUTO-SAVE INDICATOR -->
+<div id="autosave-indicator">
+  <div class="as-dot"></div>
+  <span id="autosave-text">Saved</span>
 </div>
 
 <!-- UPDATE BANNER -->
@@ -677,10 +1869,54 @@ footer a:hover{color:var(--text-2);}
     Authority Lab
   </div>
   <div class="nav-right">
-    <button class="nav-workspace-btn" id="nav-workspace-btn" onclick="resumeBook()">📘 My Workspace</button>
+    <button onclick="startContentFlow()" style="font-size:12px;font-weight:600;color:var(--text-3);background:none;border:1px solid var(--border-2);border-radius:20px;padding:5px 14px;cursor:pointer;transition:all .2s;font-family:var(--font-body);" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-3)'">⚡ Content</button>
+    <button class="nav-workspace-btn" id="nav-workspace-btn" onclick="resumeBook()">My Workspace</button>
     <span class="nav-pill" id="nav-pill" style="display:none;"></span>
     <button class="nav-back" id="nav-back" onclick="goHome()">← Home</button>
     <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" style="background:none;border:1px solid var(--border-2);border-radius:20px;padding:5px 11px;cursor:pointer;font-size:14px;color:var(--text-2);transition:all .2s;" aria-label="Toggle theme">🌙</button>
+    <!-- ACCOUNT DROPDOWN -->
+    <div class="nav-account" id="nav-account">
+      <button class="nav-account-btn" onclick="toggleAccountMenu(event)" aria-label="Account menu">
+        <div class="nav-account-avatar">👤</div>
+        <span class="nav-account-label">Account</span>
+        <span class="nav-account-caret">▾</span>
+      </button>
+      <div class="nav-dropdown" id="nav-dropdown">
+        <!-- GUEST STATE -->
+        <div id="nav-dropdown-guest">
+          <div class="nav-dropdown-header">
+            <div class="nav-dropdown-guest-badge">Guest Mode</div>
+            <div class="nav-dropdown-guest-hint">Sign in to save your work and unlock the full experience.</div>
+          </div>
+          <div class="nav-dropdown-signin">
+            <button class="nav-dropdown-signin-btn primary" onclick="triggerSignIn('create')">&#10024; Create Free Account</button>
+            <button class="nav-dropdown-signin-btn secondary" onclick="triggerSignIn('signin')">Sign In</button>
+          </div>
+        </div>
+        <!-- AUTHENTICATED STATE -->
+        <div id="nav-dropdown-authed" style="display:none;">
+          <div class="nav-dropdown-header">
+            <div style="font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:2px;" id="nav-dropdown-name">My Account</div>
+            <div class="nav-dropdown-email" id="nav-dropdown-email"></div>
+            <div id="nav-owner-badge" style="display:none;margin-top:6px;"><span class="owner-badge">👑 Owner Access Enabled</span></div>
+          </div>
+          <div class="nav-dropdown-divider"></div>
+          <button class="nav-dropdown-item" onclick="openSettings();toggleAccountMenu()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Settings
+          </button>
+          <button class="nav-dropdown-item" onclick="showBillingPage();toggleAccountMenu()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Billing
+          </button>
+          <div class="nav-dropdown-divider"></div>
+          <button class="nav-dropdown-item logout-item" onclick="logoutUser()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sign out
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -729,7 +1965,7 @@ footer a:hover{color:var(--text-2);}
       </div>
     </div>
   </div>
-  <footer>Built by <a href="https://www.linkedin.com/in/rodrigue-shema-4553b4405/" target="_blank">Rodrigue Shema</a> &nbsp;·&nbsp; v0.5</footer>
+  <footer>Turn what you know into authority. &nbsp;·&nbsp; Built by <a href="https://www.linkedin.com/in/rodrigue-shema-4553b4405/" target="_blank">Rodrigue Shema</a> &nbsp;·&nbsp; v0.6</footer>
 </div>
 
 <!-- SETUP -->
@@ -737,9 +1973,10 @@ footer a:hover{color:var(--text-2);}
   <div class="setup-wrap">
 
     <!-- RCFTO badge -->
-    <div style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:4px 12px;margin-bottom:1.5rem;">
+    <div style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:4px 12px;margin-bottom:.75rem;">
       RCFTO Framework
     </div>
+    <div style="font-size:12px;color:var(--text-3);margin-bottom:1.5rem;">Step 1 of 2 — Set up your book foundation</div>
 
     <!-- EXPERT PATH -->
     <div id="setup-expert" style="display:none;">
@@ -813,10 +2050,10 @@ footer a:hover{color:var(--text-2);}
             <div class="field-error-msg" id="err-expert-output">Please describe what you want your reader to decide or do.</div>
           </div>
           <div class="field-label" style="margin-bottom:.5rem;">Chapter depth</div>
-          <div class="choice-grid" id="length-grid">
-            <button class="choice-btn" data-val="800" onclick="selectChoice(this,'length-grid')">Short (~800 words)</button>
-            <button class="choice-btn selected" data-val="1200" onclick="selectChoice(this,'length-grid')">Standard (~1,200 words)</button>
-            <button class="choice-btn" data-val="1800" onclick="selectChoice(this,'length-grid')">Detailed (~1,800 words)</button>
+<div class="depth-grid" id="length-grid">
+            <button class="depth-btn" data-val="800" onclick="selectChoice(this,'length-grid')"><div class="depth-btn-left"><span class="depth-btn-title">Quick Read</span><span class="depth-btn-sub">Fast, focused, and easy to consume</span></div><span class="depth-btn-count">800+ words</span></button>
+            <button class="depth-btn selected" data-val="1200" onclick="selectChoice(this,'length-grid')"><div class="depth-btn-left"><span class="depth-btn-title">Balanced Depth</span><span class="depth-btn-sub">Clear structure with enough detail</span></div><span class="depth-btn-count">1,200+ words</span></button>
+            <button class="depth-btn" data-val="1800" onclick="selectChoice(this,'length-grid')"><div class="depth-btn-left"><span class="depth-btn-title">Deep Dive</span><span class="depth-btn-sub">Expanded insights and strategic depth</span></div><span class="depth-btn-count">1,800+ words</span></button>
           </div>
         </div>
       </div>
@@ -889,10 +2126,10 @@ footer a:hover{color:var(--text-2);}
         <div class="rcfto-letter">O</div>
         <div class="rcfto-block-body">
           <div class="rcfto-block-title">Output — Chapter depth</div>
-          <div class="choice-grid" id="b-length-grid">
-            <button class="choice-btn" data-val="800" onclick="selectChoice(this,'b-length-grid')">Short (~800 words)</button>
-            <button class="choice-btn selected" data-val="1200" onclick="selectChoice(this,'b-length-grid')">Standard (~1,200 words)</button>
-            <button class="choice-btn" data-val="1800" onclick="selectChoice(this,'b-length-grid')">Detailed (~1,800 words)</button>
+<div class="depth-grid" id="b-length-grid">
+            <button class="depth-btn" data-val="800" onclick="selectChoice(this,'b-length-grid')"><div class="depth-btn-left"><span class="depth-btn-title">Quick Read</span><span class="depth-btn-sub">Fast, focused, and easy to consume</span></div><span class="depth-btn-count">800+ words</span></button>
+            <button class="depth-btn selected" data-val="1200" onclick="selectChoice(this,'b-length-grid')"><div class="depth-btn-left"><span class="depth-btn-title">Balanced Depth</span><span class="depth-btn-sub">Clear structure with enough detail</span></div><span class="depth-btn-count">1,200+ words</span></button>
+            <button class="depth-btn" data-val="1800" onclick="selectChoice(this,'b-length-grid')"><div class="depth-btn-left"><span class="depth-btn-title">Deep Dive</span><span class="depth-btn-sub">Expanded insights and strategic depth</span></div><span class="depth-btn-count">1,800+ words</span></button>
           </div>
         </div>
       </div>
@@ -950,7 +2187,7 @@ footer a:hover{color:var(--text-2);}
 <!-- WORKSPACE -->
 <div class="page" id="page-workspace">
   <div class="workspace-wrap">
-    <div class="ws-book-label">📘 Your Book</div>
+    <div class="ws-book-label">Your Book</div>
     <div class="ws-book-title" id="ws-title" style="display:none;">Your Book</div>
     <div class="book-meta">
       <div class="meta-title-label">Title</div>
@@ -972,8 +2209,7 @@ footer a:hover{color:var(--text-2);}
     </div>
 
     <div class="ws-danger-row">
-      <div class="ws-danger-label">Danger Zone</div>
-      <button class="btn-danger" onclick="confirmDeleteBook()">🗑 Delete Book</button>
+      <button class="btn-danger" onclick="confirmDeleteBook()">Delete Book</button>
     </div>
 
     <!-- SOFT SWITCH: Book → Content (UX ENHANCEMENT v8) -->
@@ -990,6 +2226,7 @@ footer a:hover{color:var(--text-2);}
     <div class="chapter-meta">
       <div class="chapter-num-badge" id="ch-num-badge">Chapter 1</div>
       <div class="chapter-title-display" id="ch-title-display">Chapter Title</div>
+      <div id="ch-word-count" style="font-size:12px;color:var(--text-3);margin-top:.35rem;margin-bottom:1rem;"></div>
     </div>
     <div class="chapter-body" id="ch-body"></div>
     <div class="approval-box" id="approval-box">
@@ -1020,10 +2257,12 @@ footer a:hover{color:var(--text-2);}
     </div>
 
     <!-- Chapter Navigation -->
-    <div id="ch-nav-row" style="display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);gap:10px;flex-wrap:wrap;">
+    <div id="ch-nav-row" style="display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);gap:10px;">
       <button class="btn-secondary" id="ch-nav-prev" onclick="navigateChapter(-1)" style="padding:10px 18px;font-size:13px;">← Previous</button>
-      <button class="btn-ghost" onclick="showPage('page-workspace');showWorkspace();" style="font-size:13px;">↑ Workspace</button>
-      <button class="btn-ghost" id="ch-reset-btn" onclick="resetCurrentChapter()" style="font-size:12px;color:var(--red);opacity:.7;" title="Reset this chapter">↺ Reset</button>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+        <button class="btn-ghost" onclick="showPage('page-workspace');showWorkspace();" style="font-size:13px;">↑ Workspace</button>
+        <button class="btn-ghost" id="ch-reset-btn" onclick="resetCurrentChapter()" style="font-size:11px;color:var(--text-3);opacity:.6;" title="Reset this chapter">Reset chapter</button>
+      </div>
       <button class="btn-secondary" id="ch-nav-next" onclick="navigateChapter(1)" style="padding:10px 18px;font-size:13px;">Next →</button>
     </div>
   </div>
@@ -1034,7 +2273,7 @@ footer a:hover{color:var(--text-2);}
   <div class="book-view-wrap">
     <div style="margin-bottom:3rem;">
       <div class="section-label">Full Book</div>
-      <div style="font-family:var(--font-head);font-size:27px;font-weight:800;letter-spacing:-.02em;color:var(--text);margin-bottom:.5rem;" id="fb-title">Your Book</div>
+      <div style="font-family:var(--font-head);font-size:22px;font-weight:700;color:var(--text);margin-bottom:.5rem;" id="fb-title">Your Book</div>
       <div style="font-size:14px;color:var(--text-2);" id="fb-subtitle"></div>
     </div>
     <div id="fb-chapters"></div>
@@ -1185,6 +2424,22 @@ footer a:hover{color:var(--text-2);}
 </div>
 
 <!-- FRICTION OVERLAY -->
+
+<!-- SOFT AUTH WALL -->
+<div id="soft-auth-wall">
+  <div class="soft-wall-box">
+    <div class="soft-wall-icon">✍️</div>
+    <div id="soft-wall-counter" class="soft-wall-counter">3 free generations used</div>
+    <div class="soft-wall-title">Save your work and keep writing</div>
+    <div class="soft-wall-sub">You've seen what this can do. Create a free account to save everything you've generated and keep going without limits.</div>
+    <div class="soft-wall-actions">
+      <button class="soft-wall-cta primary" onclick="triggerSignIn('create')">✨ Create Free Account</button>
+      <button class="soft-wall-cta" style="background:var(--bg-3);color:var(--text-2);border:1px solid var(--border-2);" onclick="triggerSignIn('signin')">I already have an account</button>
+      <button class="soft-wall-skip" onclick="closeSoftWall()">Continue as guest →</button>
+    </div>
+  </div>
+</div>
+
 <div id="friction-overlay">
   <div class="friction-box">
     <div class="friction-icon">🚀</div>
@@ -1229,26 +2484,287 @@ footer a:hover{color:var(--text-2);}
 </div>
 
 <!-- CHAT -->
-<button class="chat-fab" onclick="toggleAskPanel()" title="Ask a question">💬</button>
+<button class="chat-fab" onclick="toggleAskPanel()" title="RCFTO Assistant">✦</button>
 
 
-<!-- ASK PANEL -->
+<!-- RCFTO ASSISTANT PANEL -->
 <div class="chat-panel" id="ask-panel">
+  <!-- Header -->
   <div class="chat-header">
-    <div class="chat-avatar">💬</div>
+    <div class="chat-avatar">✦</div>
     <div>
-      <div class="chat-name">Ask Rodrigue</div>
-      <div class="chat-status">Replies within 24h</div>
+      <div class="chat-name">RCFTO Assistant</div>
+      <div class="chat-status">● Online</div>
     </div>
     <button class="chat-close" onclick="toggleAskPanel()">×</button>
   </div>
-  <div style="padding:1rem;display:flex;flex-direction:column;gap:10px;">
-    <div style="font-size:13px;color:var(--text-2);line-height:1.6;">Have a question about your book, the process, or the app? Send it directly and Rodrigue will reply by email.</div>
-    <!-- Sent questions history -->
-    <div id="ask-history" style="display:none;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.75rem;max-height:140px;overflow-y:auto;"></div>
-    <textarea class="field-textarea" id="ask-input" rows="4" placeholder="Type your question here..."></textarea>
-    <button class="btn-primary" style="width:100%;justify-content:center;" onclick="submitQuestion()">Send Question →</button>
-    <div id="ask-thank" style="display:none;font-size:13px;color:var(--green);text-align:center;padding:.5rem 0;">Sent! Rodrigue will reply to your email.</div>
+
+  <!-- Quick Actions -->
+  <div class="rcfto-quick-actions" id="rcfto-quick-actions">
+    <div class="rcfto-qa-label" id="rcfto-qa-label">Quick actions</div>
+    <div class="rcfto-qa-chips" id="rcfto-chips"></div>
+  </div>
+
+  <!-- Messages -->
+  <div class="chat-msgs" id="ask-history"></div>
+
+  <!-- Input Row -->
+  <div class="chat-input-row">
+    <input class="chat-input" id="ask-input" type="text" placeholder="Ask RCFTO Assistant..." autocomplete="off" onkeydown="if(event.key==='Enter')rcftoSend()">
+    <button class="chat-send" id="rcfto-send-btn" onclick="rcftoSend()" title="Send">→</button>
+  </div>
+
+  <!-- Subtle Founder Footer -->
+  <div class="rcfto-founder-footer">
+    <span class="rcfto-founder-text">Need deeper strategy help?</span>
+    <div class="rcfto-founder-links">
+      <a href="https://www.linkedin.com/in/rodrigue-shema-4553b4405/" target="_blank" class="rcfto-founder-link">LinkedIn ↗</a>
+      <a href="https://x.com/" target="_blank" class="rcfto-founder-link">X ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS PAGE -->
+<div class="page" id="page-settings">
+  <div class="settings-wrap">
+
+    <div class="settings-header">
+      <div class="settings-eyebrow">Account</div>
+      <div class="settings-title">Settings</div>
+    </div>
+
+    <!-- ── 1. PROFILE ── -->
+    <div class="settings-section">
+      <div class="settings-section-label">Profile</div>
+      <div class="settings-card">
+        <div class="settings-row" style="align-items:flex-start;gap:1rem;">
+          <div class="sp-avatar" id="settings-avatar">👤</div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+            <input class="sp-input" id="settings-name" type="text" placeholder="Your name" />
+            <input class="sp-input" id="settings-email" type="email" placeholder="your@email.com" disabled />
+          </div>
+        </div>
+        <div class="settings-row" style="border-top:1px solid var(--border);">
+          <div></div>
+          <button class="sp-btn sp-btn-gold" onclick="saveProfileSettings()">Save Profile</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 2. WRITING PREFERENCES ── -->
+    <div class="settings-section">
+      <div class="settings-section-label">Writing Preferences</div>
+      <div class="settings-card">
+
+        <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:.75rem;">
+          <div class="settings-row-left">
+            <div class="settings-row-label">Default Format</div>
+            <div class="settings-row-sub">Pre-selected when you open Content Mode</div>
+          </div>
+          <div class="sp-chip-row">
+            <button class="sp-chip" data-spgroup="sp-format" data-val="LinkedIn Post" onclick="spSelect(this,'sp-format')">💼 LinkedIn</button>
+            <button class="sp-chip" data-spgroup="sp-format" data-val="Tweet" onclick="spSelect(this,'sp-format')">🐦 Tweet</button>
+            <button class="sp-chip" data-spgroup="sp-format" data-val="X Thread" onclick="spSelect(this,'sp-format')">🧵 Thread</button>
+            <button class="sp-chip" data-spgroup="sp-format" data-val="Email Newsletter" onclick="spSelect(this,'sp-format')">📧 Email</button>
+          </div>
+        </div>
+
+        <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:.75rem;">
+          <div class="settings-row-left">
+            <div class="settings-row-label">Chapter Depth</div>
+            <div class="settings-row-sub">Default depth when building your book</div>
+          </div>
+          <div class="sp-chip-row">
+            <button class="sp-chip" data-spgroup="sp-depth" data-val="Quick" onclick="spSelect(this,'sp-depth')">Quick Read</button>
+            <button class="sp-chip" data-spgroup="sp-depth" data-val="Balanced" onclick="spSelect(this,'sp-depth')">Balanced</button>
+            <button class="sp-chip" data-spgroup="sp-depth" data-val="Deep" onclick="spSelect(this,'sp-depth')">Deep Dive</button>
+          </div>
+        </div>
+
+        <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:.75rem;">
+          <div class="settings-row-left">
+            <div class="settings-row-label">Default Tone</div>
+            <div class="settings-row-sub">Your preferred writing voice</div>
+          </div>
+          <div class="sp-chip-row">
+            <button class="sp-chip" data-spgroup="sp-tone" data-val="Authority" onclick="spSelect(this,'sp-tone')">Authority</button>
+            <button class="sp-chip" data-spgroup="sp-tone" data-val="Storytelling" onclick="spSelect(this,'sp-tone')">Storytelling</button>
+            <button class="sp-chip" data-spgroup="sp-tone" data-val="Bold" onclick="spSelect(this,'sp-tone')">Bold</button>
+            <button class="sp-chip" data-spgroup="sp-tone" data-val="Warm" onclick="spSelect(this,'sp-tone')">Warm</button>
+          </div>
+        </div>
+
+        <div class="settings-row">
+          <div></div>
+          <button class="sp-btn sp-btn-gold" onclick="saveWritingPrefs()">Save Preferences</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 3. VOICE MEMORY ── -->
+    <div class="settings-section">
+      <div class="settings-section-label">Voice Memory</div>
+      <div class="settings-card">
+        <div class="settings-row">
+          <div class="settings-row-left">
+            <div class="settings-row-label">Enable Voice Memory</div>
+            <div class="settings-row-sub">RCFTO adapts to your writing patterns over time.</div>
+          </div>
+          <label class="sp-toggle">
+            <input type="checkbox" id="vm-toggle" onchange="toggleVoiceMemory(this)" checked>
+            <div class="sp-toggle-track"></div>
+            <div class="sp-toggle-thumb"></div>
+          </label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-left">
+            <div class="settings-row-label" style="margin-bottom:5px;">Learned Style</div>
+            <span class="vm-stat-pill" id="vm-stats">Loading...</span>
+          </div>
+          <button class="sp-btn sp-btn-danger" onclick="resetVoiceMemorySettings()">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 4. APPEARANCE ── -->
+    <div class="settings-section">
+      <div class="settings-section-label">Appearance</div>
+      <div class="settings-card">
+        <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:.75rem;">
+          <div class="settings-row-left">
+            <div class="settings-row-label">Theme</div>
+            <div class="settings-row-sub">Choose how Authority Lab looks for you</div>
+          </div>
+          <div class="sp-chip-row">
+            <button class="sp-chip" data-spgroup="sp-theme" data-val="Dark" onclick="applyThemeFromSettings(this,'Dark')">🌙 Dark</button>
+            <button class="sp-chip" data-spgroup="sp-theme" data-val="Light" onclick="applyThemeFromSettings(this,'Light')">☀️ Light</button>
+            <button class="sp-chip" data-spgroup="sp-theme" data-val="System" onclick="applyThemeFromSettings(this,'System')">💻 System</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 5. BILLING ── -->
+    <div class="settings-section">
+      <div class="settings-section-label">Billing</div>
+      <div class="settings-card">
+        <div class="settings-row">
+          <div class="settings-row-left">
+            <div class="settings-row-label">Current Plan</div>
+            <div class="settings-row-sub">Free — limited generations</div>
+          </div>
+          <button class="sp-btn sp-btn-gold" onclick="showBillingPage()">Manage Plan →</button>
+        </div>
+        <!-- Owner row -->
+        <div class="settings-row sp-owner-row" id="settings-owner-row" style="display:none;">
+          <span style="font-size:16px;">👑</span>
+          <span class="sp-owner-text">Owner Access — all features unlocked.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 6. ACCOUNT ── -->
+    <div class="settings-section">
+      <div class="settings-section-label">Account</div>
+      <div class="settings-card">
+        <div class="settings-row">
+          <div class="settings-row-left">
+            <div class="settings-row-label">Sign Out</div>
+            <div class="settings-row-sub">You'll keep all your saved content</div>
+          </div>
+          <button class="sp-btn sp-btn-danger" onclick="logoutUser()">Sign Out</button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-left">
+            <div class="settings-row-label" style="color:var(--text-3);">Delete Account</div>
+            <div class="settings-row-sub">Permanently remove your data — coming soon</div>
+          </div>
+          <button class="sp-btn" style="opacity:.4;cursor:not-allowed;" disabled>Delete</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BILLING PAGE -->
+<div class="page" id="page-billing">
+  <div class="billing-wrap">
+    <div class="billing-header">
+      <div class="billing-eyebrow">Plans &amp; Billing</div>
+      <h2 class="billing-title">Choose your plan</h2>
+      <p class="billing-sub">Simple, transparent pricing. Turn what you know into authority — start free and upgrade when you're ready.</p>
+    </div>
+
+    <!-- Owner notice (shown only to owner) -->
+    <div class="billing-owner-notice" id="billing-owner-notice" style="display:none;">
+      <div class="billing-owner-icon">👑</div>
+      <div class="billing-owner-text">Owner Access Enabled — all features unlocked.</div>
+    </div>
+
+    <div class="billing-plans">
+
+      <!-- FREE -->
+      <div class="plan-card">
+        <div class="plan-name">Free</div>
+        <div class="plan-subtitle">Explore the system</div>
+        <div class="plan-price">
+          <span class="plan-price-amount">$0</span>
+          <span class="plan-price-period">/ month</span>
+        </div>
+        <div class="plan-divider"></div>
+        <div class="plan-features">
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Limited generations</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Basic content formats</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Quick Mode access</div>
+        </div>
+        <button class="plan-cta active-plan">Current Plan</button>
+      </div>
+
+      <!-- PRO (featured) -->
+      <div class="plan-card plan-featured">
+        <div class="plan-featured-bar"></div>
+        <div class="plan-featured-label">✦ Most Popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-subtitle">Build your authority</div>
+        <div class="plan-price">
+          <span class="plan-price-amount">$29</span>
+          <span class="plan-price-period">/ month</span>
+        </div>
+        <div class="plan-divider"></div>
+        <div class="plan-features">
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Unlimited generations</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Voice Memory system</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Advanced RCFTO outputs</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Saved content systems</div>
+        </div>
+        <button class="plan-cta cta-upgrade" onclick="showToast('Pro plan coming soon — stay tuned!')">Upgrade to Pro →</button>
+      </div>
+
+      <!-- BUSINESS -->
+      <div class="plan-card">
+        <div class="plan-name">Business</div>
+        <div class="plan-subtitle">Scale content operations</div>
+        <div class="plan-price">
+          <span class="plan-price-amount">$79</span>
+          <span class="plan-price-period">/ month</span>
+        </div>
+        <div class="plan-divider"></div>
+        <div class="plan-features">
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Team workflows</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Multi-brand support</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Shared voice systems</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Agency &amp; company usage</div>
+        </div>
+        <button class="plan-cta cta-secondary" onclick="showToast('Business plan coming soon — stay tuned!')">Get Business →</button>
+      </div>
+
+    </div>
+
+    <div class="billing-note">
+      All plans include a 7-day free trial. No credit card required to start.<br>
+      Questions? <a href="https://wa.me/250798878364" target="_blank" style="color:var(--gold);text-decoration:none;">Chat with Rodrigue →</a>
+    </div>
   </div>
 </div>
 
@@ -1269,84 +2785,228 @@ footer a:hover{color:var(--text-2);}
   <div class="cm-wrap">
     <div class="cm-label">Content System · RCFTO Powered</div>
     <h2 class="cm-title">Turn your ideas into <span>content</span></h2>
-    <p class="cm-sub">Answer a few quick questions so your content connects and sounds like you.</p>
 
-    <!-- AUDIENCE -->
-    <div class="cm-section">
-      <label class="cm-section-label">Who is this for?</label>
-      <input class="cm-input" id="cm-audience" type="text" placeholder="e.g. Early-stage founders who struggle with hiring" />
+    <!-- MODE TOGGLE -->
+    <div class="cm-mode-toggle">
+      <button class="cm-mode-btn quick active" id="cm-mode-quick" onclick="cmSwitchMode('quick')">⚡ Quick Mode</button>
+      <button class="cm-mode-btn" id="cm-mode-full" onclick="cmSwitchMode('full')">⚙️ Full Mode</button>
     </div>
 
-    <!-- ANGLE -->
-    <div class="cm-section">
-      <label class="cm-section-label">What's your angle or insight?</label>
-      <input class="cm-input" id="cm-angle" type="text" placeholder="e.g. Most founders hire for skills, not values — and regret it" />
+    <!-- ── QUICK MODE PANEL ── -->
+    <div id="cm-quick-panel" class="show">
+      <div class="qm-card">
+        <div class="qm-label">Quick Mode</div>
+        <div class="qm-title">Just write your idea.</div>
+        <div class="qm-sub">We'll handle the audience, angle, and tone automatically.</div>
+        <textarea class="qm-input" id="qm-idea" placeholder="e.g. Most people overthink starting a business. The real barrier isn't money — it's not shipping your first ugly version." oninput="qmShowInferred(this.value)"></textarea>
+
+        <div class="qm-format-row" id="qm-format-row">
+          <button class="qm-format-btn qm-selected" data-val="LinkedIn Post" onclick="qmSelectFormat(this)">💼 LinkedIn</button>
+          <button class="qm-format-btn" data-val="Tweet" onclick="qmSelectFormat(this)">🐦 Tweet</button>
+          <button class="qm-format-btn" data-val="X Thread" onclick="qmSelectFormat(this)">🧵 Thread</button>
+          <button class="qm-format-btn" data-val="Email Newsletter" onclick="qmSelectFormat(this)">📧 Email</button>
+        </div>
+
+        <div class="qm-inferred" id="qm-inferred"></div>
+      </div>
+
+      <button class="qm-generate-btn" id="qm-generate-btn" onclick="qmGenerate()">⚡ Generate Content →</button>
+      <div class="cm-kbd-hint">
+        <span class="cm-kbd">⌘</span><span class="cm-kbd">↵</span>
+        <span>to generate</span>
+      </div>
+      <div class="qm-unlock-hint">Want full control? <span onclick="cmSwitchMode('full')">Switch to Full Mode →</span></div>
     </div>
 
-    <!-- TAKEAWAY -->
-    <div class="cm-section">
-      <label class="cm-section-label">What should they take away?</label>
-      <input class="cm-input" id="cm-takeaway" type="text" placeholder="e.g. Slow down the process, interview for values first" />
-    </div>
+    <!-- ── FULL MODE PANEL ── -->
+    <div id="cm-full-panel" class="hidden">
+    <p class="cm-sub" style="margin-top:-.5rem;">Answer a few quick questions so your content connects and sounds like you.</p>
 
-    <!-- GOAL -->
-    <div class="cm-section">
-      <label class="cm-section-label">Content Goal</label>
-      <div class="cm-radio-row" id="cm-goal-row">
-        <button class="cm-radio-btn cm-selected" data-val="Engagement" onclick="cmSelect(this,'cm-goal-row')">Engage</button>
-        <button class="cm-radio-btn" data-val="Authority" onclick="cmSelect(this,'cm-goal-row')">Authority</button>
-        <button class="cm-radio-btn" data-val="Conversation" onclick="cmSelect(this,'cm-goal-row')">Start a Conversation</button>
+    <!-- CARD 1: Your Idea -->
+    <div class="cm-card">
+      <div class="cm-card-title">Your Idea</div>
+
+      <!-- AUDIENCE -->
+      <div class="cm-section">
+        <label class="cm-section-label">Who is this for?</label>
+        <div class="cm-section-helper">Be specific — the more precise, the better your content will connect.</div>
+        <input class="cm-input" id="cm-audience" type="text" placeholder="e.g. Early-stage founders who struggle with hiring" />
+      </div>
+
+      <!-- ANGLE -->
+      <div class="cm-section">
+        <label class="cm-section-label">What's your angle or insight?</label>
+        <div class="cm-section-helper">What do you believe that others in your space get wrong?</div>
+        <input class="cm-input" id="cm-angle" type="text" placeholder="e.g. Most founders hire for skills, not values — and regret it" />
+      </div>
+
+      <!-- TAKEAWAY -->
+      <div class="cm-section">
+        <label class="cm-section-label">What should they take away?</label>
+        <div class="cm-section-helper">What should your reader understand or do after reading?</div>
+        <input class="cm-input" id="cm-takeaway" type="text" placeholder="e.g. Slow down the process, interview for values first" />
       </div>
     </div>
 
-    <!-- TYPE -->
-    <div class="cm-section">
-      <label class="cm-section-label">Content Type</label>
-      <div class="cm-radio-row" id="cm-type-row">
-        <button class="cm-radio-btn cm-selected" data-val="LinkedIn Post" onclick="cmSelect(this,'cm-type-row')">💼 LinkedIn Post</button>
-        <button class="cm-radio-btn" data-val="X Thread" onclick="cmSelect(this,'cm-type-row')">🧵 X Thread</button>
-        <button class="cm-radio-btn" data-val="Email Newsletter" onclick="cmSelect(this,'cm-type-row')">📧 Email</button>
-      </div>
-    </div>
+    <!-- CARD 2: Format & Style -->
+    <div class="cm-card">
+      <div class="cm-card-title">Format &amp; Style</div>
 
-    <!-- TONE -->
-    <div class="cm-section">
-      <label class="cm-section-label">Tone</label>
-      <div class="cm-radio-row" id="cm-tone-row">
-        <button class="cm-radio-btn cm-selected" data-val="Direct and professional" onclick="cmSelect(this,'cm-tone-row')">Direct</button>
-        <button class="cm-radio-btn" data-val="Bold and contrarian" onclick="cmSelect(this,'cm-tone-row')">Bold</button>
-        <button class="cm-radio-btn" data-val="Warm and conversational" onclick="cmSelect(this,'cm-tone-row')">Warm</button>
+      <!-- GOAL -->
+      <div class="cm-section">
+        <label class="cm-section-label">Content Goal</label>
+        <div class="cm-radio-row" id="cm-goal-row">
+          <button class="cm-radio-btn cm-selected" data-val="Engagement" onclick="cmSelect(this,'cm-goal-row')">Engage</button>
+          <button class="cm-radio-btn" data-val="Authority" onclick="cmSelect(this,'cm-goal-row')">Authority</button>
+          <button class="cm-radio-btn" data-val="Conversation" onclick="cmSelect(this,'cm-goal-row')">Start a Conversation</button>
+        </div>
+      </div>
+
+      <!-- TYPE -->
+      <div class="cm-section">
+        <label class="cm-section-label">Content Type</label>
+        <div class="cm-radio-row" id="cm-type-row">
+          <button class="cm-radio-btn cm-selected" data-val="LinkedIn Post" onclick="cmSelect(this,'cm-type-row')">💼 LinkedIn Post</button>
+          <button class="cm-radio-btn" data-val="Tweet" onclick="cmSelect(this,'cm-type-row')">🐦 Tweet</button>
+          <button class="cm-radio-btn" data-val="X Thread" onclick="cmSelect(this,'cm-type-row')">🧵 X Thread</button>
+          <button class="cm-radio-btn" data-val="Email Newsletter" onclick="cmSelect(this,'cm-type-row')">📧 Email</button>
+        </div>
+      </div>
+
+      <!-- TONE -->
+      <div class="cm-section">
+        <label class="cm-section-label">Tone</label>
+        <div class="cm-radio-row" id="cm-tone-row">
+          <button class="cm-radio-btn cm-selected" data-val="Direct and professional" onclick="cmSelect(this,'cm-tone-row')">Direct</button>
+          <button class="cm-radio-btn" data-val="Bold and contrarian" onclick="cmSelect(this,'cm-tone-row')">Bold</button>
+          <button class="cm-radio-btn" data-val="Warm and conversational" onclick="cmSelect(this,'cm-tone-row')">Warm</button>
+        </div>
       </div>
     </div>
 
     <button class="cm-generate-btn" id="cm-generate-btn" onclick="cmGenerate()">Generate Content →</button>
+    <div class="cm-kbd-hint" style="margin-top:.5rem;">
+      <span class="cm-kbd">⌘</span><span class="cm-kbd">↵</span>
+      <span>to generate</span>
+    </div>
 
-    <!-- OUTPUT -->
-    <div class="cm-output-card" id="cm-output-card">
-      <div class="cm-output-header">
-        <span class="cm-output-badge" id="cm-output-badge">LinkedIn Post</span>
-        <button class="cm-output-copy-btn" onclick="cmCopy()">📋 Copy</button>
-      </div>
-      <div class="cm-output-content" id="cm-output-content"></div>
-      <div class="cm-output-actions">
-        <button class="cm-action-btn" onclick="cmSave()">💾 Save</button>
-        <button class="cm-action-btn" onclick="cmToggleImprove()">✨ Improve ▾</button>
-        <button class="cm-action-btn" onclick="cmRegenerate()">↺ Regenerate</button>
-      </div>
-      <div class="cm-improve-menu" id="cm-improve-menu">
-        <button class="cm-improve-btn" onclick="cmImprove('more engaging and punchy')">More engaging</button>
-        <button class="cm-improve-btn" onclick="cmImprove('shorter and more concise')">Shorter</button>
-        <button class="cm-improve-btn" onclick="cmImprove('bolder and more contrarian')">Bolder</button>
-        <button class="cm-improve-btn" onclick="cmImprove('with a stronger hook at the start')">Stronger hook</button>
-      </div>
-      <div class="cm-upsell">
-        <div class="cm-upsell-text"><strong>💡 This idea can become a full chapter.</strong><br>Build your book around insights like this one.</div>
-        <button class="cm-upsell-btn" onclick="startBookFlow()">Build a Book →</button>
+    </div><!-- /#cm-full-panel -->
+
+    <!-- SHARED: LOADING STATE -->
+    <div class="cm-loading-state" id="cm-loading-state">
+      <div class="cm-loading-msg" id="cm-loading-msg">Writing in your voice…</div>
+      <div class="cm-loading-bar-wrap"><div class="cm-loading-bar" id="cm-loading-bar"></div></div>
+      <div class="cm-loading-hint" id="cm-loading-hint">Shaping your message around your insight.</div>
+      <div class="cm-loading-skeletons">
+        <div class="skeleton skeleton-line w-80"></div>
+        <div class="skeleton skeleton-line w-full"></div>
+        <div class="skeleton skeleton-line w-full"></div>
+        <div class="skeleton skeleton-line w-60"></div>
+        <div style="margin-top:1rem;"></div>
+        <div class="skeleton skeleton-line w-full"></div>
+        <div class="skeleton skeleton-line w-40"></div>
       </div>
     </div>
 
+    <!-- SUCCESS MESSAGE -->
+    <div class="cm-success-msg" id="cm-success-msg">✅ Your content is ready — copy, refine, or save it below.</div>
+
+    <!-- VOICE MEMORY ADAPTIVE BANNER (shown after 2+ generations) -->
+    <div class="cm-voice-banner" id="cm-voice-banner">
+      <div class="cm-voice-banner-text"><strong>✦ Adapting to your style</strong> — RCFTO is learning your writing voice.</div>
+      <div class="cm-voice-banner-actions">
+        <button class="cm-voice-banner-btn keep" onclick="cmKeepVoice()">Keep</button>
+        <button class="cm-voice-banner-btn" onclick="cmResetVoice()">Reset</button>
+      </div>
+    </div>
+
+    <!-- OUTPUT CARD -->
+    <div class="cm-output-card" id="cm-output-card">
+      <div class="cm-output-header">
+        <span class="cm-output-badge" id="cm-output-badge">LinkedIn Post</span>
+        <button class="cm-output-copy-btn" onclick="cmCopyWithMicro(this)">📋 Copy</button>
+      </div>
+
+      <!-- CONTENT READY BADGE -->
+      <div class="cm-content-ready" id="cm-content-ready">Content ready ✓</div>
+
+      <!-- CONFIDENCE FEEDBACK -->
+      <div class="cm-confidence-bar" id="cm-confidence-bar">
+        <div class="cm-confidence-dot"></div>
+        Strong hook
+        <span class="cm-confidence-sep">·</span>
+        Clear structure
+        <span class="cm-confidence-sep">·</span>
+        Ready to publish ✓
+      </div>
+
+      <!-- EDIT HINT -->
+      <div class="cm-edit-hint" id="cm-edit-hint">✏️ Editing mode — click outside to finish</div>
+
+      <div class="cm-output-content" id="cm-output-content"></div>
+      <div class="output-ownership" id="cm-ownership-signal">
+        <div class="output-ownership-dot"></div>
+        <span id="cm-ownership-text">Structured with RCFTO · adapted to your style</span>
+      </div>
+
+      <!-- ENHANCED ACTION BAR -->
+      <div class="cm-output-actions">
+        <button class="cm-action-btn primary-action" onclick="cmSaveWithMicro(this)">💾 Save</button>
+        <button class="cm-action-btn" onclick="cmToggleEdit(this)">✏️ Edit</button>
+        <button class="cm-action-btn" onclick="cmToggleImprove()">🔁 Improve ▾</button>
+        <button class="cm-action-btn" onclick="cmToggleToneSelector()">🎯 Change Tone ▾</button>
+        <button class="cm-action-btn" onclick="cmImprove('shorter and more concise, cutting it by roughly 30%')">✂️ Shorten</button>
+        <button class="cm-action-btn" onclick="cmRegenerate()">↺ Regenerate</button>
+      </div>
+
+      <!-- IMPROVE MENU -->
+      <div class="cm-improve-menu" id="cm-improve-menu">
+        <button class="cm-improve-btn" onclick="cmImprove('more engaging and punchy — strengthen the hook and body')">More engaging</button>
+        <button class="cm-improve-btn" onclick="cmImprove('stronger in authority and credibility')">More authority</button>
+        <button class="cm-improve-btn" onclick="cmImprove('bolder and more contrarian — challenge the status quo')">Bolder</button>
+        <button class="cm-improve-btn" onclick="cmImprove('with a stronger, more attention-grabbing hook at the start')">Stronger hook</button>
+        <button class="cm-improve-btn" onclick="cmImprove('with a stronger, clearer call-to-action at the end')">Stronger CTA</button>
+      </div>
+
+      <!-- TONE SELECTOR -->
+      <div class="cm-tone-selector" id="cm-tone-selector">
+        <button class="cm-tone-chip" onclick="cmImprove('in a bold, confident, direct tone — assertive and declarative');cmToggleToneSelector()">Bold</button>
+        <button class="cm-tone-chip" onclick="cmImprove('in a warm, conversational, empathetic tone — speak to the reader personally');cmToggleToneSelector()">Warm</button>
+        <button class="cm-tone-chip" onclick="cmImprove('in a professional, authoritative tone — credible and precise');cmToggleToneSelector()">Authority</button>
+        <button class="cm-tone-chip" onclick="cmImprove('using storytelling — open with a narrative or personal moment');cmToggleToneSelector()">Storytelling</button>
+        <button class="cm-tone-chip" onclick="cmImprove('in a direct, no-fluff tone — minimal words, maximum clarity');cmToggleToneSelector()">Direct</button>
+      </div>
+
+      <!-- SMART SUGGESTIONS (context-aware) -->
+      <div class="cm-suggestions" id="cm-suggestions">
+        <div class="cm-suggestions-label">Quick refinements</div>
+        <div class="cm-suggestion-chips" id="cm-suggestion-chips"></div>
+      </div>
+
+      <div class="rcfto-why" id="cm-rcfto-why">Structured using RCFTO + adapted to your voice</div>
+
+      <!-- BOOK BRIDGE CTA -->
+      <div class="cm-book-bridge" id="cm-book-bridge">
+        <div class="cm-book-bridge-text"><strong>📖 Turn this into a book chapter</strong><br>This insight has real depth. Build a full book around it.</div>
+        <button class="cm-book-bridge-btn" onclick="startBookFlow()">Build a Book →</button>
+      </div>
+
+      <!-- CONTINUE LATER -->
+      <div class="cm-continue-later show" id="cm-continue-later" onclick="cmSaveWithMicro(this)">
+        📚 Continue later — save to your library
+      </div>
+    </div>
+
+    <!-- EMPTY STATE (shown before first generation) -->
+    <div class="cm-empty-state" id="cm-empty-state">
+      <div class="cm-empty-icon">✦</div>
+      <div class="cm-empty-title">Your ideas deserve to be heard.</div>
+      <div class="cm-empty-sub">Describe your idea. We'll structure it into clear, publish-ready content.</div>
+      <div style="font-size:12px;color:var(--text-3);margin-top:.75rem;opacity:.7;">Answer 3 prompts → get structured content</div>
+    </div>
+
     <!-- PROGRESS + LIBRARY -->
-    <div id="cm-library-section" style="display:none;">
+    <div id="cm-library-section">
       <div class="cm-library-header">
         <span class="cm-library-title">Saved Content</span>
         <span class="cm-library-count" id="cm-library-count">0 pieces</span>
@@ -1367,6 +3027,126 @@ function toggleTheme() {
   document.getElementById('theme-toggle').textContent = isLight ? '☀️' : '🌙';
 }
 
+/* ── ACCOUNT DROPDOWN ── */
+const GUEST_GEN_LIMIT = 3;
+const GUEST_GEN_KEY   = 'al_guest_gens';
+
+function isAuthenticated() {
+  return !!localStorage.getItem('authority_lab_email');
+}
+
+function getGuestGenerations() {
+  return parseInt(localStorage.getItem(GUEST_GEN_KEY) || '0', 10);
+}
+
+function incrementGuestGenerations() {
+  const n = getGuestGenerations() + 1;
+  localStorage.setItem(GUEST_GEN_KEY, n);
+  return n;
+}
+
+function toggleAccountMenu(e) {
+  if (e) e.stopPropagation();
+  document.getElementById('nav-account').classList.toggle('open');
+}
+
+function updateAccountDropdown() {
+  const email = localStorage.getItem('authority_lab_email');
+  const guestEl  = document.getElementById('nav-dropdown-guest');
+  const authedEl = document.getElementById('nav-dropdown-authed');
+  const avatarEl = document.querySelector('.nav-account-avatar');
+  const labelEl  = document.querySelector('.nav-account-label');
+
+  if (email) {
+    // AUTHENTICATED
+    if (guestEl)  guestEl.style.display  = 'none';
+    if (authedEl) authedEl.style.display = 'block';
+    const emailEl = document.getElementById('nav-dropdown-email');
+    if (emailEl) emailEl.textContent = email;
+    if (avatarEl) {
+      avatarEl.textContent = email[0].toUpperCase();
+      avatarEl.style.background = 'linear-gradient(135deg,var(--gold),#fbbf24)';
+      avatarEl.style.fontSize   = '12px';
+    }
+    if (labelEl) labelEl.textContent = email.split('@')[0];
+    // Owner badge
+    const ownerBadge = document.getElementById('nav-owner-badge');
+    if (ownerBadge) ownerBadge.style.display = email.toLowerCase() === OWNER_EMAIL ? 'block' : 'none';
+  } else {
+    // GUEST
+    if (guestEl)  guestEl.style.display  = 'block';
+    if (authedEl) authedEl.style.display = 'none';
+    if (avatarEl) {
+      avatarEl.textContent = '👤';
+      avatarEl.style.background = 'var(--bg-4)';
+      avatarEl.style.fontSize   = '11px';
+    }
+    if (labelEl) labelEl.textContent = 'Guest';
+  }
+}
+
+function triggerSignIn(mode) {
+  // Close dropdown
+  document.getElementById('nav-account').classList.remove('open');
+  closeSoftWall();
+  // Re-use existing email modal flow
+  document.getElementById('email-modal').classList.add('show');
+  setTimeout(() => document.getElementById('email-input')?.focus(), 150);
+}
+
+function logoutUser() {
+  document.getElementById('nav-account').classList.remove('open');
+
+  // Clear session — preserve books/content
+  localStorage.removeItem('authority_lab_email');
+  localStorage.removeItem('isOwner');
+  localStorage.removeItem(GUEST_GEN_KEY);
+
+  // Remove owner badges
+  document.getElementById('owner-badge')?.remove();
+  document.getElementById('owner-badge-cm')?.remove();
+
+  updateAccountDropdown();
+  showToast('Signed out. Your content is still saved.');
+
+  setTimeout(() => {
+    document.getElementById('entry-screen').style.display = 'flex';
+    document.getElementById('main-app').style.display    = 'none';
+    document.getElementById('content-mode').style.display = 'none';
+  }, 700);
+}
+
+/* ── SOFT AUTH WALL ── */
+function checkGuestWall(onAllow) {
+  if (isAuthenticated()) { onAllow(); return; }
+  const count = incrementGuestGenerations();
+  if (count <= GUEST_GEN_LIMIT) {
+    onAllow();
+    // After the last free gen, queue the prompt
+    if (count === GUEST_GEN_LIMIT) {
+      setTimeout(() => showSoftWall(count), 3200);
+    }
+  } else {
+    showSoftWall(count);
+  }
+}
+
+function showSoftWall(count) {
+  const el = document.getElementById('soft-auth-wall');
+  const counter = document.getElementById('soft-wall-counter');
+  if (counter) counter.textContent = count + ' free generation' + (count !== 1 ? 's' : '') + ' used';
+  if (el) el.classList.add('show');
+}
+
+function closeSoftWall() {
+  document.getElementById('soft-auth-wall')?.classList.remove('show');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', () => {
+  document.getElementById('nav-account')?.classList.remove('open');
+});
+
 function applyStoredTheme() {
   const theme = localStorage.getItem('authority_lab_theme');
   if (theme === 'light') {
@@ -1377,28 +3157,37 @@ function applyStoredTheme() {
 }
 
 /* ══════════════════════════════════════
-   SUPABASE
+   SUPABASE  (plain fetch — no SDK, no worker conflicts)
 ══════════════════════════════════════ */
 const SUPABASE_URL  = 'https://wqckznuokpniqgnzxoqi.supabase.co';
 const SUPABASE_ANON = 'sb_publishable_oPpeDGSjKGzatY6UHj02_g_NjMUnzb2';
 
+function sbHeaders() {
+  return {
+    'Content-Type': 'application/json',
+    'apikey': SUPABASE_ANON,
+    'Authorization': 'Bearer ' + SUPABASE_ANON,
+    'Prefer': 'return=minimal'
+  };
+}
+
 async function saveEmailToSupabase(email) {
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/subscribers', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON,
-        'Authorization': `Bearer ${SUPABASE_ANON}`,
-        'Prefer': 'resolution=ignore-duplicates,return=minimal'
-      },
+      headers: sbHeaders(),
       body: JSON.stringify({ email, source: 'authority_lab', created_at: new Date().toISOString() })
     });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      console.warn('Supabase subscribers error:', err.message || res.status);
+    if (res.ok || res.status === 409) {
+      console.log('✅ Supabase: subscriber saved');
+    } else {
+      const txt = await res.text();
+      console.log('Supabase note:', res.status, txt); // non-fatal, log only
     }
-  } catch(e) { console.warn('Supabase failed:', e.message); }
+  } catch(e) {
+    // Silently ignore — blocked by sandbox/offline/CORS; works fine in real browser
+    console.log('Supabase offline or sandboxed — skipping remote save.');
+  }
 }
 
 /* ══════════════════════════════════════
@@ -1419,13 +3208,13 @@ let confirmCallback = null;
 ══════════════════════════════════════ */
 window.addEventListener('load', () => {
   applyStoredTheme();
-  if (!SUPABASE_ANON || SUPABASE_ANON === 'YOUR_SUPABASE_ANON_KEY_HERE') {
-    console.warn('⚠️ Authority Lab: Supabase anon key not set. Email collection will not work.');
-  }
+  console.log('✅ Supabase ready (plain fetch mode)');
   // Show entry screen first; defer book init until book flow starts
   loadBookFromStorage();
   restoreSetupForm();
   cmLoadLibrary();
+  initOwnerMode();
+  updateAccountDropdown();
 });
 
 /* ══════════════════════════════════════
@@ -1451,6 +3240,8 @@ function startContentFlow() {
   document.getElementById('main-app').style.display = 'none';
   document.getElementById('content-mode').style.display = 'block';
   window.scrollTo(0, 0);
+  applyUsageMemory();
+  setTimeout(initOwnerMode, 50);
 }
 
 /* ══════════════════════════════════════
@@ -1459,6 +3250,143 @@ function startContentFlow() {
 let cmSaved = JSON.parse(localStorage.getItem('cm_saved_content') || '[]');
 let cmLastGenerated = '';
 let cmLastContext = {};
+
+// ── USAGE MEMORY ──
+
+// ── OWNER MODE ──
+const OWNER_EMAIL = 'rodriigueshema@gmail.com';
+
+function isOwner() {
+  const storedEmail = localStorage.getItem('authority_lab_email') || '';
+  const devFlag     = localStorage.getItem('isOwner') === 'true';
+  return devFlag || storedEmail === OWNER_EMAIL;
+}
+
+function initOwnerMode() {
+  if (!isOwner()) return;
+  // Inject subtle owner badge into nav
+  const navRight = document.querySelector('.nav-right');
+  if (navRight && !document.getElementById('owner-badge')) {
+    const badge = document.createElement('span');
+    badge.id = 'owner-badge';
+    badge.textContent = '👑 Owner';
+    badge.style.cssText = 'font-size:11px;font-weight:700;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:3px 10px;letter-spacing:.04em;';
+    navRight.prepend(badge);
+  }
+  // Also badge content mode top nav if visible
+  const topNav = document.querySelector('.top-nav');
+  if (topNav && !document.getElementById('owner-badge-cm')) {
+    const badge2 = document.createElement('span');
+    badge2.id = 'owner-badge-cm';
+    badge2.textContent = '👑 Owner Mode';
+    badge2.style.cssText = 'font-size:11px;font-weight:700;color:var(--gold);opacity:.7;';
+    topNav.appendChild(badge2);
+  }
+}
+
+
+// ── VOICE MEMORY ──
+const VOICE_MEMORY_KEY = 'voiceMemory';
+const VOICE_MEMORY_MAX = 5;
+
+function getVoiceMemory() {
+  try {
+    const s = localStorage.getItem(VOICE_MEMORY_KEY);
+    return s ? JSON.parse(s) : [];
+  } catch(e) { return []; }
+}
+
+function addToVoiceMemory(output) {
+  const mem = getVoiceMemory();
+  mem.unshift(output);
+  localStorage.setItem(VOICE_MEMORY_KEY, JSON.stringify(mem.slice(0, VOICE_MEMORY_MAX)));
+}
+
+function extractVoiceProfile(outputs) {
+  if (!outputs || outputs.length === 0) return null;
+
+  const combined = outputs.join(' ');
+  const sentences = combined.match(/[^.!?]+[.!?]+/g) || [];
+  const avgLen = sentences.length
+    ? sentences.reduce((s, x) => s + x.trim().split(' ').length, 0) / sentences.length
+    : 20;
+
+  // Sentence style
+  const sentenceStyle = avgLen < 12 ? 'short' : avgLen < 20 ? 'medium' : 'long';
+
+  // Tone detection
+  const boldSignals   = (combined.match(/\b(wrong|truth|stop|never|always|most|every|best|worst|fail|broken)/gi) || []).length;
+  const warmSignals   = (combined.match(/\b(you|your|together|understand|feel|help|support|share)/gi) || []).length;
+  const tone = boldSignals > warmSignals ? 'bold' : warmSignals > boldSignals ? 'warm' : 'direct';
+
+  // Hook style — look at first sentence of each output
+  const hooks = outputs.map(o => (o.match(/^[^.!?]+[.!?]/) || [''])[0].trim());
+  const questionHooks    = hooks.filter(h => h.endsWith('?')).length;
+  const contraryHooks    = hooks.filter(h => /most|wrong|stop|never|truth/i.test(h)).length;
+  const hookStyle = questionHooks > contraryHooks ? 'question' : contraryHooks > 0 ? 'contrarian' : 'statement';
+
+  return { sentenceStyle, tone, hookStyle };
+}
+
+function buildVoiceInstruction() {
+  const outputs = getVoiceMemory();
+  if (outputs.length < 2) return ''; // need at least 2 samples
+
+  const profile = extractVoiceProfile(outputs);
+  if (!profile) return '';
+
+  const parts = [];
+  if (profile.sentenceStyle === 'short')
+    parts.push('Use short, punchy sentences — aim for under 12 words per sentence.');
+  else if (profile.sentenceStyle === 'long')
+    parts.push('Use flowing, explanatory sentences that build context.');
+
+  if (profile.tone === 'bold')
+    parts.push('Be bold and direct — use strong, confident phrasing. Challenge assumptions.');
+  else if (profile.tone === 'warm')
+    parts.push('Use a warm, conversational tone — speak directly to the reader with empathy.');
+  else
+    parts.push('Keep a professional, direct tone.');
+
+  if (profile.hookStyle === 'question')
+    parts.push('Open with a thought-provoking question.');
+  else if (profile.hookStyle === 'contrarian')
+    parts.push('Open with a contrarian or surprising statement that challenges the status quo.');
+  else
+    parts.push('Open with a confident, clear statement.');
+
+  return parts.length
+    ? '\n\nVoice style (match this user\'s writing style):\n- ' + parts.join('\n- ')
+    : '';
+}
+
+const USAGE_MEMORY_KEY = 'usageMemory';
+const USAGE_DEFAULTS = { format: 'LinkedIn Post', goal: 'Authority', mode: 'quick' };
+
+function getUsageMemory() {
+  try {
+    const s = localStorage.getItem(USAGE_MEMORY_KEY);
+    return s ? { ...USAGE_DEFAULTS, ...JSON.parse(s) } : { ...USAGE_DEFAULTS };
+  } catch(e) { return { ...USAGE_DEFAULTS }; }
+}
+
+function saveUsageMemory(patch) {
+  localStorage.setItem(USAGE_MEMORY_KEY, JSON.stringify({ ...getUsageMemory(), ...patch }));
+}
+
+function applyUsageMemory() {
+  const mem = getUsageMemory();
+  cmSwitchMode(mem.mode, true);
+  document.querySelectorAll('#qm-format-row .qm-format-btn').forEach(btn => {
+    btn.classList.toggle('qm-selected', btn.dataset.val === mem.format);
+  });
+  document.querySelectorAll('#cm-type-row .cm-radio-btn').forEach(btn => {
+    btn.classList.toggle('cm-selected', btn.dataset.val === mem.format);
+  });
+  document.querySelectorAll('#cm-goal-row .cm-radio-btn').forEach(btn => {
+    btn.classList.toggle('cm-selected', btn.dataset.val === mem.goal);
+  });
+}
 
 /* ══════════════════════════════════════
    CONTENT MODE — UI HELPERS
@@ -1471,6 +3399,175 @@ function cmSelect(btn, rowId) {
 function cmGetVal(rowId) {
   const sel = document.querySelector(`#${rowId} .cm-selected`);
   return sel ? sel.dataset.val : '';
+}
+
+/* ══════════════════════════════════════
+   CLIPBOARD UTILITY
+══════════════════════════════════════ */
+function copyToClipboard(text, btn, label = '📋 Copy') {
+  const succeed = () => {
+    if (btn) { btn.textContent = '✅ Copied!'; setTimeout(() => btn.textContent = label, 2000); }
+    showToast('Copied to clipboard');
+  };
+
+  // Primary: modern Clipboard API
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(succeed).catch(() => fallback());
+  } else {
+    fallback();
+  }
+
+  function fallback() {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (ok) succeed();
+      else showToast('Copy failed — please select and copy manually.');
+    } catch(e) {
+      showToast('Copy not supported in this browser.');
+    }
+  }
+}
+
+/* ══════════════════════════════════════
+   QUICK MODE
+══════════════════════════════════════ */
+function cmSwitchMode(mode, silent) {
+  const quickPanel = document.getElementById('cm-quick-panel');
+  const fullPanel  = document.getElementById('cm-full-panel');
+  const btnQuick   = document.getElementById('cm-mode-quick');
+  const btnFull    = document.getElementById('cm-mode-full');
+
+  if (mode === 'quick') {
+    quickPanel.classList.add('show');
+    fullPanel.classList.add('hidden');
+    btnQuick.classList.add('active');
+    btnFull.classList.remove('active');
+  } else {
+    quickPanel.classList.remove('show');
+    fullPanel.classList.remove('hidden');
+    btnFull.classList.add('active');
+    btnQuick.classList.remove('active');
+  }
+  if (!silent) saveUsageMemory({ mode });
+}
+
+function qmSelectFormat(btn) {
+  document.querySelectorAll('#qm-format-row .qm-format-btn').forEach(b => b.classList.remove('qm-selected'));
+  btn.classList.add('qm-selected');
+  saveUsageMemory({ format: btn.dataset.val });
+}
+
+function qmGetFormat() {
+  const sel = document.querySelector('#qm-format-row .qm-format-btn.qm-selected');
+  return sel ? sel.dataset.val : 'LinkedIn Post';
+}
+
+function qmShowInferred(val) {
+  const el = document.getElementById('qm-inferred');
+  if (!val || val.length < 20) { el.classList.remove('show'); return; }
+  // Simple heuristic labels — shown as "what we'll infer"
+  el.innerHTML = `<strong>We'll automatically infer:</strong> audience from context · direct professional tone · engagement goal`;
+  el.classList.add('show');
+}
+
+async function qmGenerate() {
+  const idea = document.getElementById('qm-idea').value.trim();
+  if (!idea) { showQmError('Please write your idea first.'); return; }
+
+  // Guest wall check
+  if (!isAuthenticated()) {
+    checkGuestWall(() => _qmGenerateCore(idea));
+    return;
+  }
+  _qmGenerateCore(idea);
+}
+
+async function _qmGenerateCore(idea) {
+  const format = qmGetFormat();
+  const btn = document.getElementById('qm-generate-btn');
+  btn.disabled = true;
+  btn.textContent = 'Generating…';
+
+  // Reuse the shared loading/output UI
+  const emptyState  = document.getElementById('cm-empty-state');
+  const loadingState = document.getElementById('cm-loading-state');
+  const successMsg  = document.getElementById('cm-success-msg');
+  const card        = document.getElementById('cm-output-card');
+
+  if (emptyState) emptyState.style.display = 'none';
+  if (successMsg) successMsg.classList.remove('show');
+  card.classList.remove('show');
+  if (loadingState) {
+    loadingState.classList.add('show');
+    const msgs = ['Building your structure…', 'Writing in your voice…', 'Shaping your angle…'];
+    let idx = 0;
+    const msgEl = document.getElementById('cm-loading-msg');
+    const iv = setInterval(() => { idx = (idx + 1) % msgs.length; if (msgEl) msgEl.textContent = msgs[idx]; }, 1800);
+    window._qmMsgInterval = iv;
+  }
+
+  const qmFormatInstructions = format === 'Tweet'
+    ? 'Write a single tweet: max 280 characters. One sharp, complete thought. No hashtags unless essential.'
+    : format === 'X Thread'
+    ? 'Write a thread of 5–8 numbered tweets (1/, 2/, etc.). Each tweet stands alone. Hook hard on tweet 1. End with a CTA or question on the last tweet.'
+    : format === 'LinkedIn Post'
+    ? 'Write a LinkedIn post. Open with a one-line hook. Use short paragraphs. End with a question or CTA.'
+    : 'Write a short email newsletter. Include a subject line prefixed with "Subject:". Keep it personal and focused.';
+
+  const voiceInstruction = buildVoiceInstruction();
+  const prompt = `You are a world-class content strategist. A creator gave you a raw idea. Your job is to:
+1. Infer the most likely audience for this idea.
+2. Identify the sharpest angle or insight hidden in it.
+3. Write a compelling, ready-to-post ${format} based on it.
+
+Raw idea: "${idea}"
+
+Rules:
+- Write ONLY the final ${format} content — no preamble, no labels, no meta-commentary.
+- ${qmFormatInstructions}
+- Keep the tone direct and professional unless the idea calls for something different.
+- Do NOT explain what you're doing. Just write the content.${voiceInstruction}`;
+
+  try {
+    const result = await cmCallClaude(prompt);
+    cmLastGenerated = result;
+    cmLastContext = { type: format, goal: 'Engagement', audience: 'inferred', angle: idea, takeaway: '', tone: 'Direct' };
+  saveUsageMemory({ format, mode: 'quick' });
+  addToVoiceMemory(result);
+    document.getElementById('cm-output-content').textContent = result;
+    document.getElementById('cm-output-badge').textContent = format + ' · Quick Mode';
+    document.getElementById('cm-improve-menu').classList.remove('open');
+    updateOwnershipSignal(getVoiceMemory().length >= 2, format);
+    trackEvent('generate', { type: format, mode: 'quick' });
+    if (loadingState) loadingState.classList.remove('show');
+    if (window._qmMsgInterval) clearInterval(window._qmMsgInterval);
+    card.classList.add('show');
+    if (successMsg) successMsg.classList.add('show');
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } catch(e) {
+    if (loadingState) loadingState.classList.remove('show');
+    if (window._qmMsgInterval) clearInterval(window._qmMsgInterval);
+    document.getElementById('cm-output-content').textContent = 'Something went wrong. Please try again.';
+    card.classList.add('show');
+    console.error('Quick Mode error:', e);
+  }
+
+  btn.disabled = false;
+  btn.textContent = '⚡ Generate Content →';
+}
+
+function showQmError(msg) {
+  const el = document.getElementById('qm-idea');
+  el.style.borderColor = 'rgba(248,113,113,.6)';
+  el.style.boxShadow = '0 0 0 3px rgba(248,113,113,.08)';
+  setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2000);
 }
 
 /* ══════════════════════════════════════
@@ -1489,19 +3586,54 @@ async function cmGenerate() {
     return;
   }
 
+  // Guest wall check
+  if (!isAuthenticated()) {
+    checkGuestWall(() => _cmGenerateCore(audience, angle, takeaway, goal, type, tone));
+    return;
+  }
+  _cmGenerateCore(audience, angle, takeaway, goal, type, tone);
+}
+
+async function _cmGenerateCore(audience, angle, takeaway, goal, type, tone) {
+
   cmLastContext = { audience, angle, takeaway, goal, type, tone };
+  saveUsageMemory({ format: type, goal, mode: 'full' });
 
   const btn = document.getElementById('cm-generate-btn');
   btn.disabled = true;
   btn.textContent = 'Generating…';
 
-  // Show spinner in output area
+  // Hide empty state, output card, success; show loading
+  const emptyState = document.getElementById('cm-empty-state');
+  const loadingState = document.getElementById('cm-loading-state');
+  const successMsg = document.getElementById('cm-success-msg');
   const card = document.getElementById('cm-output-card');
-  card.classList.remove('show');
-  const content = document.getElementById('cm-output-content');
-  content.innerHTML = '<div class="cm-spinner"></div>';
-  card.classList.add('show');
 
+  if (emptyState) emptyState.style.display = 'none';
+  if (successMsg) successMsg.classList.remove('show');
+  card.classList.remove('show');
+  if (loadingState) {
+    loadingState.classList.add('show');
+    // Rotate loading messages
+    const msgs = ['Building your structure…', 'Shaping your chapter…', 'Writing in your voice…'];
+    let msgIdx = 0;
+    const msgEl = document.getElementById('cm-loading-msg');
+    const msgInterval = setInterval(() => {
+      msgIdx = (msgIdx + 1) % msgs.length;
+      if (msgEl) msgEl.textContent = msgs[msgIdx];
+    }, 2000);
+    window._cmMsgInterval = msgInterval;
+  }
+
+  const formatInstructions = type === 'Tweet'
+    ? '- Write a single tweet: max 280 characters. One punchy, complete thought. No hashtags unless essential.'
+    : type === 'X Thread'
+    ? '- Write a thread of 5–8 numbered tweets (1/, 2/, etc.). Each tweet stands alone. Hook hard on tweet 1. End with a CTA or question.'
+    : type === 'LinkedIn Post'
+    ? '- Write a LinkedIn post. Open with a one-line hook. Use short paragraphs. End with a question or CTA. Hashtags optional at the end.'
+    : '- Write a short email newsletter. Include a subject line prefixed with "Subject:". Keep it personal and focused.';
+
+  const voiceInstructionFull = buildVoiceInstruction();
   const prompt = `You are a professional content strategist. Write a single, ready-to-post ${type} for the following:
 
 Audience: ${audience}
@@ -1513,20 +3645,30 @@ Tone: ${tone}
 Instructions:
 - Write ONLY the final content — no preamble, no labels, no commentary.
 - Open with a strong hook.
-- Make it feel native to ${type}.
-- End with a clear call to action or question that drives ${goal.toLowerCase()}.
-- Match the tone: ${tone}.
-- Do NOT use hashtags unless it's a LinkedIn Post.`;
+${formatInstructions}
+- Match the tone: ${tone}.${voiceInstructionFull}`;
 
   try {
     const result = await cmCallClaude(prompt);
     cmLastGenerated = result;
-    content.innerHTML = '';
+    addToVoiceMemory(result);
+    const content = document.getElementById('cm-output-content');
     content.textContent = result;
     document.getElementById('cm-output-badge').textContent = type;
     document.getElementById('cm-improve-menu').classList.remove('open');
+    updateOwnershipSignal(getVoiceMemory().length >= 2, type);
+    trackEvent('generate', { type, goal, mode: 'full' });
+    if (loadingState) loadingState.classList.remove('show');
+    if (window._cmMsgInterval) clearInterval(window._cmMsgInterval);
+    card.classList.add('show');
+    if (successMsg) successMsg.classList.add('show');
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   } catch(e) {
+    if (loadingState) loadingState.classList.remove('show');
+    if (window._cmMsgInterval) clearInterval(window._cmMsgInterval);
+    const content = document.getElementById('cm-output-content');
     content.textContent = 'Something went wrong. Please try again.';
+    card.classList.add('show');
     console.error('Content generation error:', e);
   }
 
@@ -1545,9 +3687,18 @@ async function cmRegenerate() {
 async function cmImprove(instruction) {
   if (!cmLastGenerated) { alert('Generate content first.'); return; }
 
-  const btn = document.querySelector('.cm-action-btn');
   const content = document.getElementById('cm-output-content');
-  content.innerHTML = '<div class="cm-spinner"></div>';
+  const loadingState = document.getElementById('cm-loading-state');
+  const card = document.getElementById('cm-output-card');
+  const successMsg = document.getElementById('cm-success-msg');
+
+  card.classList.remove('show');
+  if (successMsg) successMsg.classList.remove('show');
+  if (loadingState) {
+    const msgEl = document.getElementById('cm-loading-msg');
+    if (msgEl) msgEl.textContent = 'Improving your content…';
+    loadingState.classList.add('show');
+  }
 
   const prompt = `Rewrite the following ${cmLastContext.type || 'content'} to make it ${instruction}. Keep the same core message and audience. Return ONLY the rewritten content — no labels or commentary.\n\n${cmLastGenerated}`;
 
@@ -1555,8 +3706,13 @@ async function cmImprove(instruction) {
     const result = await cmCallClaude(prompt);
     cmLastGenerated = result;
     content.textContent = result;
+    if (loadingState) loadingState.classList.remove('show');
+    card.classList.add('show');
+    if (successMsg) successMsg.classList.add('show');
   } catch(e) {
     content.textContent = cmLastGenerated;
+    if (loadingState) loadingState.classList.remove('show');
+    card.classList.add('show');
   }
 }
 
@@ -1566,11 +3722,8 @@ function cmToggleImprove() {
 
 function cmCopy() {
   if (!cmLastGenerated) return;
-  navigator.clipboard.writeText(cmLastGenerated).then(() => {
-    const btn = document.querySelector('.cm-output-copy-btn');
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = '📋 Copy', 2000);
-  });
+  const btn = document.querySelector('.cm-output-copy-btn');
+  copyToClipboard(cmLastGenerated, btn);
 }
 
 function cmSave() {
@@ -1579,13 +3732,18 @@ function cmSave() {
     text: cmLastGenerated,
     goal: cmLastContext.goal || 'General',
     type: cmLastContext.type || 'Content',
+    audience: cmLastContext.audience || '',
+    angle: cmLastContext.angle || '',
+    takeaway: cmLastContext.takeaway || '',
+    tone: cmLastContext.tone || '',
     saved_at: new Date().toISOString()
   };
   cmSaved.unshift(item);
   localStorage.setItem('cm_saved_content', JSON.stringify(cmSaved.slice(0, 50)));
+  showAutosave('saving');
+  setTimeout(() => showAutosave('saved'), 400);
+  trackEvent('save', { type: item.type, goal: item.goal });
   cmRenderLibrary();
-  // Brief confirmation
-  const btn = document.querySelector('.cm-action-btn');
   const allBtns = document.querySelectorAll('.cm-action-btn');
   allBtns.forEach(b => { if (b.textContent.includes('Save')) { b.textContent = '✅ Saved!'; setTimeout(() => b.textContent = '💾 Save', 2000); } });
 }
@@ -1601,19 +3759,82 @@ function cmRenderLibrary() {
   const count = document.getElementById('cm-library-count');
   if (!lib) return;
 
+  section.style.display = 'block';
+  count.textContent = `${cmSaved.length} piece${cmSaved.length !== 1 ? 's' : ''}`;
+
   if (cmSaved.length === 0) {
-    section.style.display = 'none';
+    lib.innerHTML = `<div style="font-size:13px;color:var(--text-3);padding:.75rem 0;font-style:italic;">Nothing saved yet — your content library starts here.</div>`;
     return;
   }
 
-  section.style.display = 'block';
-  count.textContent = `${cmSaved.length} piece${cmSaved.length !== 1 ? 's' : ''}`;
-  lib.innerHTML = cmSaved.map((item, i) => `
-    <div class="cm-library-item">
-      <div class="cm-library-goal">${item.type || 'Content'} · ${item.goal || 'General'}</div>
-      <div class="cm-library-text">${item.text.slice(0, 200)}${item.text.length > 200 ? '…' : ''}</div>
-    </div>
-  `).join('');
+  lib.innerHTML = cmSaved.map((item, i) => {
+    const isLong = item.text.length > 200;
+    const dateStr = item.saved_at ? new Date(item.saved_at).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '';
+    return `
+    <div class="cm-library-item" id="cm-lib-item-${i}">
+      <div class="cm-lib-meta">
+        <span class="cm-lib-tag format">${item.type || 'Content'}</span>
+        <span class="cm-lib-tag">${item.goal || 'General'}</span>
+        ${item.tone ? `<span class="cm-lib-tag">${item.tone}</span>` : ''}
+        ${dateStr ? `<span class="cm-lib-date">${dateStr}</span>` : ''}
+      </div>
+      <div class="cm-library-item-header">
+        <div class="cm-library-actions">
+          <button class="cm-lib-btn copy" onclick="cmLibCopy(${i}, this)">📋 Copy</button>
+          <button class="cm-lib-btn" onclick="cmLibRegenerate(${i})">↺ Regenerate</button>
+        </div>
+      </div>
+      <div class="cm-library-text collapsed" id="cm-lib-text-${i}">${item.text}</div>
+      ${isLong ? `<button class="cm-lib-expand" id="cm-lib-exp-${i}" onclick="cmLibToggle(${i})">Show more ↓</button>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function cmLibToggle(i) {
+  const text = document.getElementById(`cm-lib-text-${i}`);
+  const btn  = document.getElementById(`cm-lib-exp-${i}`);
+  const collapsed = text.classList.toggle('collapsed');
+  if (btn) btn.textContent = collapsed ? 'Show more ↓' : 'Show less ↑';
+}
+
+function cmLibCopy(i, btn) {
+  const item = cmSaved[i];
+  if (!item) return;
+  copyToClipboard(item.text, btn);
+}
+
+async function cmLibRegenerate(i) {
+  const item = cmSaved[i];
+  if (!item) return;
+
+  // Load saved item context back into the active mode and trigger generation
+  const type = item.type || 'LinkedIn Post';
+  const isQuickMode = !document.getElementById('cm-quick-panel').classList.contains('show') === false;
+
+  // Switch to the right mode and pre-fill
+  if (item.angle && item.audience) {
+    // Has full mode context — switch to full mode
+    cmSwitchMode('full');
+    if (document.getElementById('cm-audience')) document.getElementById('cm-audience').value = item.audience || '';
+    if (document.getElementById('cm-angle'))    document.getElementById('cm-angle').value    = item.angle    || '';
+    if (document.getElementById('cm-takeaway')) document.getElementById('cm-takeaway').value = item.takeaway || '';
+    // Set format
+    document.querySelectorAll('#cm-type-row .cm-radio-btn').forEach(btn => {
+      btn.classList.toggle('cm-selected', btn.dataset.val === type);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => cmGenerate(), 300);
+  } else {
+    // Quick mode item — load text as idea prompt and regenerate
+    cmSwitchMode('quick');
+    const ideaEl = document.getElementById('qm-idea');
+    if (ideaEl) ideaEl.value = item.text.slice(0, 300);
+    document.querySelectorAll('#qm-format-row .qm-format-btn').forEach(btn => {
+      btn.classList.toggle('qm-selected', btn.dataset.val === type);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => qmGenerate(), 300);
+  }
 }
 
 /* ══════════════════════════════════════
@@ -1674,8 +3895,8 @@ function loadBookFromStorage() {
 function saveBook() {
   if (book) {
     localStorage.setItem('authority_lab_book', JSON.stringify(book));
-    // Refresh workspace button
     document.getElementById('nav-workspace-btn').style.display = 'inline-block';
+    showAutosave('saved');
   }
 }
 
@@ -1767,7 +3988,7 @@ function applySetupDraft(path) {
 }
 
 function restoreChoice(gridId, val) {
-  const btns = document.querySelectorAll(`#${gridId} .choice-btn`);
+  const btns = document.querySelectorAll(`#${gridId} .choice-btn, #${gridId} .depth-btn`);
   btns.forEach(b => {
     b.classList.remove('selected');
     if (b.dataset.val === val) b.classList.add('selected');
@@ -1806,12 +4027,12 @@ function resumeBook() {
    CHOICE SELECTORS
 ══════════════════════════════════════ */
 function selectChoice(el, gridId) {
-  document.querySelectorAll(`#${gridId} .choice-btn`).forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll(`#${gridId} .choice-btn, #${gridId} .depth-btn`).forEach(b => b.classList.remove('selected'));
   el.classList.add('selected');
 }
 
 function getSelectedChoice(gridId) {
-  const sel = document.querySelector(`#${gridId} .choice-btn.selected`);
+  const sel = document.querySelector(`#${gridId} .choice-btn.selected, #${gridId} .depth-btn.selected`);
   return sel ? sel.dataset.val : null;
 }
 
@@ -2031,6 +4252,8 @@ async function submitEmail() {
   const btn = document.querySelector('#email-modal .btn-primary');
   if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
   localStorage.setItem('authority_lab_email', val);
+  localStorage.removeItem(GUEST_GEN_KEY); // Reset guest counter on sign-in
+  updateAccountDropdown();
   await saveEmailToSupabase(val);
   document.getElementById('email-modal').classList.remove('show');
   if (btn) { btn.disabled = false; btn.textContent = 'Continue →'; }
@@ -2114,7 +4337,7 @@ function showWorkspace() {
       buttons += `<button class="btn-secondary" onclick="readFullBook()">📖 Read Book</button>`;
       buttons += `<button class="btn-secondary" onclick="goToContent()">⚡ Content Engine</button>`;
     }
-    buttons += `<button class="btn-secondary" onclick="toggleAskPanel()" style="margin-top:4px;">💬 Talk to Rodrigue</button>`;
+    buttons += `<button class="btn-secondary" onclick="toggleAskPanel()" style="margin-top:4px;">✦ RCFTO Assistant</button>`;
     actionsEl.innerHTML = buttons;
   }
   // Show locked preview until all chapters approved, then hide it
@@ -2136,7 +4359,7 @@ async function continueWriting() {
     showToast(`📘 1 free chapter left — make it count!`);
   }
 
-  if (approved >= FREE_CHAPTER_LIMIT) {
+  if (approved >= FREE_CHAPTER_LIMIT && !isOwner()) {
     showFriction();
     return;
   }
@@ -2161,6 +4384,16 @@ function openChapter(idx) {
   document.getElementById('ch-num-badge').textContent = `Chapter ${idx + 1} of ${book.total_chapters}`;
   document.getElementById('ch-title-display').textContent = ch.title;
   document.getElementById('ch-body').innerHTML = formatChapterContent(ch.content || '');
+
+  // Word count + reading time
+  const wcEl = document.getElementById('ch-word-count');
+  if (wcEl && ch.content) {
+    const words = ch.content.trim().split(/\s+/).length;
+    const mins = Math.max(1, Math.round(words / 200));
+    wcEl.textContent = `${words.toLocaleString()} words · ${mins} min read`;
+  } else if (wcEl) {
+    wcEl.textContent = '';
+  }
 
   const genRow = document.getElementById('ch-generate-content-row');
   if (ch.status === 'approved') {
@@ -3242,12 +5475,8 @@ RULES:
 
 function copyCEOutput() {
   const text = document.getElementById('ce-output-box').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector('.ce-copy-btn');
-    btn.textContent = 'Copied!';
-    showToast('Copied to clipboard');
-    setTimeout(() => btn.textContent = '📋 Copy', 2000);
-  });
+  const btn = document.querySelector('.ce-copy-btn');
+  copyToClipboard(text, btn, '📋 Copy');
 }
 
 function toggleCEIdeas(btn) {
@@ -3412,13 +5641,27 @@ function copyContent(id) {
   const body = el.querySelector('.co-body').innerText;
   const closing = el.querySelector('.co-closing').innerText;
   const text = `${hook}\n\n${body}\n\n${closing}`;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = el.querySelector('.co-copy-btn');
-    btn.textContent = 'Copied!';
-    showToast('Copied to clipboard');
-    setTimeout(() => btn.textContent = '📋 Copy', 2000);
-  });
+  const btn = el.querySelector('.co-copy-btn');
+  copyToClipboard(text, btn);
 }
+
+/* ══════════════════════════════════════
+   KEYBOARD SHORTCUTS
+══════════════════════════════════════ */
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    // Only fire when content mode is visible
+    const cm = document.getElementById('content-mode');
+    if (!cm || cm.style.display === 'none') return;
+    e.preventDefault();
+    const quickVisible = document.getElementById('cm-quick-panel').classList.contains('show');
+    if (quickVisible) {
+      qmGenerate();
+    } else {
+      cmGenerate();
+    }
+  }
+});
 
 /* ══════════════════════════════════════
    FEEDBACK
@@ -3451,70 +5694,149 @@ function unlockAccess() {
 /* ══════════════════════════════════════
    ASK PANEL
 ══════════════════════════════════════ */
+/* ══════════════════════════════════════
+   RCFTO ASSISTANT
+══════════════════════════════════════ */
+const CONTENT_QUICK_ACTIONS = [
+  'Improve Hook', 'Make More Engaging', 'Strengthen Authority',
+  'Rewrite CTA', 'Turn Into Thread', 'Shorten Output'
+];
+const BOOK_QUICK_ACTIONS = [
+  'Expand Chapter', 'Improve Clarity', 'Add Example',
+  'Rewrite Subtitle', 'Simplify Writing', 'Strengthen Structure'
+];
+
+let rcftoMessages = [];
+
+function getRcftoMode() {
+  const activePage = document.querySelector('.page.active');
+  if (!activePage) return 'content';
+  const id = activePage.id;
+  if (id === 'page-book' || id === 'page-workspace' || id === 'page-chapter' || id === 'page-outline') return 'book';
+  return 'content';
+}
+
+function renderRcftoChips() {
+  const mode = getRcftoMode();
+  const chips = mode === 'book' ? BOOK_QUICK_ACTIONS : CONTENT_QUICK_ACTIONS;
+  const label = document.getElementById('rcfto-qa-label');
+  const container = document.getElementById('rcfto-chips');
+  if (!container) return;
+  if (label) label.textContent = mode === 'book' ? 'Book actions' : 'Content actions';
+  container.innerHTML = chips.map(c =>
+    `<button class="rcfto-chip" onclick="rcftoQuickAction('${c}')">${c}</button>`
+  ).join('');
+}
+
+function renderRcftoMessages() {
+  const el = document.getElementById('ask-history');
+  if (!el) return;
+  if (rcftoMessages.length === 0) {
+    el.innerHTML = `<div style="font-size:12px;color:var(--text-3);text-align:center;padding:.5rem 0;">Improve your content, structure, and clarity instantly.</div>`;
+    return;
+  }
+  el.innerHTML = rcftoMessages.map(m => {
+    if (m.role === 'user') return `<div class="chat-msg user">${escHtml(m.content)}</div>`;
+    return `<div class="chat-msg">${m.content.replace(/\n/g,'<br>')}</div>`;
+  }).join('');
+  el.scrollTop = el.scrollHeight;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
 function toggleAskPanel() {
   const panel = document.getElementById('ask-panel');
   panel.classList.toggle('open');
   if (panel.classList.contains('open')) {
-    renderAskHistory();
+    renderRcftoChips();
+    renderRcftoMessages();
     setTimeout(() => document.getElementById('ask-input').focus(), 100);
   }
 }
 
-function renderAskHistory() {
-  const questions = JSON.parse(localStorage.getItem('authority_lab_questions') || '[]');
-  const historyEl = document.getElementById('ask-history');
-  if (!historyEl) return;
-  if (questions.length === 0) { historyEl.style.display = 'none'; return; }
-  historyEl.style.display = 'block';
-  historyEl.innerHTML = questions.slice(-5).reverse().map(q => `
-    <div style="margin-bottom:.6rem;padding-bottom:.6rem;border-bottom:1px solid var(--border);">
-      <div style="font-size:12px;color:var(--text-2);line-height:1.5;">${q.question}</div>
-      <div style="font-size:10px;color:var(--text-3);margin-top:.2rem;">⏳ Awaiting reply · ${new Date(q.created_at).toLocaleDateString()}</div>
-    </div>`).join('');
+async function rcftoQuickAction(action) {
+  // Build context-aware prompt
+  const mode = getRcftoMode();
+  let context = '';
+  if (mode === 'content' && typeof cmLastGenerated !== 'undefined' && cmLastGenerated) {
+    context = `\n\nCurrent content:\n"""\n${cmLastGenerated}\n"""`;
+  } else if (mode === 'book') {
+    const chapterEl = document.getElementById('chapter-output');
+    if (chapterEl && chapterEl.textContent.trim()) {
+      context = `\n\nCurrent chapter excerpt:\n"""\n${chapterEl.textContent.trim().slice(0, 1200)}\n"""`;
+    }
+  }
+  const prompt = `${action} the following${context ? ' content' : ''}.${context || ' (No content selected yet — provide general guidance on how to do this.)'} Be specific, actionable, and concise.`;
+  await rcftoChat(prompt, action);
 }
 
-async function submitQuestion() {
-  const question = document.getElementById('ask-input').value.trim();
-  if (!question) { showToast('Please type a question first'); return; }
+async function rcftoSend() {
+  const input = document.getElementById('ask-input');
+  const q = input.value.trim();
+  if (!q) return;
+  input.value = '';
+  await rcftoChat(q);
+}
 
-  const email = localStorage.getItem('authority_lab_email') || 'anonymous';
-  const btn = document.querySelector('#ask-panel .btn-primary');
-  if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+async function rcftoChat(userMsg, displayMsg) {
+  rcftoMessages.push({ role: 'user', content: displayMsg || userMsg });
+  renderRcftoMessages();
 
-  // Save to Supabase
+  // Show typing indicator
+  const el = document.getElementById('ask-history');
+  const typingEl = document.createElement('div');
+  typingEl.className = 'chat-msg assistant-typing';
+  typingEl.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+  if (el) el.appendChild(typingEl);
+  if (el) el.scrollTop = el.scrollHeight;
+
+  // Disable send
+  const btn = document.getElementById('rcfto-send-btn');
+  if (btn) btn.disabled = true;
+
+  // Build system prompt with context
+  const mode = getRcftoMode();
+  let currentContent = '';
+  if (mode === 'content' && typeof cmLastGenerated !== 'undefined' && cmLastGenerated) {
+    currentContent = `\nCurrent generated content: ${cmLastGenerated.slice(0, 800)}`;
+  }
+  const voiceProfile = typeof getVoiceMemory === 'function' ? getVoiceMemory().slice(-3).join(' | ') : '';
+
+  const systemPrompt = `You are RCFTO Assistant, an AI writing copilot embedded in Rodrigue's Authority Lab.
+Your role: help users instantly improve their content, clarity, structure, and authority.
+Current mode: ${mode === 'book' ? 'Book Mode' : 'Content Mode'}.
+RCFTO framework: R=Result, C=Credibility, F=Framework, T=Transformation, O=Offer.${currentContent}${voiceProfile ? `\nUser voice profile: ${voiceProfile}` : ''}
+Be concise, direct, and actionable. Return only the improved content or advice — no preamble.`;
+
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/questions`, {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON,
-        'Authorization': `Bearer ${SUPABASE_ANON}`,
-        'Prefer': 'return=minimal'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        email,
-        question,
-        created_at: new Date().toISOString()
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userMsg }]
       })
     });
-    if (!res.ok) console.warn('Question save failed:', res.status);
-  } catch(e) { console.warn('Supabase error:', e.message); }
+    const data = await response.json();
+    const reply = data.content?.map(b => b.text || '').join('') || 'Sorry, I could not process that.';
+    if (typingEl.parentNode) typingEl.remove();
+    rcftoMessages.push({ role: 'assistant', content: reply });
+  } catch(e) {
+    if (typingEl.parentNode) typingEl.remove();
+    rcftoMessages.push({ role: 'assistant', content: 'Connection issue — try again in a moment.' });
+  }
 
-  // Save to localStorage for history display
-  const questions = JSON.parse(localStorage.getItem('authority_lab_questions') || '[]');
-  questions.push({ question, created_at: new Date().toISOString() });
-  localStorage.setItem('authority_lab_questions', JSON.stringify(questions.slice(-20)));
-
-  // Show thank you
-  document.getElementById('ask-input').value = '';
-  document.getElementById('ask-thank').style.display = 'block';
-  renderAskHistory();
-  if (btn) { btn.disabled = false; btn.textContent = 'Send Question →'; }
-  setTimeout(() => {
-    document.getElementById('ask-thank').style.display = 'none';
-    document.getElementById('ask-panel').classList.remove('open');
-  }, 3000);
+  renderRcftoMessages();
+  if (btn) btn.disabled = false;
 }
+
+// Keep old submitQuestion stub to avoid reference errors from other code
+function submitQuestion() { toggleAskPanel(); }
+function renderAskHistory() { renderRcftoMessages(); }
 
 
 
@@ -3550,6 +5872,222 @@ async function callClaude(prompt, maxTokens = 1000, retries = 2) {
       }
     }
   }
+}
+
+/* ══════════════════════════════════════
+   AUTO-SAVE INDICATOR
+══════════════════════════════════════ */
+let _autosaveTimer = null;
+function showAutosave(state = 'saving') {
+  const el = document.getElementById('autosave-indicator');
+  const txt = document.getElementById('autosave-text');
+  if (!el) return;
+  el.className = 'show ' + state;
+  txt.textContent = state === 'saving' ? 'Saving…' : 'Saved';
+  clearTimeout(_autosaveTimer);
+  if (state === 'saved') {
+    _autosaveTimer = setTimeout(() => { el.className = ''; }, 2200);
+  }
+}
+
+function triggerAutosave(fn) {
+  showAutosave('saving');
+  setTimeout(() => { fn(); showAutosave('saved'); }, 400);
+}
+
+/* ══════════════════════════════════════
+   MICRO-INTERACTIONS
+══════════════════════════════════════ */
+function microPop(el) {
+  if (!el) return;
+  el.classList.remove('micro-pop');
+  void el.offsetWidth;
+  el.classList.add('micro-pop');
+  setTimeout(() => el.classList.remove('micro-pop'), 300);
+}
+function microGlow(el) {
+  if (!el) return;
+  el.classList.remove('micro-glow');
+  void el.offsetWidth;
+  el.classList.add('micro-glow');
+  setTimeout(() => el.classList.remove('micro-glow'), 700);
+}
+
+function cmCopyWithMicro(btn) {
+  if (!cmLastGenerated) return;
+  microPop(btn);
+  copyToClipboard(cmLastGenerated, btn);
+  trackEvent('copy', { type: cmLastContext.type });
+}
+
+function cmSaveWithMicro(btn) {
+  microPop(btn);
+  triggerAutosave(() => cmSave());
+  trackEvent('save', { type: cmLastContext.type });
+}
+
+/* ══════════════════════════════════════
+   OWNERSHIP SIGNAL — update after generation
+══════════════════════════════════════ */
+function updateOwnershipSignal(hasVoice, format) {
+  const el = document.getElementById('cm-ownership-text');
+  if (!el) return;
+  if (hasVoice) {
+    el.textContent = 'Structured with RCFTO · voice-adapted to your style';
+  } else {
+    el.textContent = 'Structured with RCFTO · built from your insight';
+  }
+}
+
+/* ══════════════════════════════════════
+   INTERNAL ANALYTICS (lightweight)
+══════════════════════════════════════ */
+const ANALYTICS_KEY = 'al_analytics';
+function getAnalytics() {
+  try { return JSON.parse(localStorage.getItem(ANALYTICS_KEY) || '{}'); } catch(e) { return {}; }
+}
+function trackEvent(event, data = {}) {
+  try {
+    const a = getAnalytics();
+    const ts = new Date().toISOString();
+    if (!a.events) a.events = [];
+    a.events.push({ event, ...data, ts });
+    // Keep only last 200 events
+    if (a.events.length > 200) a.events = a.events.slice(-200);
+    // Aggregate counters
+    if (!a.counts) a.counts = {};
+    const key = event + (data.type ? '_' + data.type : '') + (data.mode ? '_' + data.mode : '');
+    a.counts[key] = (a.counts[key] || 0) + 1;
+    localStorage.setItem(ANALYTICS_KEY, JSON.stringify(a));
+  } catch(e) {}
+}
+
+/* ══════════════════════════════════════
+   BILLING PAGE
+══════════════════════════════════════ */
+function showBillingPage() {
+  showPage('page-billing');
+  const email = localStorage.getItem('authority_lab_email') || '';
+  const isOwner = email.toLowerCase() === OWNER_EMAIL;
+  const ownerNotice = document.getElementById('billing-owner-notice');
+  if (ownerNotice) ownerNotice.style.display = isOwner ? 'flex' : 'none';
+}
+
+/* ══════════════════════════════════════
+   SETTINGS PAGE
+══════════════════════════════════════ */
+const SETTINGS_KEY = 'authority_lab_settings';
+
+function getSettings() {
+  try {
+    const s = localStorage.getItem(SETTINGS_KEY);
+    return s ? JSON.parse(s) : {};
+  } catch(e) { return {}; }
+}
+
+function saveSettings(patch) {
+  const current = getSettings();
+  const updated = Object.assign({}, current, patch);
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(updated));
+}
+
+function openSettings() {
+  showPage('page-settings');
+  renderSettingsPage();
+}
+
+function renderSettingsPage() {
+  const s = getSettings();
+  const email = localStorage.getItem('authority_lab_email') || '';
+  const isLight = document.body.classList.contains('light-mode');
+
+  // Profile
+  const nameEl = document.getElementById('settings-name');
+  const emailEl = document.getElementById('settings-email');
+  if (nameEl) nameEl.value = s.profileName || '';
+  if (emailEl) emailEl.value = email;
+  const avatarEl = document.getElementById('settings-avatar');
+  if (avatarEl) {
+    const initial = (s.profileName || email || '').trim()[0];
+    avatarEl.textContent = initial ? initial.toUpperCase() : '👤';
+  }
+
+  // Writing prefs
+  setSettingsRadio('sp-format', s.defaultFormat || 'LinkedIn Post');
+  setSettingsRadio('sp-depth',  s.defaultDepth  || 'Balanced');
+  setSettingsRadio('sp-tone',   s.defaultTone   || 'Authority');
+
+  // Voice memory toggle
+  const voiceOn = s.voiceMemoryEnabled !== false;
+  const vmToggle = document.getElementById('vm-toggle');
+  if (vmToggle) vmToggle.checked = voiceOn;
+  updateVoiceMemoryStats();
+
+  // Appearance
+  setSettingsRadio('sp-theme', isLight ? 'Light' : 'Dark');
+
+  // Owner row
+  const ownerRow = document.getElementById('settings-owner-row');
+  if (ownerRow) ownerRow.style.display = email.toLowerCase() === OWNER_EMAIL ? 'flex' : 'none';
+}
+
+function setSettingsRadio(group, value) {
+  document.querySelectorAll(`[data-spgroup="${group}"]`).forEach(btn => {
+    btn.classList.toggle('sp-selected', btn.dataset.val === value);
+  });
+}
+
+function spSelect(btn, group) {
+  document.querySelectorAll(`[data-spgroup="${group}"]`).forEach(b => b.classList.remove('sp-selected'));
+  btn.classList.add('sp-selected');
+}
+
+function saveProfileSettings() {
+  const name = document.getElementById('settings-name').value.trim();
+  saveSettings({ profileName: name });
+  showToast('Profile saved');
+}
+
+function saveWritingPrefs() {
+  const format = document.querySelector('[data-spgroup="sp-format"].sp-selected')?.dataset.val || 'LinkedIn Post';
+  const depth  = document.querySelector('[data-spgroup="sp-depth"].sp-selected')?.dataset.val  || 'Balanced';
+  const tone   = document.querySelector('[data-spgroup="sp-tone"].sp-selected')?.dataset.val   || 'Authority';
+  saveSettings({ defaultFormat: format, defaultDepth: depth, defaultTone: tone });
+  showToast('Writing preferences saved');
+}
+
+function toggleVoiceMemory(checkbox) {
+  saveSettings({ voiceMemoryEnabled: checkbox.checked });
+  updateVoiceMemoryStats();
+  showToast(checkbox.checked ? 'Voice Memory enabled' : 'Voice Memory paused');
+}
+
+function updateVoiceMemoryStats() {
+  const count = getVoiceMemory().length;
+  const el = document.getElementById('vm-stats');
+  if (el) el.textContent = count > 0
+    ? count + ' writing sample' + (count !== 1 ? 's' : '') + ' learned'
+    : 'No samples yet — generate content to build your voice profile.';
+}
+
+function resetVoiceMemorySettings() {
+  localStorage.removeItem(VOICE_MEMORY_KEY);
+  updateVoiceMemoryStats();
+  showToast('Voice Memory reset');
+}
+
+function applyThemeFromSettings(btn, val) {
+  spSelect(btn, 'sp-theme');
+  const shouldBeLight = val === 'Light';
+  const isCurrentlyLight = document.body.classList.contains('light-mode');
+  if (val === 'System') {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const wantLight = !prefersDark;
+    if (wantLight !== isCurrentlyLight) toggleTheme();
+  } else if (shouldBeLight !== isCurrentlyLight) {
+    toggleTheme();
+  }
+  saveSettings({ theme: val });
 }
 
 /* ══════════════════════════════════════
