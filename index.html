@@ -2777,16 +2777,17 @@ footer a:hover{color:var(--text-2);}
       <!-- FREE -->
       <div class="plan-card">
         <div class="plan-name">Free</div>
-        <div class="plan-subtitle">Explore the system</div>
+        <div class="plan-subtitle">forever free</div>
         <div class="plan-price">
           <span class="plan-price-amount">$0</span>
           <span class="plan-price-period">/ month</span>
         </div>
         <div class="plan-divider"></div>
         <div class="plan-features">
-          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Limited generations</div>
-          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Basic content formats</div>
-          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Quick Mode access</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Limited platform access</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Basic content generation</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Up to 10 generations/month</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Standard output quality</div>
         </div>
         <button class="plan-cta active-plan">Current Plan</button>
       </div>
@@ -2796,17 +2797,18 @@ footer a:hover{color:var(--text-2);}
         <div class="plan-featured-bar"></div>
         <div class="plan-featured-label">✦ Most Popular</div>
         <div class="plan-name">Pro</div>
-        <div class="plan-subtitle">Build your authority</div>
+        <div class="plan-subtitle">per month</div>
         <div class="plan-price">
           <span class="plan-price-amount">$29</span>
           <span class="plan-price-period">/ month</span>
         </div>
         <div class="plan-divider"></div>
         <div class="plan-features">
-          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Unlimited generations</div>
-          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Voice Memory system</div>
-          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Advanced RCFTO outputs</div>
-          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Saved content systems</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Full content generation</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Structured writing tools</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Priority access &amp; processing</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Voice Memory profile</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Unlimited saves &amp; library</div>
         </div>
         <button class="plan-cta cta-upgrade" onclick="showToast('Pro plan coming soon — stay tuned!')">Upgrade to Pro →</button>
       </div>
@@ -2814,25 +2816,26 @@ footer a:hover{color:var(--text-2);}
       <!-- BUSINESS -->
       <div class="plan-card">
         <div class="plan-name">Business</div>
-        <div class="plan-subtitle">Scale content operations</div>
+        <div class="plan-subtitle">per month</div>
         <div class="plan-price">
           <span class="plan-price-amount">$79</span>
           <span class="plan-price-period">/ month</span>
         </div>
         <div class="plan-divider"></div>
         <div class="plan-features">
-          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Team workflows</div>
-          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Multi-brand support</div>
-          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Shared voice systems</div>
-          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Agency &amp; company usage</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Unlimited usage</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>All advanced features</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Priority support</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Team collaboration tools</div>
+          <div class="plan-feature"><div class="plan-feature-dot">✓</div>Custom voice profiles</div>
         </div>
-        <button class="plan-cta cta-secondary" onclick="showToast('Business plan coming soon — stay tuned!')">Get Business →</button>
+        <button class="plan-cta cta-secondary" onclick="showToast('Business plan coming soon — stay tuned!')">Get Started →</button>
       </div>
 
     </div>
 
     <div class="billing-note">
-      All plans include a 7-day free trial. No credit card required to start.<br>
+      All plans are billed monthly. Cancel anytime.<br>
       Questions? <a href="https://wa.me/250798878364" target="_blank" style="color:var(--gold);text-decoration:none;">Chat with Rodrigue →</a>
     </div>
   </div>
@@ -3291,6 +3294,8 @@ window.addEventListener('load', () => {
   cmLoadLibrary();
   initOwnerMode();
   updateAccountDropdown();
+  // Sync real plan from backend (async, non-blocking)
+  fetchAndCachePlan();
 });
 
 /* ══════════════════════════════════════
@@ -3360,6 +3365,155 @@ function initOwnerMode() {
   }
 }
 
+
+// ══════════════════════════════════════
+//  SUBSCRIPTION ACCESS SYSTEM
+// ══════════════════════════════════════
+
+/* ─────────────────────────────────────────────────────────────────
+   BACKEND CONFIG
+   Change this to your deployed server URL in production.
+   e.g. 'https://your-server.com'
+   Leave as '' if frontend and backend run on the same origin.
+───────────────────────────────────────────────────────────────── */
+const BACKEND_URL = 'http://localhost:3000';
+
+/* ── Plan helpers ── */
+
+/**
+ * Synchronous read — used by all existing gate functions.
+ * Returns whatever is cached in localStorage (set by fetchAndCachePlan).
+ * Falls back to 'free' if nothing is cached yet.
+ */
+function getUserPlan() {
+  return localStorage.getItem('userPlan') || 'free';
+}
+
+/**
+ * Async fetch from backend — called once on init (and after sign-in).
+ * On success: writes the real plan into localStorage and re-runs applyPlanUI.
+ * On failure: silently keeps the existing cached value (defaults to 'free').
+ */
+async function fetchAndCachePlan() {
+  const email = localStorage.getItem('authority_lab_email');
+  if (!email) return; // guest — no plan to fetch
+
+  try {
+    const url  = `${BACKEND_URL}/api/user-plan?email=${encodeURIComponent(email)}`;
+    const res  = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const plan = data.plan || 'free';
+
+    // Write into localStorage so all existing sync helpers pick it up
+    localStorage.setItem('userPlan', plan);
+    console.log(`✅ Plan synced from backend: ${email} → ${plan}`);
+
+    // Refresh plan-dependent UI
+    applyPlanUI();
+  } catch (err) {
+    // Non-fatal — backend offline or unreachable, safe fallback to 'free'
+    if (!localStorage.getItem('userPlan')) localStorage.setItem('userPlan', 'free');
+    console.warn('⚠️  Backend unreachable — using free plan. Run: node server.js');
+  }
+}
+
+/* ── Generation counter (canonical key: generationCount) ── */
+const FREE_GEN_LIMIT = 10;
+
+function getGenerationCount() {
+  return Number(localStorage.getItem('generationCount') || 0);
+}
+
+/* ── Access gate — owner always first ── */
+function canGenerate() {
+  if (isOwner()) return true;
+  const plan = getUserPlan();
+  if (plan === 'pro' || plan === 'business') return true;
+  return getGenerationCount() < FREE_GEN_LIMIT;
+}
+
+/* ── Track usage — skipped for owner ── */
+function trackGeneration() {
+  if (isOwner()) return;
+  const count = Number(localStorage.getItem('generationCount') || 0);
+  localStorage.setItem('generationCount', count + 1);
+}
+
+/* ── Feature gates — owner always first ── */
+function hasVoiceMemory() {
+  if (isOwner()) return true;
+  const plan = getUserPlan();
+  return plan === 'pro' || plan === 'business';
+}
+
+function hasUnlimitedSaves() {
+  if (isOwner()) return true;
+  const plan = getUserPlan();
+  return plan === 'pro' || plan === 'business';
+}
+
+/* ── Upgrade prompt (non-blocking banner, no alert) ── */
+function showUpgradePrompt(reason) {
+  const existing = document.getElementById('plan-upgrade-banner');
+  if (existing) existing.remove();
+
+  const banner = document.createElement('div');
+  banner.id = 'plan-upgrade-banner';
+  banner.style.cssText = [
+    'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);',
+    'background:linear-gradient(135deg,#1e2a3e,#111827);',
+    'border:1px solid rgba(245,158,11,.35);border-radius:12px;',
+    'padding:14px 20px;z-index:9999;max-width:360px;width:90%;',
+    'box-shadow:0 8px 32px rgba(0,0,0,.5);',
+    'display:flex;flex-direction:column;gap:10px;',
+    'animation:fadeUp .3s ease both;'
+  ].join('');
+  banner.innerHTML = `
+    <div style="font-size:13px;font-weight:600;color:#f1f5f9;line-height:1.5;">
+      🔒 ${reason || "You've reached your free plan limit."}
+    </div>
+    <div style="font-size:12px;color:#94a3b8;">Upgrade to Pro for unlimited generations, Voice Memory &amp; more.</div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button onclick="document.getElementById('plan-upgrade-banner').remove()"
+        style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:transparent;color:#94a3b8;cursor:pointer;">
+        Dismiss
+      </button>
+      <button onclick="showPage('page-billing');document.getElementById('plan-upgrade-banner').remove();"
+        style="font-size:12px;font-weight:700;padding:6px 16px;border-radius:8px;border:none;background:#f59e0b;color:#0b0f1a;cursor:pointer;">
+        Upgrade →
+      </button>
+    </div>`;
+  document.body.appendChild(banner);
+  setTimeout(() => { if (banner.parentNode) banner.remove(); }, 7000);
+}
+
+/* ── Apply plan-aware UI (Voice Memory lock for free users) ── */
+function applyPlanUI() {
+  if (isOwner()) return; // owner sees nothing restricted
+  const plan = getUserPlan();
+  const vmToggle = document.getElementById('vm-toggle');
+  if (vmToggle && plan === 'free') {
+    vmToggle.disabled = true;
+    vmToggle.checked  = false;
+    vmToggle.title    = 'Voice Memory requires Pro or Business plan';
+    if (!document.getElementById('vm-plan-lock')) {
+      const lock = document.createElement('span');
+      lock.id = 'vm-plan-lock';
+      lock.style.cssText = 'font-size:11px;color:var(--gold);margin-left:8px;';
+      lock.textContent = '🔒 Pro feature';
+      vmToggle.parentNode.appendChild(lock);
+    }
+  } else if (vmToggle) {
+    vmToggle.disabled = false;
+    const lock = document.getElementById('vm-plan-lock');
+    if (lock) lock.remove();
+  }
+}
+
+// ══════════════════════════════════════
+//  END SUBSCRIPTION ACCESS SYSTEM
+// ══════════════════════════════════════
 
 // ── VOICE MEMORY ──
 const VOICE_MEMORY_KEY = 'voiceMemory';
@@ -3557,6 +3711,12 @@ async function qmGenerate() {
   const idea = document.getElementById('qm-idea').value.trim();
   if (!idea) { showQmError('Please write your idea first.'); return; }
 
+  // Plan access gate (owner exempt)
+  if (!canGenerate()) {
+    showUpgradePrompt("You've used all " + FREE_GEN_LIMIT + " free generations. Upgrade to Pro for unlimited access.");
+    return;
+  }
+
   // Guest wall check
   if (!isAuthenticated()) {
     checkGuestWall(() => _qmGenerateCore(idea));
@@ -3622,6 +3782,7 @@ Rules:
     document.getElementById('cm-improve-menu').classList.remove('open');
     updateOwnershipSignal(getVoiceMemory().length >= 2, format);
     trackEvent('generate', { type: format, mode: 'quick' });
+    trackGeneration(); // plan usage tracking
     if (loadingState) loadingState.classList.remove('show');
     if (window._qmMsgInterval) clearInterval(window._qmMsgInterval);
     card.classList.add('show');
@@ -3659,6 +3820,12 @@ async function cmGenerate() {
 
   if (!audience || !angle || !takeaway) {
     alert('Please fill in all three fields before generating.');
+    return;
+  }
+
+  // Plan access gate (owner exempt)
+  if (!canGenerate()) {
+    showUpgradePrompt("You've used all " + FREE_GEN_LIMIT + " free generations. Upgrade to Pro for unlimited access.");
     return;
   }
 
@@ -3734,6 +3901,7 @@ ${formatInstructions}
     document.getElementById('cm-improve-menu').classList.remove('open');
     updateOwnershipSignal(getVoiceMemory().length >= 2, type);
     trackEvent('generate', { type, goal, mode: 'full' });
+    trackGeneration(); // plan usage tracking
     if (loadingState) loadingState.classList.remove('show');
     if (window._cmMsgInterval) clearInterval(window._cmMsgInterval);
     card.classList.add('show');
@@ -3804,6 +3972,11 @@ function cmCopy() {
 
 function cmSave() {
   if (!cmLastGenerated) return;
+  // Free plan: cap at 10 saved pieces
+  if (!hasUnlimitedSaves() && cmSaved.length >= 10) {
+    showUpgradePrompt("Free plan is limited to 10 saved pieces. Upgrade to Pro for unlimited saves.");
+    return;
+  }
   const item = {
     text: cmLastGenerated,
     goal: cmLastContext.goal || 'General',
@@ -4331,6 +4504,7 @@ async function submitEmail() {
   localStorage.removeItem(GUEST_GEN_KEY); // Reset guest counter on sign-in
   updateAccountDropdown();
   await saveEmailToSupabase(val);
+  fetchAndCachePlan(); // Sync plan from backend (non-blocking)
   document.getElementById('email-modal').classList.remove('show');
   if (btn) { btn.disabled = false; btn.textContent = 'Continue →'; }
   createBookAndStart();
@@ -6324,10 +6498,12 @@ const _orig_qmGenerateCore = window._qmGenerateCore || null;
 /* ── Init on load ── */
 document.addEventListener('DOMContentLoaded', function() {
   refreshUsageCounters();
+  applyPlanUI();
 });
 // Also refresh now in case DOMContentLoaded already fired
 if (document.readyState !== 'loading') {
   setTimeout(refreshUsageCounters, 200);
+  setTimeout(applyPlanUI, 200);
 }
 
 /* ══════════════════════════════════════
@@ -6344,7 +6520,7 @@ function showToast(msg) {
 
 <!-- SITE FOOTER -->
 <footer class="site-footer">
-  <span class="site-footer-copy">© <script>document.write(new Date().getFullYear())</script> Authority Lab. All rights reserved.</span>
+  <span class="site-footer-copy">© 2026 Authority Lab. All rights reserved.</span>
   <nav class="site-footer-links" aria-label="Legal links">
     <a href="/pricing">Pricing</a>
     <a href="/terms">Terms</a>
