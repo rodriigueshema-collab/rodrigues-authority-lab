@@ -9,10 +9,16 @@ export default async function handler(req, res) {
   if (!supabaseUrl || !supabaseKey) return res.status(503).json({ error: 'Not configured' });
 
   if (req.method === 'POST') {
-    // Save book
     const { email, book } = req.body;
-    if (!email || !book) return res.status(400).json({ error: 'email and book required' });
-
+    if (!email || typeof email !== 'string' || !email.includes('@')) {
+      return res.status(400).json({ error: 'Valid email required' });
+    }
+    if (!book || typeof book !== 'object') {
+      return res.status(400).json({ error: 'Valid book data required' });
+    }
+    if (JSON.stringify(book).length > 500000) {
+      return res.status(400).json({ error: 'Book data too large' });
+    }
     try {
       const response = await fetch(`${supabaseUrl}/rest/v1/books`, {
         method: 'POST',
@@ -23,8 +29,8 @@ export default async function handler(req, res) {
           'Prefer': 'resolution=merge-duplicates'
         },
         body: JSON.stringify({
-          user_email: email,
-          title: book.title,
+          user_email: email.toLowerCase().trim(),
+          title: book.title?.slice(0, 200) || 'Untitled',
           data: book,
           updated_at: new Date().toISOString()
         })
@@ -37,12 +43,13 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'GET') {
-    // Load book
     const { email } = req.query;
-    if (!email) return res.status(400).json({ error: 'email required' });
+    if (!email || typeof email !== 'string' || !email.includes('@')) {
+      return res.status(400).json({ error: 'Valid email required' });
+    }
     try {
       const response = await fetch(
-        `${supabaseUrl}/rest/v1/books?user_email=eq.${encodeURIComponent(email)}&order=updated_at.desc&limit=1`,
+        `${supabaseUrl}/rest/v1/books?user_email=eq.${encodeURIComponent(email.toLowerCase().trim())}&order=updated_at.desc&limit=1`,
         {
           headers: {
             'apikey': supabaseKey,
