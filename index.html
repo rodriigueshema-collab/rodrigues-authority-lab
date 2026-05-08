@@ -220,7 +220,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
   .rcfto-letter{width:auto;}
   .home-author{flex-wrap:wrap;}
   .home-author-links{margin-left:0;margin-top:.5rem;}
-  .entry-h1{font-size:clamp(22px,6vw,32px);}
+  .entry-h1{font-size:clamp(22px,5.5vw,30px);}
   .section-title{font-size:clamp(20px,5vw,27px);}
   .btn-primary{font-size:14px;padding:13px 24px;}
   .soft-wall-box{padding:1.5rem 1.25rem;}
@@ -570,7 +570,7 @@ nav{
 .home-wrap{max-width:640px;margin:0 auto;padding:72px 1.5rem 40px;}
 .home-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:4px 12px;margin-bottom:1.5rem;animation:fadeUp .5s ease both;}
 .home-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
-.home-h1{font-family:var(--font-head);font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.12;letter-spacing:-.02em;margin-bottom:.6rem;animation:fadeUp .5s .1s ease both;}
+.home-h1{font-family:var(--font-head);font-size:clamp(24px,3.5vw,42px);font-weight:600;line-height:1.2;letter-spacing:-.01em;max-width:700px;margin-bottom:.6rem;animation:fadeUp .5s .1s ease both;}
 .home-h1 span{color:var(--text);}
 .home-tagline{font-size:13px;font-weight:600;color:var(--text-3);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.6rem;animation:fadeUp .5s .15s ease both;}
 .home-sub{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:1.5rem;max-width:460px;animation:fadeUp .5s .2s ease both;}
@@ -1018,9 +1018,9 @@ footer a:hover{color:var(--text-2);}
 .entry-eyebrow::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
 .entry-h1{
   font-family:var(--font-head);
-  font-size:clamp(26px,4.5vw,42px);
-  font-weight:800;line-height:1.1;letter-spacing:-.025em;
-  color:var(--text);text-align:center;max-width:600px;
+  font-size:clamp(24px,3.5vw,42px);
+  font-weight:600;line-height:1.2;letter-spacing:-.01em;
+  color:var(--text);text-align:center;max-width:700px;
   margin-bottom:.85rem;animation:fadeUp .5s .08s ease both;
 }
 .entry-h1 span{color:var(--text);}
@@ -3096,7 +3096,39 @@ footer a:hover{color:var(--text-2);}
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  const FREE_LIMIT = 10;
+
+function getUsage() {
+  return parseInt(localStorage.getItem('usage') || '0');
+}
+
+function incrementUsage() {
+  const usage = getUsage() + 1;
+  localStorage.setItem('usage', usage);
+  return usage;
+}
+
+function canGenerate(plan) {
+  if (plan === 'pro') return true;
+  return getUsage() < FREE_LIMIT;
+}
+
+function updateUsageUI() {
+  const usage = getUsage();
+  const remaining = FREE_LIMIT - usage;
+
+  const counter = document.querySelector('.usage-counter');
+  if (counter) {
+    counter.textContent = remaining + " generations left";
+  }
+
+  if (remaining <= 0) {
+    const msg = document.querySelector('.usage-limit-msg');
+    if (msg) msg.classList.add('show');
+  }
+}
 /* ══════════════════════════════════════
    THEME TOGGLE
 ══════════════════════════════════════ */
@@ -3261,11 +3293,23 @@ async function saveEmailToSupabase(email) {
       console.log('✅ Supabase: subscriber saved');
     } else {
       const txt = await res.text();
-      console.log('Supabase note:', res.status, txt); // non-fatal, log only
+      console.log('Supabase note:', res.status, txt);
     }
   } catch(e) {
-    // Silently ignore — blocked by sandbox/offline/CORS; works fine in real browser
     console.log('Supabase offline or sandboxed — skipping remote save.');
+  }
+  // Also save to users table
+  try {
+    const res2 = await fetch(SUPABASE_URL + '/rest/v1/users', {
+      method: 'POST',
+      headers: sbHeaders(),
+      body: JSON.stringify({ email, created_at: new Date().toISOString() })
+    });
+    if (res2.ok || res2.status === 409) {
+      console.log('✅ Supabase: user saved');
+    }
+  } catch(e) {
+    console.log('Supabase users insert skipped.');
   }
 }
 
@@ -3317,6 +3361,12 @@ function startBookFlow() {
 }
 
 function startContentFlow() {
+  if (!isAuthenticated()) {
+    // Show email gate — after submit it will unlock content mode
+    _pendingFlow = 'content';
+    document.getElementById('email-modal').classList.add('show');
+    return;
+  }
   document.getElementById('entry-screen').style.display = 'none';
   document.getElementById('main-app').style.display = 'none';
   document.getElementById('content-mode').style.display = 'block';
@@ -3331,6 +3381,7 @@ function startContentFlow() {
 let cmSaved = JSON.parse(localStorage.getItem('cm_saved_content') || '[]');
 let cmLastGenerated = '';
 let cmLastContext = {};
+let _pendingFlow = null; // tracks which flow to resume after email login
 
 // ── USAGE MEMORY ──
 
@@ -3399,7 +3450,7 @@ async function fetchAndCachePlan() {
   if (!email) return; // guest — no plan to fetch
 
   try {
-    const url  = `${BACKEND_URL}/api/user-plan?email=${encodeURIComponent(email)}`;
+    const url = `http://localhost:3000/api/user-plan?email=${encodeURIComponent(email)}`;
     const res  = await fetch(url);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
@@ -3823,17 +3874,23 @@ async function cmGenerate() {
     return;
   }
 
-  // Plan access gate (owner exempt)
-  if (!canGenerate()) {
-    showUpgradePrompt("You've used all " + FREE_GEN_LIMIT + " free generations. Upgrade to Pro for unlimited access.");
-    return;
-  }
+ // Plan access gate (owner exempt)
+const userEmail = localStorage.getItem('userEmail') || '';
+const userPlan = getUserPlan(userEmail);
+
+if (!canGenerate(userPlan)) {
+  showUpgradePrompt("You've used all " + FREE_GEN_LIMIT + " free generations. Upgrade to Pro 🚀");
+  return;
+}
 
   // Guest wall check
   if (!isAuthenticated()) {
     checkGuestWall(() => _cmGenerateCore(audience, angle, takeaway, goal, type, tone));
     return;
   }
+  incrementUsage();
+updateUsageUI();
+
   _cmGenerateCore(audience, angle, takeaway, goal, type, tone);
 }
 
@@ -4507,7 +4564,19 @@ async function submitEmail() {
   fetchAndCachePlan(); // Sync plan from backend (non-blocking)
   document.getElementById('email-modal').classList.remove('show');
   if (btn) { btn.disabled = false; btn.textContent = 'Continue →'; }
-  createBookAndStart();
+  // Route to correct flow after login
+  if (_pendingFlow === 'content') {
+    _pendingFlow = null;
+    document.getElementById('entry-screen').style.display = 'none';
+    document.getElementById('main-app').style.display = 'none';
+    document.getElementById('content-mode').style.display = 'block';
+    window.scrollTo(0, 0);
+    applyUsageMemory();
+    setTimeout(initOwnerMode, 50);
+  } else {
+    _pendingFlow = null;
+    createBookAndStart();
+  }
 }
 
 /* ══════════════════════════════════════
@@ -5309,8 +5378,8 @@ function buildBookHTML(forPrint) {
     .cover, .toc-page, .chapter-section { padding-left: 1.5rem; padding-right: 1.5rem; }
     nav { padding: 12px 1.5rem; }
   }
-</style>
-</head>
+<\/style>
+<\/head>
 <body>
 
 <nav>
@@ -5321,7 +5390,6 @@ function buildBookHTML(forPrint) {
   </div>
 </nav>
 
-<!-- COVER -->
 <div class="cover">
   <div class="cover-label">Authority Book</div>
   <h1 class="cover-title">${book.title}</h1>
@@ -5330,7 +5398,6 @@ function buildBookHTML(forPrint) {
   <div class="cover-meta">${approved.length} Chapter${approved.length !== 1 ? 's' : ''} &nbsp;·&nbsp; ${new Date().getFullYear()}</div>
 </div>
 
-<!-- TABLE OF CONTENTS -->
 <div class="toc-page" id="toc">
   <div class="toc-label">Table of Contents</div>
   <ul class="toc-list">
@@ -5341,13 +5408,12 @@ function buildBookHTML(forPrint) {
   </ul>
 </div>
 
-<!-- CHAPTERS -->
 ${chaptersHTML}
 
 ${forPrint ? '' : `<div class="print-hint">To save as PDF: <strong>File → Print → Save as PDF</strong> in your browser.</div>`}
 
-</body>
-</html>`;
+<\/body>
+<\/html>`;
 }
 
 function exportEbook() {
