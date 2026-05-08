@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
   "rewrites": [
     { "source": "/pricing", "destination": "/pricing.html" },
     { "source": "/terms",   "destination": "/terms.html"   },
