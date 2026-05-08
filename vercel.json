@@ -1,12 +1,8 @@
 {
   "rewrites": [
-    { "source": "/api/claude",          "destination": "/api/claude.js" },
-    { "source": "/api/user-plan",       "destination": "/api/user-plan.js" },
-    { "source": "/api/paddle-webhook",  "destination": "/api/paddle-webhook.js" },
-    { "source": "/api/save-book",       "destination": "/api/save-book.js" },
-    { "source": "/pricing",             "destination": "/pricing.html" },
-    { "source": "/terms",               "destination": "/terms.html" },
-    { "source": "/privacy",             "destination": "/privacy.html" },
-    { "source": "/refund",              "destination": "/refund.html" }
+    { "source": "/pricing", "destination": "/pricing.html" },
+    { "source": "/terms",   "destination": "/terms.html"   },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/refund",  "destination": "/refund.html"  }
   ]
 }
