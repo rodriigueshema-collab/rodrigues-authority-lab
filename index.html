@@ -4538,12 +4538,13 @@ async function regenerateOutlineFresh() {
    EMAIL CAPTURE
 ══════════════════════════════════════ */
 function startWritingBook() {
+  if (!outlineData) {
+    showToast('Please generate an outline first');
+    return;
+  }
   const savedEmail = localStorage.getItem('authority_lab_email');
-
   if (savedEmail) {
-    createBookAndStart({
-      title: "My Book" // temporary fix
-    });
+    createBookAndStart();
   } else {
     document.getElementById('email-modal').classList.add('show');
     setTimeout(() => document.getElementById('email-input').focus(), 100);
