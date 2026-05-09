@@ -4549,6 +4549,9 @@ function startWritingBook() {
     setTimeout(() => document.getElementById('email-input').focus(), 100);
   }
 }
+function startBookFlow() {
+  startWritingBook();
+}
 
 async function submitEmail() {
   const val = document.getElementById('email-input').value.trim();
@@ -4591,7 +4594,6 @@ async function submitEmail() {
     _pendingFlow = null;
     createBookAndStart();
   }
-}
 
 /* ══════════════════════════════════════
    WORKSPACE CREATION
