@@ -4539,8 +4539,11 @@ async function regenerateOutlineFresh() {
 ══════════════════════════════════════ */
 function startWritingBook() {
   const savedEmail = localStorage.getItem('authority_lab_email');
+
   if (savedEmail) {
-    createBookAndStart();
+    createBookAndStart({
+      title: "My Book" // temporary fix
+    });
   } else {
     document.getElementById('email-modal').classList.add('show');
     setTimeout(() => document.getElementById('email-input').focus(), 100);
