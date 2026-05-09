@@ -4553,13 +4553,21 @@ function startWritingBook() {
 async function submitEmail() {
   const val = document.getElementById('email-input').value.trim();
   if (!val || !val.includes('@')) { showToast('Please enter a valid email'); return; }
+
   const btn = document.querySelector('#email-modal .btn-primary');
   if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
+
   localStorage.setItem('authority_lab_email', val);
-  localStorage.removeItem(GUEST_GEN_KEY); // Reset guest counter on sign-in
+  localStorage.removeItem(GUEST_GEN_KEY);
+
   updateAccountDropdown();
+
   await saveEmailToSupabase(val);
-  // Register user in Supabase users table via secure API
+
+  createBookAndStart({
+    title: "My Book"
+  });
+}
   try {
     await fetch('/api/register-user', {
       method: 'POST',
