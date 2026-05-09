@@ -3478,7 +3478,7 @@ function getGenerationCount() {
 async function canGenerate() {
   if (isOwner()) return true;
   
-  const email = localStorage.getItem('userEmail');
+  const email = localStorage.getItem('authority_lab_email');
   if (!email) return getGenerationCount() < FREE_GEN_LIMIT;
   
   try {
@@ -3886,7 +3886,7 @@ async function cmGenerate() {
   }
 
  // Plan access gate (owner exempt)
-const userEmail = localStorage.getItem('userEmail') || '';
+const userEmail = localStorage.getItem('authority_lab_email') || '';
 const userPlan = getUserPlan(userEmail);
 
 if (!canGenerate(userPlan)) {
@@ -4568,6 +4568,14 @@ async function submitEmail() {
   localStorage.removeItem(GUEST_GEN_KEY); // Reset guest counter on sign-in
   updateAccountDropdown();
   await saveEmailToSupabase(val);
+  // Register user in Supabase users table for plan tracking
+  try {
+    await fetch('/api/register-user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: val })
+    });
+  } catch(e) { console.warn('Register user failed — will retry on next login'); }
   fetchAndCachePlan(); // Sync plan from backend (non-blocking)
   document.getElementById('email-modal').classList.remove('show');
   if (btn) { btn.disabled = false; btn.textContent = 'Continue →'; }
