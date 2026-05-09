@@ -3776,7 +3776,7 @@ async function qmGenerate() {
   if (!idea) { showQmError('Please write your idea first.'); return; }
 
   // Plan access gate (owner exempt)
-  if (!canGenerate()) {
+  if (!await canGenerate()) {
     showUpgradePrompt("You've used all " + FREE_GEN_LIMIT + " free generations. Upgrade to Pro for unlimited access.");
     return;
   }
