@@ -3297,19 +3297,7 @@ async function saveEmailToSupabase(email) {
   } catch(e) {
     console.log('Supabase offline or sandboxed — skipping remote save.');
   }
-  // Also save to users table
-  try {
-    const res2 = await fetch(SUPABASE_URL + '/rest/v1/users', {
-      method: 'POST',
-      headers: sbHeaders(),
-      body: JSON.stringify({ email, created_at: new Date().toISOString() })
-    });
-    if (res2.ok || res2.status === 409) {
-      console.log('✅ Supabase: user saved');
-    }
-  } catch(e) {
-    console.log('Supabase users insert skipped.');
-  }
+  // users table is handled by /api/register-user (uses secret key)
 }
 
 /* ══════════════════════════════════════
@@ -3478,7 +3466,7 @@ function getGenerationCount() {
 async function canGenerate() {
   if (isOwner()) return true;
   
-  const email = localStorage.getItem('authority_lab_email');
+  const email = localStorage.getItem('userEmail');
   if (!email) return getGenerationCount() < FREE_GEN_LIMIT;
   
   try {
@@ -3886,7 +3874,7 @@ async function cmGenerate() {
   }
 
  // Plan access gate (owner exempt)
-const userEmail = localStorage.getItem('authority_lab_email') || '';
+const userEmail = localStorage.getItem('userEmail') || '';
 const userPlan = getUserPlan(userEmail);
 
 if (!canGenerate(userPlan)) {
@@ -4568,14 +4556,14 @@ async function submitEmail() {
   localStorage.removeItem(GUEST_GEN_KEY); // Reset guest counter on sign-in
   updateAccountDropdown();
   await saveEmailToSupabase(val);
-  // Register user in Supabase users table for plan tracking
+  // Register user in Supabase users table via secure API
   try {
     await fetch('/api/register-user', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: val })
     });
-  } catch(e) { console.warn('Register user failed — will retry on next login'); }
+  } catch(e) { console.warn('Register user failed'); }
   fetchAndCachePlan(); // Sync plan from backend (non-blocking)
   document.getElementById('email-modal').classList.remove('show');
   if (btn) { btn.disabled = false; btn.textContent = 'Continue →'; }
