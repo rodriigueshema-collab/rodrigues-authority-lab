@@ -3477,10 +3477,23 @@ function getGenerationCount() {
 }
 
 /* ── Access gate — owner always first ── */
-function canGenerate() {
+async function canGenerate() {
   if (isOwner()) return true;
-  const plan = getUserPlan();
-  if (plan === 'pro' || plan === 'business') return true;
+  
+  const email = localStorage.getItem('userEmail');
+  if (!email) return getGenerationCount() < FREE_GEN_LIMIT;
+  
+  try {
+    const res = await fetch(`/api/user-plan?email=${encodeURIComponent(email)}`);
+    const data = await res.json();
+    const plan = data.plan || 'free';
+    localStorage.setItem('userPlan', plan);
+    if (plan === 'pro' || plan === 'business') return true;
+  } catch {
+    const plan = getUserPlan();
+    if (plan === 'pro' || plan === 'business') return true;
+  }
+  
   return getGenerationCount() < FREE_GEN_LIMIT;
 }
 
