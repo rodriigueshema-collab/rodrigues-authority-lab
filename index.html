@@ -4562,15 +4562,9 @@ async function submitEmail() {
 
   localStorage.setItem('authority_lab_email', val);
   localStorage.removeItem(GUEST_GEN_KEY);
-
   updateAccountDropdown();
-
   await saveEmailToSupabase(val);
 
-  createBookAndStart({
-    title: "My Book"
-  });
-}
   try {
     await fetch('/api/register-user', {
       method: 'POST',
@@ -4578,10 +4572,11 @@ async function submitEmail() {
       body: JSON.stringify({ email: val })
     });
   } catch(e) { console.warn('Register user failed'); }
-  fetchAndCachePlan(); // Sync plan from backend (non-blocking)
+
+  fetchAndCachePlan();
   document.getElementById('email-modal').classList.remove('show');
   if (btn) { btn.disabled = false; btn.textContent = 'Continue →'; }
-  // Route to correct flow after login
+
   if (_pendingFlow === 'content') {
     _pendingFlow = null;
     document.getElementById('entry-screen').style.display = 'none';
@@ -4594,7 +4589,7 @@ async function submitEmail() {
     _pendingFlow = null;
     createBookAndStart();
   }
-
+}
 /* ══════════════════════════════════════
    WORKSPACE CREATION
 ══════════════════════════════════════ */
