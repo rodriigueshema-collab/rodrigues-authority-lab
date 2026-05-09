@@ -4550,7 +4550,11 @@ function startWritingBook() {
   }
 }
 function startBookFlow() {
-  startWritingBook();
+  document.getElementById('entry-screen').style.display = 'none';
+  document.getElementById('content-mode').style.display = 'none';
+  document.getElementById('main-app').style.display = 'block';
+  checkUpdateBanner();
+  showHomePage();
 }
 
 async function submitEmail() {
@@ -4594,6 +4598,11 @@ async function submitEmail() {
    WORKSPACE CREATION
 ══════════════════════════════════════ */
 function createBookAndStart() {
+  if (!outlineData) {
+    showToast('Please generate an outline first');
+    showPage('page-setup');
+    return;
+  }
   const s = window._setup || {};
   book = {
     id: Date.now().toString(),
