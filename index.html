@@ -3458,7 +3458,6 @@ async function fetchAndCachePlan() {
 
     // Write into localStorage so all existing sync helpers pick it up
     localStorage.setItem('userPlan', plan);
-    console.log(`✅ Plan synced from backend: ${email} → ${plan}`);
 
     // Refresh plan-dependent UI
     applyPlanUI();
